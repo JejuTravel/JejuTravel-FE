@@ -1,10 +1,16 @@
 import React from "react";
 import "./index.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/home";
 
 function App() {
   return (
-    <div className="p-6">
-      <h1 className="text-4xl font-bold mb-4">Hello, Tailwind CSS + DaisyUI</h1>
+    <div className="App w-[1200px] m-auto">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
