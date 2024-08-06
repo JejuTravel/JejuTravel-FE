@@ -5,10 +5,10 @@ import Home from "./pages/home";
 
 function App() {
   return (
-    <div className="App w-[1200px] m-auto">
+    <div className="App w-full max-w-none m-auto relative">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
+          <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </div>
