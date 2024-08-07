@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -18,8 +19,8 @@ function Header() {
           JEJU TRAVEL
         </div>
         <div className="mt-2 sm:mt-0 flex space-x-4">
-          <a
-            href="#"
+          <Link
+            to="/"
             onMouseEnter={() => handleMouseEnter("login")}
             onMouseLeave={handleMouseLeave}
             className={`transition-colors duration-300 ${
@@ -27,10 +28,10 @@ function Header() {
             }`}
           >
             로그인
-          </a>
+          </Link>
           <span className="hidden sm:inline text-white">/</span>
-          <a
-            href="#"
+          <Link
+            to="/"
             onMouseEnter={() => handleMouseEnter("signup")}
             onMouseLeave={handleMouseLeave}
             className={`transition-colors duration-300 ${
@@ -38,31 +39,74 @@ function Header() {
             }`}
           >
             회원가입
-          </a>
+          </Link>
         </div>
       </div>
       <nav>
         <ul className="flex flex-wrap justify-center space-x-8 text-lg md:text-xl font-semibold">
-          {[
-            "관광",
-            "쇼핑",
-            "음식점",
-            "숙박",
-            "버스",
-            "공중화장실",
-            "공공와이파이",
-          ].map((item, index) => (
-            <li
-              key={index}
-              onMouseEnter={() => handleMouseEnter(item)}
-              onMouseLeave={handleMouseLeave}
-              className={`cursor-pointer transition-colors duration-300 ${
-                hoveredItem === item ? "text-[#FF4C4C]" : "text-white"
-              }`}
-            >
-              {item}
-            </li>
-          ))}
+          <li
+            onMouseEnter={() => handleMouseEnter("Tourism")}
+            onMouseLeave={handleMouseLeave}
+            className={`cursor-pointer transition-colors duration-300 ${
+              hoveredItem === "Tourism" ? "text-[#FF4C4C]" : "text-white"
+            }`}
+          >
+            <Link to="/tourism">Tourism</Link>
+          </li>
+          <li
+            onMouseEnter={() => handleMouseEnter("Shopping")}
+            onMouseLeave={handleMouseLeave}
+            className={`cursor-pointer transition-colors duration-300 ${
+              hoveredItem === "Shopping" ? "text-[#FF4C4C]" : "text-white"
+            }`}
+          >
+            <Link to="/shopping">Shopping</Link>
+          </li>
+          <li
+            onMouseEnter={() => handleMouseEnter("Restaurant")}
+            onMouseLeave={handleMouseLeave}
+            className={`cursor-pointer transition-colors duration-300 ${
+              hoveredItem === "Restaurant" ? "text-[#FF4C4C]" : "text-white"
+            }`}
+          >
+            <Link to="/restaurant">Restaurant</Link>
+          </li>
+          <li
+            onMouseEnter={() => handleMouseEnter("Accommodation")}
+            onMouseLeave={handleMouseLeave}
+            className={`cursor-pointer transition-colors duration-300 ${
+              hoveredItem === "Accommodation" ? "text-[#FF4C4C]" : "text-white"
+            }`}
+          >
+            <Link to="/accomodation">Accommodation</Link>
+          </li>
+          <li
+            onMouseEnter={() => handleMouseEnter("Bus")}
+            onMouseLeave={handleMouseLeave}
+            className={`cursor-pointer transition-colors duration-300 ${
+              hoveredItem === "Bus" ? "text-[#FF4C4C]" : "text-white"
+            }`}
+          >
+            <Link to="/bus">Bus</Link>
+          </li>
+          <li
+            onMouseEnter={() => handleMouseEnter("Restroom")}
+            onMouseLeave={handleMouseLeave}
+            className={`cursor-pointer transition-colors duration-300 ${
+              hoveredItem === "Restroom" ? "text-[#FF4C4C]" : "text-white"
+            }`}
+          >
+            <Link to="/restroom">Restroom</Link>
+          </li>
+          <li
+            onMouseEnter={() => handleMouseEnter("Wifi")}
+            onMouseLeave={handleMouseLeave}
+            className={`cursor-pointer transition-colors duration-300 ${
+              hoveredItem === "Wifi" ? "text-[#FF4C4C]" : "text-white"
+            }`}
+          >
+            <Link to="/wifi">Wifi</Link>
+          </li>
         </ul>
       </nav>
     </header>
