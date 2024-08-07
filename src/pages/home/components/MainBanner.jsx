@@ -1,5 +1,5 @@
 import React from "react";
-import jejuImage from "../../../assets/jeju.jpg"; // 실제 이미지 경로
+import jejuImage from "../../../assets/jeju.jpg";
 
 function MainBanner() {
   return (
