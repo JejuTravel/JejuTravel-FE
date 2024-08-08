@@ -38,7 +38,7 @@ function Header() {
               hoveredItem === "signup" ? "text-[#FF4C4C]" : "text-white"
             }`}
           >
-            Sign up
+            Sign in
           </Link>
         </div>
       </div>
