@@ -27,7 +27,7 @@ function Header() {
               hoveredItem === "login" ? "text-[#FF4C4C]" : "text-white"
             }`}
           >
-            로그인
+            Sign in
           </Link>
           <span className="hidden sm:inline text-white">/</span>
           <Link
@@ -38,7 +38,7 @@ function Header() {
               hoveredItem === "signup" ? "text-[#FF4C4C]" : "text-white"
             }`}
           >
-            회원가입
+            Sign up
           </Link>
         </div>
       </div>
