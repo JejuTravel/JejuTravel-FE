@@ -3,14 +3,22 @@ import jejuImage from "../../../assets/jeju.jpg";
 
 function MainBanner() {
   return (
-    <section className="relative w-full h-[400px] overflow-hidden">
+    <section className="relative w-full h-[600px] overflow-hidden">
       <img
         src={jejuImage}
+        alt="Jeju Island"
         className="absolute top-0 left-0 w-full h-full object-cover"
       />
-      <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl md:text-5xl font-bold text-white">
-        JEJU TRAVEL
-      </h1>
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-5xl md:text-7xl font-bold text-white text-center leading-tight mb-4">
+            Discover the Beauty of
+            <br />
+            <span className="text-[#FF4C4C]">JEJU ISLAND</span>
+          </h1>
+        </div>
+      </div>
     </section>
   );
 }
