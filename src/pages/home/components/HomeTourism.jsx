@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from "react";
-import orchardImage1 from "../../../assets/jeju.jpg";
-import orchardImage2 from "../../../assets/jeju.jpg";
-import orchardImage3 from "../../../assets/jeju.jpg";
+import { ChevronLeft, ChevronRight } from "react-feather";
+import { Link } from "react-router-dom";
+import jejuImage from "../../../assets/jeju.jpg";
 
 function HomeTourism() {
   const images = [
     {
-      src: orchardImage1,
-      alt: "제주에인 감귤밭 1",
-    },
-    {
-      src: orchardImage2,
-      alt: "제주에인 감귤밭 2",
-    },
-    {
-      src: orchardImage3,
-      alt: "제주에인 감귤밭 3",
+      src: jejuImage,
+      alt: "Jeju Island",
     },
   ];
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
@@ -25,10 +18,10 @@ function HomeTourism() {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
-  }, [currentImageIndex]);
+  }, []);
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
@@ -43,43 +36,61 @@ function HomeTourism() {
   };
 
   return (
-    <section className="p-6 mt-6 flex items-start  rounded-lg shadow-md">
-      <div className="flex-1 mr-4">
-        <h2 className="text-red-500 text-5xl font-bold mb-2">Tourism</h2>
-        <p className="text-2xl text-gray-700 leading-relaxed">
-          제주의 자연과 문화를 만끽하세요!
-        </p>
-      </div>
-
-      <div className="flex-1 relative overflow-hidden rounded-lg shadow-lg transition-transform duration-500 ease-in-out">
-        <div className="overflow-hidden h-[500px]">
-          <img
-            src={images[currentImageIndex].src}
-            alt={images[currentImageIndex].alt}
-            className="w-full h-full object-cover transition-opacity duration-500"
-          />
-          <div className="absolute top-4 left-4">
-            <h3 className="text-white text-4xl font-bold">
-              {images[currentImageIndex].alt}
-            </h3>
-          </div>
+    <section className="container mx-auto py-16 px-4">
+      <div className="flex flex-col lg:flex-row items-center gap-12">
+        <div className="lg:w-1/2 text-center lg:text-left">
+          <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 text-[#FF4C4C]">
+            Discover Jeju
+          </h2>
+          <p className="text-xl text-gray-700 leading-relaxed mb-8">
+            Experience the breathtaking nature and rich culture of Jeju Island.
+            <br />A new adventure awaits you at every corner.
+          </p>
+          <Link to="/tourism" className="inline-block">
+            <button className="btn btn-lg bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white border-none">
+              Explore Jeju Tourism
+            </button>
+          </Link>
         </div>
-        <div className="flex justify-center items-center mt-4">
-          <button
-            onClick={prevImage}
-            className="text-gray-500 bg-gray-200 hover:bg-gray-300 rounded-full p-2 mx-2 focus:outline-none"
+        <div className="lg:w-1/2">
+          <div
+            className="relative w-full rounded-lg shadow-2xl overflow-hidden"
+            style={{ aspectRatio: "16/9" }}
           >
-            {"<"}
-          </button>
-          <span className="text-gray-700 text-sm mx-2">
-            {currentImageIndex + 1} / {images.length}
-          </span>
-          <button
-            onClick={nextImage}
-            className="text-gray-500 bg-gray-200 hover:bg-gray-300 rounded-full p-2 mx-2 focus:outline-none"
-          >
-            {">"}
-          </button>
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+            {images.map((image, index) => (
+              <img
+                key={index}
+                src={image.src}
+                alt={image.alt}
+                className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                  index === currentImageIndex ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            ))}
+            <div className="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-center">
+              <h3 className="text-white text-2xl font-bold">
+                {images[currentImageIndex].alt}
+              </h3>
+              <div className="flex items-center">
+                <button
+                  onClick={prevImage}
+                  className="btn btn-circle btn-sm bg-white bg-opacity-20 hover:bg-opacity-30 text-white border-none mr-2"
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <span className="text-white text-sm mx-2">
+                  {currentImageIndex + 1} / {images.length}
+                </span>
+                <button
+                  onClick={nextImage}
+                  className="btn btn-circle btn-sm bg-white bg-opacity-20 hover:bg-opacity-30 text-white border-none ml-2"
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
