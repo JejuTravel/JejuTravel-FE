@@ -47,7 +47,7 @@ function HomeTourism() {
             <br />A new adventure awaits you at every corner.
           </p>
           <Link to="/tourism" className="inline-block">
-            <button className="btn btn-lg bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white border-none">
+            <button className="px-8 py-3 bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white font-bold text-lg transition-all duration-300 ease-in-out rounded-full focus:outline-none focus:ring-2 focus:ring-[#FF4C4C] focus:ring-opacity-50">
               Explore Jeju Tourism
             </button>
           </Link>

@@ -38,17 +38,15 @@ function HomeShoppingRestaurant() {
             Shopping & Restaurants
           </h2>
           <div className="space-x-4">
-            <Link
-              to="/shopping"
-              className="btn btn-sm bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white border-none"
-            >
-              Explore Jeju Shops
+            <Link to="/shopping">
+              <button className="px-6 py-2 bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white font-semibold text-sm transition-all duration-300 ease-in-out rounded-full focus:outline-none focus:ring-2 focus:ring-[#FF4C4C] focus:ring-opacity-50 mr-4">
+                Explore Jeju Shops
+              </button>
             </Link>
-            <Link
-              to="/restaurant"
-              className="btn btn-sm bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white border-none"
-            >
-              Explore Jeju Restaurants
+            <Link to="/restaurant">
+              <button className="px-6 py-2 bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white font-semibold text-sm transition-all duration-300 ease-in-out rounded-full focus:outline-none focus:ring-2 focus:ring-[#FF4C4C] focus:ring-opacity-50">
+                Explore Jeju Restaurants
+              </button>
             </Link>
           </div>
         </div>
