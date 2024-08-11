@@ -4,111 +4,68 @@ import { Link } from "react-router-dom";
 function Header() {
   const [hoveredItem, setHoveredItem] = useState(null);
 
-  const handleMouseEnter = (item) => {
-    setHoveredItem(item);
-  };
+  const handleMouseEnter = (item) => setHoveredItem(item);
+  const handleMouseLeave = () => setHoveredItem(null);
 
-  const handleMouseLeave = () => {
-    setHoveredItem(null);
-  };
+  const navItems = [
+    { name: "Tourism", link: "/tourism" },
+    { name: "Shopping", link: "/shopping" },
+    { name: "Restaurant", link: "/restaurant" },
+    { name: "Accommodation", link: "/accommodation" },
+    { name: "Bus", link: "/bus" },
+    { name: "Restroom", link: "/restroom" },
+    { name: "Wifi", link: "/wifi" },
+  ];
 
   return (
-    <header className="p-4 fixed top-0 left-0 w-full z-10 bg-transparent">
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-        <div className="text-3xl sm:text-4xl font-bold text-white">
-          JEJU TRAVEL
+    <header className="p-4 fixed top-0 left-0 w-full z-10 bg-white bg-opacity-90 backdrop-filter backdrop-blur-lg shadow-md">
+      <div className="container mx-auto">
+        <div className="flex justify-between items-center mb-4">
+          <div className="text-4xl font-bold text-[#FF4C4C]">JEJU TRAVEL</div>
+          <div className="flex space-x-4">
+            <Link
+              to="/"
+              onMouseEnter={() => handleMouseEnter("login")}
+              onMouseLeave={handleMouseLeave}
+              className={`btn btn-ghost btn-sm ${
+                hoveredItem === "login" ? "text-[#FF4C4C]" : "text-gray-700"
+              }`}
+            >
+              Login
+            </Link>
+            <Link
+              to="/"
+              onMouseEnter={() => handleMouseEnter("signup")}
+              onMouseLeave={handleMouseLeave}
+              className={`btn btn-ghost btn-sm ${
+                hoveredItem === "signup" ? "text-[#FF4C4C]" : "text-gray-700"
+              }`}
+            >
+              SignUp
+            </Link>
+          </div>
         </div>
-        <div className="mt-2 sm:mt-0 flex space-x-4">
-          <Link
-            to="/"
-            onMouseEnter={() => handleMouseEnter("login")}
-            onMouseLeave={handleMouseLeave}
-            className={`transition-colors duration-300 ${
-              hoveredItem === "login" ? "text-[#FF4C4C]" : "text-white"
-            }`}
-          >
-            Sign in
-          </Link>
-          <span className="hidden sm:inline text-white">/</span>
-          <Link
-            to="/"
-            onMouseEnter={() => handleMouseEnter("signup")}
-            onMouseLeave={handleMouseLeave}
-            className={`transition-colors duration-300 ${
-              hoveredItem === "signup" ? "text-[#FF4C4C]" : "text-white"
-            }`}
-          >
-            Sign in
-          </Link>
-        </div>
+        <nav>
+          <ul className="flex flex-wrap justify-center space-x-2">
+            {navItems.map((item) => (
+              <li key={item.name}>
+                <Link
+                  to={item.link}
+                  onMouseEnter={() => handleMouseEnter(item.name)}
+                  onMouseLeave={handleMouseLeave}
+                  className={`btn btn-ghost btn-sm ${
+                    hoveredItem === item.name
+                      ? "text-[#FF4C4C] bg-red-100"
+                      : "text-gray-700 hover:bg-red-50"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
-      <nav>
-        <ul className="flex flex-wrap justify-center space-x-8 text-lg md:text-xl font-semibold">
-          <li
-            onMouseEnter={() => handleMouseEnter("Tourism")}
-            onMouseLeave={handleMouseLeave}
-            className={`cursor-pointer transition-colors duration-300 ${
-              hoveredItem === "Tourism" ? "text-[#FF4C4C]" : "text-white"
-            }`}
-          >
-            <Link to="/tourism">Tourism</Link>
-          </li>
-          <li
-            onMouseEnter={() => handleMouseEnter("Shopping")}
-            onMouseLeave={handleMouseLeave}
-            className={`cursor-pointer transition-colors duration-300 ${
-              hoveredItem === "Shopping" ? "text-[#FF4C4C]" : "text-white"
-            }`}
-          >
-            <Link to="/shopping">Shopping</Link>
-          </li>
-          <li
-            onMouseEnter={() => handleMouseEnter("Restaurant")}
-            onMouseLeave={handleMouseLeave}
-            className={`cursor-pointer transition-colors duration-300 ${
-              hoveredItem === "Restaurant" ? "text-[#FF4C4C]" : "text-white"
-            }`}
-          >
-            <Link to="/restaurant">Restaurant</Link>
-          </li>
-          <li
-            onMouseEnter={() => handleMouseEnter("Accommodation")}
-            onMouseLeave={handleMouseLeave}
-            className={`cursor-pointer transition-colors duration-300 ${
-              hoveredItem === "Accommodation" ? "text-[#FF4C4C]" : "text-white"
-            }`}
-          >
-            <Link to="/accomodation">Accommodation</Link>
-          </li>
-          <li
-            onMouseEnter={() => handleMouseEnter("Bus")}
-            onMouseLeave={handleMouseLeave}
-            className={`cursor-pointer transition-colors duration-300 ${
-              hoveredItem === "Bus" ? "text-[#FF4C4C]" : "text-white"
-            }`}
-          >
-            <Link to="/bus">Bus</Link>
-          </li>
-          <li
-            onMouseEnter={() => handleMouseEnter("Restroom")}
-            onMouseLeave={handleMouseLeave}
-            className={`cursor-pointer transition-colors duration-300 ${
-              hoveredItem === "Restroom" ? "text-[#FF4C4C]" : "text-white"
-            }`}
-          >
-            <Link to="/restroom">Restroom</Link>
-          </li>
-          <li
-            onMouseEnter={() => handleMouseEnter("Wifi")}
-            onMouseLeave={handleMouseLeave}
-            className={`cursor-pointer transition-colors duration-300 ${
-              hoveredItem === "Wifi" ? "text-[#FF4C4C]" : "text-white"
-            }`}
-          >
-            <Link to="/wifi">Wifi</Link>
-          </li>
-        </ul>
-      </nav>
     </header>
   );
 }
