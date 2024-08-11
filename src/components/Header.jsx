@@ -27,8 +27,10 @@ function Header() {
               to="/"
               onMouseEnter={() => handleMouseEnter("login")}
               onMouseLeave={handleMouseLeave}
-              className={`btn btn-ghost btn-sm ${
-                hoveredItem === "login" ? "text-[#FF4C4C]" : "text-gray-700"
+              className={`btn btn-sm transition-all duration-300 ${
+                hoveredItem === "login"
+                  ? "text-[#FF4C4C] bg-red-100 rounded-full"
+                  : "text-gray-700 hover:bg-red-50 hover:rounded-full"
               }`}
             >
               Login
@@ -37,8 +39,10 @@ function Header() {
               to="/"
               onMouseEnter={() => handleMouseEnter("signup")}
               onMouseLeave={handleMouseLeave}
-              className={`btn btn-ghost btn-sm ${
-                hoveredItem === "signup" ? "text-[#FF4C4C]" : "text-gray-700"
+              className={`btn btn-sm transition-all duration-300 ${
+                hoveredItem === "signup"
+                  ? "text-[#FF4C4C] bg-red-100 rounded-full"
+                  : "text-gray-700 hover:bg-red-50 hover:rounded-full"
               }`}
             >
               SignUp
@@ -46,17 +50,17 @@ function Header() {
           </div>
         </div>
         <nav>
-          <ul className="flex flex-wrap justify-center space-x-2">
+          <ul className="flex flex-wrap justify-center space-x-6">
             {navItems.map((item) => (
               <li key={item.name}>
                 <Link
                   to={item.link}
                   onMouseEnter={() => handleMouseEnter(item.name)}
                   onMouseLeave={handleMouseLeave}
-                  className={`btn btn-ghost btn-sm ${
+                  className={`btn btn-sm transition-all duration-300 px-4 ${
                     hoveredItem === item.name
-                      ? "text-[#FF4C4C] bg-red-100"
-                      : "text-gray-700 hover:bg-red-50"
+                      ? "text-[#FF4C4C] bg-red-100 rounded-full"
+                      : "text-gray-700 hover:bg-red-50 hover:rounded-full"
                   }`}
                 >
                   {item.name}
