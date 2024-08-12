@@ -21,7 +21,12 @@ function Header() {
     <header className="p-4 fixed top-0 left-0 w-full z-10 bg-white bg-opacity-90 backdrop-filter backdrop-blur-lg shadow-md">
       <div className="container mx-auto">
         <div className="flex justify-between items-center mb-4">
-          <div className="text-4xl font-bold text-[#FF4C4C]">JEJU TRAVEL</div>
+          <Link
+            to="/"
+            className="text-4xl font-bold text-[#FF4C4C] hover:text-[#FF6B6B] transition-colors duration-300"
+          >
+            JEJU TRAVEL
+          </Link>
           <div className="flex space-x-4">
             <Link
               to="/"
