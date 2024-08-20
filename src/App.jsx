@@ -6,6 +6,7 @@ import Home from "./pages/home";
 import Tourism from "./pages/tourism";
 import Bus from "./pages/bus";
 import Shopping from "./pages/shopping"; 
+import Restaurant from "./pages/restaurant"; 
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/tourism" element={<Tourism />} />
           <Route path="/bus" element={<Bus />} />
           <Route path="/shopping" element={<Shopping />} />
+          <Route path="/restaurant" element={<Restaurant />} />
         </Routes>
       </BrowserRouter>
     </div>
