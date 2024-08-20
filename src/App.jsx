@@ -1,21 +1,14 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import React from "react";
+import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
-import Tourism from "./pages/tourism";
-import Bus from "./pages/bus";
-import Shopping from "./pages/shopping"; 
 
 function App() {
   return (
-    <div className="App w-full max-w-none m-auto relative">
+    <div className="App w-[1200px] m-auto">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/tourism" element={<Tourism />} />
-          <Route path="/bus" element={<Bus />} />
-          <Route path="/shopping" element={<Shopping />} />
+          <Route path="/" element={<Home />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
