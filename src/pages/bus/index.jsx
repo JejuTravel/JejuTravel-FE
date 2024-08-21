@@ -128,9 +128,9 @@ function Bus() {
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#FF4C4C] mb-2">
-            JeJu Bus Information
+            Jeju Bus Information
           </h1>
-          <p className="text-gray-600 text-lg">Find all Bus Stops in JeJu</p>
+          <p className="text-gray-600 text-lg">Find all Bus Stops in Jeju</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
