@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 
-function BusStopSearch() {
+function BusStopSearch({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState("");
+
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("검색어:", searchTerm);
+    onSearch(searchTerm);
   };
 
   return (
