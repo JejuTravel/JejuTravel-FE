@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Header from "../../components/Header";
-import ShoppingSection from './components/shoppingSection'; 
-import ShoppingDetail from './components/shoppingdetail'; // 상세 페이지 컴포넌트 가져오기
+import RestaurantSection from './components/restaurantSection'; 
+import RestaurantDetail from './components/restaurantDetail'; // 상세 페이지 컴포넌트 가져오기
 
-function Shopping() {
+function Restaurant() {
   const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태 관리
   const [selectedItem, setSelectedItem] = useState(null); // 선택된 항목 상태 관리
 
@@ -31,7 +31,7 @@ function Shopping() {
                 <input
                   type="text"
                   className="w-full md:w-2/3 p-4 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-[#FF4C4C]"
-                  placeholder="search for shopping..."
+                  placeholder="search for restaurant..."
                   value={searchQuery}
                   onChange={handleSearchChange} 
                 />
@@ -42,16 +42,16 @@ function Shopping() {
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow-lg">
-              <h2 className="text-3xl font-extrabold text-[#FF4C4C] mb-4">Recommended Stores</h2>
-              <ShoppingSection searchQuery={searchQuery} onItemClick={handleItemClick} /> {/* 검색어와 클릭 이벤트 전달 */}
+              <h2 className="text-3xl font-extrabold text-[#FF4C4C] mb-4">Recommended Restaurants</h2>
+              <RestaurantSection searchQuery={searchQuery} onItemClick={handleItemClick} /> {/* 검색어와 클릭 이벤트 전달 */}
             </div>
           </>
         ) : (
-          <ShoppingDetail item={selectedItem} onBackClick={handleBackClick} />
+          <RestaurantDetail item={selectedItem} onBackClick={handleBackClick} />
         )}
       </div>
     </div>
   );
 }
 
-export default Shopping;
+export default Restaurant;

@@ -1,20 +1,20 @@
 import React from "react";
 import { Phone, MapPin } from "react-feather"; 
-import shoppingImage1 from '../../../assets/jeju.jpg'; 
-import shoppingImage2 from '../../../assets/land.jpg'; 
-import shoppingImage3 from '../../../assets/jeju.jpg'; 
-import shoppingImage4 from '../../../assets/land.jpg'; 
-import shoppingImage5 from '../../../assets/jeju.jpg'; 
-import shoppingImage6 from '../../../assets/land.jpg'; 
+import restaurantImage1 from '../../../assets/jeju.jpg'; 
+import restaurantImage2 from '../../../assets/land.jpg'; 
+import restaurantImage3 from '../../../assets/jeju.jpg'; 
+import restaurantImage4 from '../../../assets/land.jpg'; 
+import restaurantImage5 from '../../../assets/jeju.jpg'; 
+import restaurantImage6 from '../../../assets/land.jpg'; 
 
-const ShoppingSection = ({ searchQuery, onItemClick }) => {
+const RestaurantSection = ({ searchQuery, onItemClick }) => {
   const items = [
-    { name: "ABC MART jeju", tel: "000-0000-0000", location: "JEJU", image: shoppingImage1 },
-    { name: "Store 2", tel: "111-1111-1111", location: "Seoul", image: shoppingImage2 },
-    { name: "Store 3", tel: "222-2222-2222", location: "Busan", image: shoppingImage3 },
-    { name: "Store 4", tel: "333-3333-3333", location: "Incheon", image: shoppingImage4 },
-    { name: "Store 5", tel: "444-4444-4444", location: "Jeju", image: shoppingImage5 },
-    { name: "Store 6", tel: "555-5555-5555", location: "Daejeon", image: shoppingImage6 },
+    { name: "ABC restaurant jeju", tel: "000-0000-0000", location: "JEJU", image: restaurantImage1 },
+    { name: "Store 2", tel: "111-1111-1111", location: "Seoul", image: restaurantImage2 },
+    { name: "Store 3", tel: "222-2222-2222", location: "Busan", image: restaurantImage3 },
+    { name: "Store 4", tel: "333-3333-3333", location: "Incheon", image: restaurantImage4 },
+    { name: "Store 5", tel: "444-4444-4444", location: "Jeju", image: restaurantImage5 },
+    { name: "Store 6", tel: "555-5555-5555", location: "Daejeon", image: restaurantImage6 },
   ];
 
   const filteredItems = items.filter(item => 
@@ -53,4 +53,4 @@ const ShoppingSection = ({ searchQuery, onItemClick }) => {
   );
 };
 
-export default ShoppingSection;
+export default RestaurantSection;
