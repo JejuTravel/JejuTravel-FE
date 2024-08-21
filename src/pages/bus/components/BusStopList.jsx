@@ -1,21 +1,27 @@
 import React from "react";
 
-function BusStopList() {
-  const busStops = [{ id: 1, name: "JejuAirport" }];
-
+function BusStopList({ busStops, onHover, onClick }) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
-      <h2 className="text-xl font-semibold mb-4">Bus Stop</h2>
-      <ul>
-        {busStops.map((stop) => (
-          <li
-            key={stop.id}
-            className="mb-2 p-2 hover:bg-gray-100 rounded transition-colors duration-200"
-          >
-            {stop.name}
-          </li>
-        ))}
-      </ul>
+    <div className="overflow-y-auto max-h-96">
+      {busStops.length === 0 ? (
+        <p>No bus stops found.</p>
+      ) : (
+        <ul>
+          {busStops.map((stop) => (
+            <li
+              key={stop.stationId}
+              className="mb-4 p-3 bg-white rounded-lg shadow hover:shadow-md transition-shadow duration-200 cursor-pointer"
+              onMouseEnter={() => onHover(stop)}
+              onMouseLeave={() => onHover(null)}
+              onClick={() => onClick(stop)}
+            >
+              <h3 className="font-semibold text-lg">{stop.stationName}</h3>
+              <p className="text-sm text-gray-600">{stop.stationAddress}</p>
+              <p className="text-xs text-gray-500 mt-1">{stop.localInfo}</p>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
