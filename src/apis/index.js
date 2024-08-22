@@ -14,4 +14,10 @@ export const getBusStops = (pageNo = 1) =>
 export const searchBusStops = (stationName, pageNo = 1) =>
   api.get("/busStop/search", { params: { stationName, pageNo } });
 
+export const getPublicToilets = (pageNo = 1) =>
+  api.get("/publicToilet", { params: { pageNo } });
+
+export const searchPublicToilets = (toiletNm, pageNo = 1) =>
+  api.get("/publicToilet/search", { params: { toiletNm, pageNo } });
+
 export default api;
