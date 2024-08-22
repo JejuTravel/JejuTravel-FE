@@ -1,6 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 
-function BusMap({ busStops, hoveredStop, selectedStop }) {
+function Map({
+  items,
+  hoveredItem,
+  selectedItem,
+  itemKey,
+  latitudeKey,
+  longitudeKey,
+  nameKey,
+  addressKey,
+  extraInfoKey,
+}) {
   const mapRef = useRef(null);
   const markersRef = useRef({});
   const overlaysRef = useRef({});
@@ -25,7 +35,7 @@ function BusMap({ busStops, hoveredStop, selectedStop }) {
         mapRef.current = mapInstance;
         setMap(mapInstance);
 
-        updateBusStopMarkers(mapInstance);
+        updateMarkers(mapInstance);
       });
     };
 
@@ -38,23 +48,23 @@ function BusMap({ busStops, hoveredStop, selectedStop }) {
 
   useEffect(() => {
     if (map) {
-      updateBusStopMarkers(map);
+      updateMarkers(map);
     }
-  }, [busStops]);
+  }, [items]);
 
   useEffect(() => {
-    if (map && hoveredStop) {
-      const marker = markersRef.current[hoveredStop.stationId];
+    if (map && hoveredItem) {
+      const marker = markersRef.current[hoveredItem[itemKey]];
       if (marker) {
         map.panTo(marker.getPosition());
       }
     }
-  }, [hoveredStop]);
+  }, [hoveredItem]);
 
   useEffect(() => {
-    if (map && selectedStop) {
-      const marker = markersRef.current[selectedStop.stationId];
-      const overlay = overlaysRef.current[selectedStop.stationId];
+    if (map && selectedItem) {
+      const marker = markersRef.current[selectedItem[itemKey]];
+      const overlay = overlaysRef.current[selectedItem[itemKey]];
       if (marker && overlay) {
         map.panTo(marker.getPosition());
         overlay.setMap(map);
@@ -64,9 +74,9 @@ function BusMap({ busStops, hoveredStop, selectedStop }) {
         overlay.setMap(null)
       );
     }
-  }, [selectedStop]);
+  }, [selectedItem]);
 
-  const updateBusStopMarkers = (mapInstance) => {
+  const updateMarkers = (mapInstance) => {
     Object.values(markersRef.current).forEach((marker) => marker.setMap(null));
     Object.values(overlaysRef.current).forEach((overlay) =>
       overlay.setMap(null)
@@ -74,10 +84,10 @@ function BusMap({ busStops, hoveredStop, selectedStop }) {
     markersRef.current = {};
     overlaysRef.current = {};
 
-    busStops.forEach((stop) => {
+    items.forEach((item) => {
       const markerPosition = new window.kakao.maps.LatLng(
-        stop.latitude,
-        stop.longitude
+        item[latitudeKey],
+        item[longitudeKey]
       );
       const marker = new window.kakao.maps.Marker({
         position: markerPosition,
@@ -88,19 +98,19 @@ function BusMap({ busStops, hoveredStop, selectedStop }) {
         <div class="custom-overlay" style="
           position: absolute;
           bottom: 40px;
-          left: -125px;
-          width: 250px;
-          padding: 15px;
+          left: -150px; 
+          width: 350px; 
+          padding: 20px; 
           background-color: white;
           border-radius: 10px;
           box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
           font-family: Arial, sans-serif;
           z-index: 1;
+          word-wrap: break-word; 
         ">
           <div style="
-            position: relative;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
             border-bottom: 2px solid #FF4C4C;
           ">
             <h3 style="
@@ -108,21 +118,29 @@ function BusMap({ busStops, hoveredStop, selectedStop }) {
               color: #FF4C4C;
               font-size: 18px;
               font-weight: bold;
-            ">${stop.stationName}</h3>
-            <button onclick="closeOverlay('${stop.stationId}')" style="
+              word-break: break-word; 
+            ">${item[nameKey]}</h3>
+            <button onclick="closeOverlay('${item[itemKey]}')" style="
               position: absolute;
-              top: 0;
-              right: 0;
+              top: 10px;
+              right: 10px;
               background: none;
               border: none;
-              font-size: 20px;
+              font-size: 18px;
               cursor: pointer;
               color: #FF4C4C;
             ">&times;</button>
           </div>
-          <p style="margin: 5px 0; font-size: 14px;"><strong>Address:</strong> ${stop.stationAddress}</p>
-          <p style="margin: 5px 0; font-size: 14px;"><strong>Local Info:</strong> ${stop.localInfo}</p>
-          <p style="margin: 5px 0; font-size: 14px;"><strong>Direction:</strong> ${stop.direction}</p>
+          <p style="margin: 8px 0; font-size: 14px; word-break: break-word;">
+            <strong>Address:</strong> ${item[addressKey]}
+          </p>
+          ${
+            extraInfoKey
+              ? `<p style="margin: 8px 0; font-size: 14px; word-break: break-word;">
+                  <strong>Info:</strong> ${item[extraInfoKey]}
+                </p>`
+              : ""
+          }
         </div>
       `;
 
@@ -137,18 +155,18 @@ function BusMap({ busStops, hoveredStop, selectedStop }) {
         overlay.setMap(mapInstance);
       });
 
-      markersRef.current[stop.stationId] = marker;
-      overlaysRef.current[stop.stationId] = overlay;
+      markersRef.current[item[itemKey]] = marker;
+      overlaysRef.current[item[itemKey]] = overlay;
     });
   };
 
-  window.closeOverlay = (stationId) => {
-    if (overlaysRef.current[stationId]) {
-      overlaysRef.current[stationId].setMap(null);
+  window.closeOverlay = (itemId) => {
+    if (overlaysRef.current[itemId]) {
+      overlaysRef.current[itemId].setMap(null);
     }
   };
 
   return <div id="map" style={{ width: "100%", height: "500px" }}></div>;
 }
 
-export default BusMap;
+export default Map;

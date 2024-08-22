@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
-import BusMap from "./components/BusMap";
-import BusStopSearch from "./components/BusStopSearch";
-import BusStopList from "./components/BusStopList";
+import Map from "../../components/Map";
+import Search from "../../components/Search";
+import List from "../../components/List";
 import {
   MapPin,
   Bus as BusIcon,
-  Search,
+  Search as SearchIcon,
   Loader,
   ChevronLeft,
   ChevronRight,
@@ -141,21 +141,29 @@ function Bus() {
                   <h2 className="text-xl font-semibold">Bus Map</h2>
                 </div>
               </div>
-              <BusMap
-                busStops={busStops}
-                hoveredStop={hoveredStop}
-                selectedStop={selectedStop}
+              <Map
+                items={busStops}
+                hoveredItem={hoveredStop}
+                selectedItem={selectedStop}
+                itemKey="stationId"
+                latitudeKey="latitude"
+                longitudeKey="longitude"
+                nameKey="stationName"
+                addressKey="stationAddress"
               />
             </div>
           </div>
           <div className="space-y-8">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="bg-[#FF6B6B] text-white p-4 flex items-center">
-                <Search className="mr-2" />
+                <SearchIcon className="mr-2" />
                 <h2 className="text-xl font-semibold">Search Bus Stops</h2>
               </div>
               <div className="p-4">
-                <BusStopSearch onSearch={handleSearch} />
+                <Search
+                  onSearch={handleSearch}
+                  placeholder="Search for bus stop..."
+                />
               </div>
             </div>
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -169,10 +177,14 @@ function Bus() {
               <div className="p-4">
                 {error && <p className="text-red-500">{error}</p>}
                 {!isLoading && !error && (
-                  <BusStopList
-                    busStops={busStops}
+                  <List
+                    items={busStops}
                     onHover={handleHover}
                     onClick={handleClick}
+                    itemKey="stationId"
+                    nameKey="stationName"
+                    addressKey="stationAddress"
+                    extraInfoKey="localInfo"
                   />
                 )}
               </div>
