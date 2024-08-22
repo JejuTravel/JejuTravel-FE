@@ -1,14 +1,13 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Tourism from "./pages/tourism";
 import Bus from "./pages/bus";
 import Shopping from "./pages/shopping";
 import Restaurant from "./pages/restaurant";
 import Restroom from "./pages/restroom";
-import Accommodation from './pages/accommodation';  // 올바른 경로 확인
+import Accommodation from "./pages/accommodation"; // 올바른 경로 확인
+import Wifi from "./pages/wifi";
 
 function App() {
   return (
@@ -22,6 +21,7 @@ function App() {
           <Route path="/restaurant" element={<Restaurant />} />
           <Route path="/restroom" element={<Restroom />} />
           <Route path="/accommodation" element={<Accommodation />} />
+          <Route path="/wifi" element={<Wifi />} />
         </Routes>
       </BrowserRouter>
     </div>
