@@ -20,4 +20,10 @@ export const getPublicToilets = (pageNo = 1) =>
 export const searchPublicToilets = (toiletNm, pageNo = 1) =>
   api.get("/publicToilet/search", { params: { toiletNm, pageNo } });
 
+export const getPublicWifi = (pageNo = 1) =>
+  api.get("/publicWifi", { params: { pageNo } });
+
+export const searchPublicWifi = (apGroupName, pageNo = 1) =>
+  api.get("/publicWifi/search", { params: { apGroupName, pageNo } });
+
 export default api;

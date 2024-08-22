@@ -8,7 +8,7 @@ import Bus from "./pages/bus";
 import Shopping from "./pages/shopping";
 import Restaurant from "./pages/restaurant";
 import Restroom from "./pages/restroom";
-
+import Wifi from "./pages/wifi";
 function App() {
   return (
     <div className="App w-full max-w-none m-auto relative">
@@ -20,6 +20,7 @@ function App() {
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/restaurant" element={<Restaurant />} />
           <Route path="/restroom" element={<Restroom />} />
+          <Route path="/wifi" element={<Wifi />} />
         </Routes>
       </BrowserRouter>
     </div>
