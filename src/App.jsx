@@ -5,8 +5,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/home";
 import Tourism from "./pages/tourism";
 import Bus from "./pages/bus";
-import Shopping from "./pages/shopping"; 
-import Restaurant from "./pages/restaurant"; 
+import Shopping from "./pages/shopping";
+import Restaurant from "./pages/restaurant";
+import Restroom from "./pages/restroom";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/bus" element={<Bus />} />
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/restaurant" element={<Restaurant />} />
+          <Route path="/restroom" element={<Restroom />} />
         </Routes>
       </BrowserRouter>
     </div>
