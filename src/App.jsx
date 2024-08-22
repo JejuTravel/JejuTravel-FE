@@ -8,6 +8,7 @@ import Bus from "./pages/bus";
 import Shopping from "./pages/shopping";
 import Restaurant from "./pages/restaurant";
 import Restroom from "./pages/restroom";
+import Accommodation from './pages/accommodation';  // 올바른 경로 확인
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/restaurant" element={<Restaurant />} />
           <Route path="/restroom" element={<Restroom />} />
+          <Route path="/accommodation" element={<Accommodation />} />
         </Routes>
       </BrowserRouter>
     </div>
