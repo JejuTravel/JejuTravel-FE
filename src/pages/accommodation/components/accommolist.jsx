@@ -19,6 +19,16 @@ const Accommolist = [
       parking: true,
       hours: "Check-in: 03:00 PM, Check-out: 11:00 AM"
     },
+    {
+        name: "Lotte Hotel Jeju",
+        image: "../../../assets/hotel2.jpg",
+        description: "Lotte Hotel Jeju provides a wonderful stay with premium services.",
+        location: "Jeju Island, South Korea",
+        phone: "010-2345-6789",
+        website: "https://example.com",
+        parking: true,
+        hours: "Check-in: 03:00 PM, Check-out: 11:00 AM"
+      },
     // 더 많은 호텔 데이터를 여기에 추가할 수 있습니다.
   ];
   

@@ -1,14 +1,22 @@
-// src/pages/accomodation/index.jsx
 import React, { useState } from "react";
 import Header from "../../components/Header";
 import Accommolist from './components/accommolist';
-import AccommoRecommend from './components/accommorecommend'; // 올바른 경로로 임포트
+import AccommoRecommend from './components/accommorecommend';
+import { FaHeart } from 'react-icons/fa'; // Font Awesome 하트 아이콘 가져오기
 
 function Accommodation() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [likes, setLikes] = useState({});
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
+  };
+
+  const handleLikeToggle = (index) => {
+    setLikes(prevLikes => ({
+      ...prevLikes,
+      [index]: !prevLikes[index]
+    }));
   };
 
   const filteredAccommolist = Accommolist.filter(acc =>
@@ -34,28 +42,36 @@ function Accommodation() {
           </div>
         </div>
 
-        <AccommoRecommend />
+        {/* 숙박 추천 섹션 (검색어가 없을 때만 표시) */}
+        {!searchQuery && <AccommoRecommend />}
 
-        <div className="bg-white p-4 rounded-lg shadow-lg mt-8">
-          {filteredAccommolist.length > 0 ? (
-            filteredAccommolist.map((accommodation, index) => (
-              <div 
-                key={index}
-                className="flex items-center space-x-4 p-4 mb-4 bg-gray-100 rounded-lg cursor-pointer"
-              >
-                <img src={accommodation.image} alt={accommodation.name} className="h-24 w-24 object-cover rounded-lg" />
-                <div>
-                  <h3 className="text-xl font-semibold text-[#FF4C4C]">{accommodation.name}</h3>
-                  <p className="text-gray-700">{accommodation.location}</p>
+        {/* 숙박 목록 섹션 */}
+        <div className="mt-8">
+          <h2 className="text-[#FF4C4C] text-2xl font-bold mb-4">Accommodation Lists</h2>
+          <div>
+            {filteredAccommolist.length > 0 ? (
+              filteredAccommolist.map((accommodation, index) => (
+                <div 
+                  key={index}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden mb-4 flex items-center p-4"
+                >
+                  <img src={accommodation.image} alt={accommodation.name} className="h-32 w-32 object-cover rounded-lg mr-4" />
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-[#FF4C4C]">{accommodation.name}</h3>
+                    <p className="text-gray-700">{accommodation.location}</p>
+                  </div>
+                  <button 
+                    className="ml-auto bg-transparent border-none cursor-pointer text-red-500"
+                    onClick={() => handleLikeToggle(index)}
+                  >
+                    <FaHeart color={likes[index] ? 'red' : 'gray'} size="1.5em" />
+                  </button>
                 </div>
-                <button className="ml-auto bg-transparent border-none cursor-pointer text-red-500">
-                  <i className="fas fa-heart"></i>
-                </button>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-500">No accommodations found.</p>
-          )}
+              ))
+            ) : (
+              <p className="text-center text-gray-500">No accommodations found.</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
