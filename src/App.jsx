@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Tourism from "./pages/tourism";
+import TourismDetail from "./pages/tourism/components/TourismDetail";
 import Bus from "./pages/bus";
 import Shopping from "./pages/shopping";
 import Restaurant from "./pages/restaurant";
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tourism" element={<Tourism />} />
+          <Route path="/tourism/:contentId" element={<TourismDetail />} />
           <Route path="/bus" element={<Bus />} />
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/restaurant" element={<Restaurant />} />

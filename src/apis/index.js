@@ -7,6 +7,14 @@ const api = axios.create({
   },
   timeout: 60000,
 });
+export const getTourismList = (pageNo = 1, sigunguCode) =>
+  api.get("/tourism", { params: { pageNo, sigunguCode } });
+
+export const searchTourism = (keyword, pageNo = 1) =>
+  api.get("/tourism/search", { params: { keyword, pageNo } });
+
+export const getTourismDetail = (contentId) =>
+  api.get(`/tourism/info/${contentId}`);
 
 export const getBusStops = (pageNo = 1) =>
   api.get("/busStop", { params: { pageNo } });
