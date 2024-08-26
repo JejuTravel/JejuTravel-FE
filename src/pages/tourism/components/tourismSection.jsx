@@ -1,82 +1,48 @@
-import React from "react";
-import Slider from "react-slick";
-import eventImage1 from '../../../assets/jeju.jpg'; 
-import eventImage2 from '../../../assets/land.jpg'; 
-import eventImage3 from '../../../assets/jeju.jpg'; 
-import eventImage4 from '../../../assets/land.jpg'; 
+import React, { useState } from "react";
 
-const TourismSection = ({ onEventClick }) => {
-  const events = [
-    {
-      name: "Jeju Beach",
-      image: eventImage1,
-      description: "Beautiful beach in Jeju Island.",
-      location: "Jeju Island, South Korea",
-      phone: "010-1234-5678",
-      website: "https://example.com",
-      parking: true,
-      hours: "09:00 AM - 06:00 PM"
-    },
-    {
-      name: "Event 2",
-      image: eventImage2,
-      description: "Event 2 Description",
-      location: "Location 2",
-      phone: "010-9876-5432",
-      website: "https://event2.com",
-      parking: false,
-      hours: "10:00 AM - 08:00 PM"
-    },
-    {
-      name: "Event 3",
-      image: eventImage3,
-      description: "Event 3 Description",
-      location: "Location 3",
-      phone: "010-1122-3344",
-      website: "https://event3.com",
-      parking: true,
-      hours: "08:00 AM - 05:00 PM"
-    },
-    {
-      name: "Event 4",
-      image: eventImage4,
-      description: "Event 4 Description",
-      location: "Location 4",
-      phone: "010-5566-7788",
-      website: "https://event4.com",
-      parking: false,
-      hours: "07:00 AM - 03:00 PM"
-    }
-  ];
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 2000,
-  };
+const TourismSection = ({ event, onEventClick }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const defaultImage = "/api/placeholder/400/300";
 
   return (
-    <section className="p-6 mt-0">
-      <h2 className="text-3xl font-bold text-[#FF4C4C] mb-4">TOURISM</h2>
-      <Slider {...settings}>
-        {events.map((event, index) => (
-          <div 
-            key={index} 
-            className="p-2 cursor-pointer" 
-            onClick={() => onEventClick(event)} // 클릭 이벤트 추가
-          >
-            <div className="relative w-full h-64 overflow-hidden rounded-lg">
-              <img src={event.image} alt={event.name} className="w-full h-full object-cover" />
-            </div>
-            <p className="mt-2 text-center">{event.description}</p>
+    <div
+      className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 cursor-pointer"
+      onClick={() => onEventClick(event.contentId)}
+    >
+      <div className="relative h-48 overflow-hidden">
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+        )}
+        <img
+          src={event.firstImage || defaultImage}
+          alt={event.title}
+          className={`w-full h-full object-cover transition-opacity duration-300 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setImageLoaded(true)}
+          onError={(e) => {
+            e.target.src = defaultImage;
+            setImageLoaded(true);
+          }}
+        />
+        {(!event.firstImage || event.firstImage === "") && imageLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+            <span className="text-gray-500 text-lg">No Image Available</span>
           </div>
-        ))}
-      </Slider>
-    </section>
+        )}
+      </div>
+      <div className="p-4">
+        <h3 className="text-xl font-semibold text-[#FF4C4C] mb-2 truncate">
+          {event.title}
+        </h3>
+        <p className="text-gray-600 text-sm mb-2 line-clamp-2">
+          {event.address}
+        </p>
+        <p className="text-gray-500 text-xs">
+          {event.tel || "No phone number available"}
+        </p>
+      </div>
+    </div>
   );
 };
 
