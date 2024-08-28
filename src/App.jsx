@@ -10,7 +10,7 @@ import Restaurant from "./pages/restaurant";
 import Restroom from "./pages/restroom";
 import Accommodation from "./pages/accommodation";
 import Wifi from "./pages/wifi";
-import RestaurantDetail from "./pages/restaurant/components/restaurantDetail";
+import RestaurantDetail from "./pages/restaurant/components/RestaurantDetail";
 
 function App() {
   return (
