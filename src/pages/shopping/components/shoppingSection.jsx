@@ -1,54 +1,69 @@
-import React from "react";
-import { Phone, MapPin } from "react-feather"; 
-import shoppingImage1 from '../../../assets/jeju.jpg'; 
-import shoppingImage2 from '../../../assets/land.jpg'; 
-import shoppingImage3 from '../../../assets/jeju.jpg'; 
-import shoppingImage4 from '../../../assets/land.jpg'; 
-import shoppingImage5 from '../../../assets/jeju.jpg'; 
-import shoppingImage6 from '../../../assets/land.jpg'; 
+import React, { useState } from "react";
+import { Phone, MapPin } from "lucide-react";
 
-const ShoppingSection = ({ searchQuery, onItemClick }) => {
-  const items = [
-    { name: "ABC MART jeju", tel: "000-0000-0000", location: "JEJU", image: shoppingImage1 },
-    { name: "Store 2", tel: "111-1111-1111", location: "Seoul", image: shoppingImage2 },
-    { name: "Store 3", tel: "222-2222-2222", location: "Busan", image: shoppingImage3 },
-    { name: "Store 4", tel: "333-3333-3333", location: "Incheon", image: shoppingImage4 },
-    { name: "Store 5", tel: "444-4444-4444", location: "Jeju", image: shoppingImage5 },
-    { name: "Store 6", tel: "555-5555-5555", location: "Daejeon", image: shoppingImage6 },
-  ];
-
-  const filteredItems = items.filter(item => 
-    item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.location.toLowerCase().includes(searchQuery.toLowerCase())
+const ShoppingSection = ({ items, onItemClick }) => {
+  return (
+    <div className="space-y-6">
+      {items.map((item) => (
+        <ShoppingItem
+          key={item.contentId}
+          item={item}
+          onItemClick={onItemClick}
+        />
+      ))}
+      {items.length === 0 && (
+        <p className="text-center text-gray-500 text-lg">
+          No stores found matching your search.
+        </p>
+      )}
+    </div>
   );
+};
+
+const ShoppingItem = ({ item, onItemClick }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const defaultImage = "/api/placeholder/400/300";
 
   return (
-    <div className="flex flex-col space-y-5">
-      {filteredItems.map((item, index) => (
-        <div 
-          key={index} 
-          className="bg-gray-50 p-6 rounded-lg shadow-lg flex h-64 transform transition-transform duration-300 hover:scale-105 cursor-pointer"
-          onClick={() => onItemClick(item)} // 클릭 시 onItemClick 호출
-        >
-          <img src={item.image} alt={item.name || `Image ${index + 1}`} className="h-full w-96 object-cover rounded-lg mr-4" />
-          <div className="flex flex-col justify-center">
-            {item.name && <h3 className="text-2xl font-bold">{item.name}</h3>}
-            {item.tel && (
-              <p className="text-xl flex items-center">
-                <Phone className="mr-2" /> {item.tel}
-              </p>
-            )}
-            {item.location && (
-              <p className="text-xl flex items-center">
-                <MapPin className="mr-2" /> {item.location}
-              </p>
-            )}
+    <div
+      className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer flex h-48"
+      onClick={() => onItemClick(item)}
+    >
+      <div className="relative w-48 flex-shrink-0">
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+        )}
+        <img
+          src={item.firstImage || defaultImage}
+          alt={item.title}
+          className={`w-full h-full object-cover transition-opacity duration-300 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoad={() => setImageLoaded(true)}
+          onError={(e) => {
+            e.target.src = defaultImage;
+            setImageLoaded(true);
+          }}
+        />
+        {(!item.firstImage || item.firstImage === "") && imageLoaded && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
+            <span className="text-gray-500 text-base">No Image Available</span>
           </div>
-        </div>
-      ))}
-      {filteredItems.length === 0 && (
-        <p className="text-center text-gray-500">No stores found matching your search.</p>
-      )}
+        )}
+      </div>
+      <div className="p-6 flex-grow flex flex-col justify-center">
+        <h3 className="text-2xl font-semibold text-[#FF4C4C] mb-2 line-clamp-1">
+          {item.title}
+        </h3>
+        <p className="text-gray-600 text-base mb-2 flex items-center line-clamp-2">
+          <MapPin className="mr-2 flex-shrink-0" size={20} />{" "}
+          {item.address || "Address not available"}
+        </p>
+        <p className="text-gray-500 text-base flex items-center">
+          <Phone className="mr-2 flex-shrink-0" size={20} />{" "}
+          {item.tel || "No phone number available"}
+        </p>
+      </div>
     </div>
   );
 };
