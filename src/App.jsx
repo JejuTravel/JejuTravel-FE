@@ -5,10 +5,12 @@ import Tourism from "./pages/tourism";
 import TourismDetail from "./pages/tourism/components/TourismDetail";
 import Bus from "./pages/bus";
 import Shopping from "./pages/shopping";
+import ShoppingDetail from "./pages/shopping/components/ShoppingDetail";
 import Restaurant from "./pages/restaurant";
 import Restroom from "./pages/restroom";
-import Accommodation from "./pages/accommodation"; // 올바른 경로 확인
+import Accommodation from "./pages/accommodation";
 import Wifi from "./pages/wifi";
+import RestaurantDetail from "./pages/restaurant/components/restaurantDetail";
 
 function App() {
   return (
@@ -18,11 +20,13 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/tourism" element={<Tourism />} />
           <Route path="/tourism/:contentId" element={<TourismDetail />} />
-          <Route path="/bus" element={<Bus />} />
           <Route path="/shopping" element={<Shopping />} />
+          <Route path="/shopping/:contentId" element={<ShoppingDetail />} />
           <Route path="/restaurant" element={<Restaurant />} />
-          <Route path="/restroom" element={<Restroom />} />
+          <Route path="/restaurant/:contentId" element={<RestaurantDetail />} />
           <Route path="/accommodation" element={<Accommodation />} />
+          <Route path="/bus" element={<Bus />} />
+          <Route path="/restroom" element={<Restroom />} />
           <Route path="/wifi" element={<Wifi />} />
         </Routes>
       </BrowserRouter>

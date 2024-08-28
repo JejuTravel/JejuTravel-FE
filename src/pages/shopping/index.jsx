@@ -1,54 +1,120 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
-import ShoppingSection from './components/shoppingSection'; 
-import ShoppingDetail from './components/shoppingdetail'; // 상세 페이지 컴포넌트 가져오기
+import ShoppingSection from "./components/ShoppingSection";
+import TouristInfoSearch from "../../components/TouristInfoSearch";
+import { getShoppingList, searchShopping } from "../../apis";
+import { Loader } from "lucide-react";
+import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 
 function Shopping() {
-  const [searchQuery, setSearchQuery] = useState(''); // 검색어 상태 관리
-  const [selectedItem, setSelectedItem] = useState(null); // 선택된 항목 상태 관리
+  const [shoppingData, setShoppingData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+  const loader = useRef(null);
+
+  const fetchShoppingData = useCallback(
+    async (query = searchTerm, pageNum = page) => {
+      if (loading || !hasMore) return;
+      setLoading(true);
+      setError(null);
+      try {
+        const response = query
+          ? await searchShopping(query, pageNum)
+          : await getShoppingList(pageNum);
+        const newItems = response.data.data.content;
+        if (newItems.length === 0) {
+          setHasMore(false);
+        } else {
+          setShoppingData((prev) =>
+            pageNum === 1 ? newItems : [...prev, ...newItems]
+          );
+          setPage((prevPage) => prevPage + 1);
+        }
+      } catch (err) {
+        console.error("Error fetching shopping data:", err);
+        setError("Failed to load shopping information.");
+      }
+      setLoading(false);
+    },
+    [searchTerm, page, loading, hasMore]
+  );
+
+  useEffect(() => {
+    fetchShoppingData("", 1);
+  }, []);
+
+  useInfiniteScroll(loader, () => fetchShoppingData());
 
   const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    setShoppingData([]);
+    setPage(1);
+    setHasMore(true);
+    fetchShoppingData(searchTerm, 1);
   };
 
   const handleItemClick = (item) => {
-    setSelectedItem(item);
-    window.scrollTo(0, 0); // 스크롤을 맨 위로 이동
-  };
-
-  const handleBackClick = () => {
-    setSelectedItem(null);
+    navigate(`/shopping/${item.contentId}`);
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFBFC]">
+    <div className="min-h-screen bg-gradient-to-b from-red-50 to-white">
       <Header />
       <div className="container mx-auto mt-32 p-6">
-        {!selectedItem ? (
-          <>
-            <div className="text-center mb-12">
-              <div className="flex justify-center items-center mb-4">
-                <input
-                  type="text"
-                  className="w-full md:w-2/3 p-4 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-[#FF4C4C]"
-                  placeholder="search for shopping..."
-                  value={searchQuery}
-                  onChange={handleSearchChange} 
-                />
-                <button className="p-4 bg-[#FF4C4C] text-white rounded-r-lg hover:bg-[#007965]">
-                  SEARCH
-                </button>
-              </div>
-            </div>
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-[#FF4C4C] mb-2">
+            Jeju Shopping
+          </h1>
+          <p className="text-gray-600 text-lg">
+            Discover the best shopping experiences in Jeju
+          </p>
+        </div>
 
-            <div className="bg-white p-4 rounded-lg shadow-lg">
-              <h2 className="text-3xl font-extrabold text-[#FF4C4C] mb-4">Recommended Stores</h2>
-              <ShoppingSection searchQuery={searchQuery} onItemClick={handleItemClick} /> {/* 검색어와 클릭 이벤트 전달 */}
-            </div>
-          </>
-        ) : (
-          <ShoppingDetail item={selectedItem} onBackClick={handleBackClick} />
+        <TouristInfoSearch
+          title="Search Shopping"
+          placeholder="Search for shopping..."
+          searchTerm={searchTerm}
+          onSearchChange={handleSearchChange}
+          onSearch={handleSearch}
+        />
+
+        {error && (
+          <p className="text-red-500 text-center mb-4 bg-red-100 p-3 rounded-lg animate-fade-in">
+            {error}
+          </p>
         )}
+
+        {shoppingData.length === 0 && !loading && (
+          <p className="text-gray-500 text-center mb-4">
+            No results found. Please try a different search term.
+          </p>
+        )}
+
+        <div className="space-y-6 animate-fade-in">
+          <ShoppingSection items={shoppingData} onItemClick={handleItemClick} />
+        </div>
+
+        {loading && (
+          <div className="text-center mt-8">
+            <Loader className="animate-spin text-[#FF4C4C] mx-auto" />
+          </div>
+        )}
+
+        {!hasMore && shoppingData.length > 0 && (
+          <p className="text-center text-gray-500 mt-4">
+            No more items to load
+          </p>
+        )}
+        <div ref={loader} />
       </div>
     </div>
   );
