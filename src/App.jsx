@@ -14,7 +14,7 @@ import RestaurantDetail from "./pages/restaurant/components/RestaurantDetail";
 
 function App() {
   return (
-    <div className="App w-full max-w-none m-auto relative">
+    <div className="App w-[1200px] m-auto">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
