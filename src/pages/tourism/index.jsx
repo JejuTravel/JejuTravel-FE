@@ -79,9 +79,7 @@ function Tourism() {
           <h1 className="text-4xl font-bold text-[#FF4C4C] mb-2">
             Jeju Tourism Information
           </h1>
-          <p className="text-gray-600 text-lg">
-            Explore the wonders of Jeju Island
-          </p>
+          <p className="text-gray-600 text-lg">Explore the wonders of Jeju</p>
         </div>
 
         <TouristInfoSearch
