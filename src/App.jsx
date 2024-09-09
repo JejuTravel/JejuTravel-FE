@@ -12,6 +12,7 @@ import Accommodation from "./pages/accommodation";
 import AccommodationDetail from "./pages/accommodation/components/AccommodationDetail";
 import Wifi from "./pages/wifi";
 import RestaurantDetail from "./pages/restaurant/components/RestaurantDetail";
+import Schedule from "./pages/schedule";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/bus" element={<Bus />} />
           <Route path="/restroom" element={<Restroom />} />
           <Route path="/wifi" element={<Wifi />} />
+          <Route path="/schedule" element={<Schedule />} />
         </Routes>
       </BrowserRouter>
     </div>
