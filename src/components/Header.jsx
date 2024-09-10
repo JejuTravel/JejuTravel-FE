@@ -15,7 +15,6 @@ function Header() {
     { name: "Bus", link: "/bus" },
     { name: "Restroom", link: "/restroom" },
     { name: "Wifi", link: "/wifi" },
-    { name: "Schedule", link: "/schedule" }, 
   ];
 
   return (

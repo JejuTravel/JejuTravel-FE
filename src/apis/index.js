@@ -38,16 +38,6 @@ export const searchRestaurant = (keyword, pageNo = 1) =>
 export const getRestaurantDetail = (contentId) =>
   api.get(`/restaurant/info/${contentId}`);
 
-// accommodation
-export const getAccommodationList = (pageNo = 1, sigunguCode, stayType) =>
-  api.get("/stay", { params: { pageNo, sigunguCode, stayType } });
-
-export const searchAccommodation = (keyword, pageNo = 1) =>
-  api.get("/stay/search", { params: { keyword, pageNo } });
-
-export const getAccommodationDetail = (contentId) =>
-  api.get(`/stay/info/${contentId}`);
-
 // bus
 export const getBusStops = (pageNo = 1) =>
   api.get("/busStop", { params: { pageNo } });
