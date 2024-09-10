@@ -9,8 +9,10 @@ import ShoppingDetail from "./pages/shopping/components/ShoppingDetail";
 import Restaurant from "./pages/restaurant";
 import Restroom from "./pages/restroom";
 import Accommodation from "./pages/accommodation";
+import AccommodationDetail from "./pages/accommodation/components/AccommodationDetail";
 import Wifi from "./pages/wifi";
 import RestaurantDetail from "./pages/restaurant/components/RestaurantDetail";
+import Schedule from "./pages/schedule";
 
 function App() {
   return (
@@ -25,9 +27,14 @@ function App() {
           <Route path="/restaurant" element={<Restaurant />} />
           <Route path="/restaurant/:contentId" element={<RestaurantDetail />} />
           <Route path="/accommodation" element={<Accommodation />} />
+          <Route
+            path="/accommodation/:contentId"
+            element={<AccommodationDetail />}
+          />
           <Route path="/bus" element={<Bus />} />
           <Route path="/restroom" element={<Restroom />} />
           <Route path="/wifi" element={<Wifi />} />
+          <Route path="/schedule" element={<Schedule />} />
         </Routes>
       </BrowserRouter>
     </div>
