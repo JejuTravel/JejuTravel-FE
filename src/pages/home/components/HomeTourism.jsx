@@ -1,94 +1,132 @@
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "react-feather";
-import { Link } from "react-router-dom";
-import jejuImage from "../../../assets/jeju.jpg";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Image as ImageIcon,
+  MapPin,
+} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
-function HomeTourism() {
-  const images = [
-    {
-      src: jejuImage,
-      alt: "Jeju Island",
-    },
-  ];
-
+function HomeTourism({ tourismData, isLoading }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 5000);
+    if (tourismData.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentImageIndex((prevIndex) =>
+          prevIndex === tourismData.length - 1 ? 0 : prevIndex + 1
+        );
+      }, 5000);
 
-    return () => clearInterval(interval);
-  }, []);
+      return () => clearInterval(interval);
+    }
+  }, [tourismData]);
 
-  const nextImage = () => {
+  const nextImage = (e) => {
+    e.stopPropagation();
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === tourismData.length - 1 ? 0 : prevIndex + 1
     );
   };
 
-  const prevImage = () => {
+  const prevImage = (e) => {
+    e.stopPropagation();
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? tourismData.length - 1 : prevIndex - 1
     );
+  };
+
+  const handleImageClick = () => {
+    if (tourismData[currentImageIndex]) {
+      navigate(`/tourism/${tourismData[currentImageIndex].contentId}`);
+    }
   };
 
   return (
-    <section className="container mx-auto py-16 px-4">
-      <div className="flex flex-col lg:flex-row items-center gap-12">
-        <div className="lg:w-1/2 text-center lg:text-left">
-          <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 text-[#FF4C4C]">
-            Discover Jeju
-          </h2>
-          <p className="text-xl text-gray-700 leading-relaxed mb-8">
-            Experience the breathtaking nature and rich culture of Jeju Island.
-            <br />A new adventure awaits you at every corner.
-          </p>
-          <Link to="/tourism" className="inline-block">
-            <button className="px-8 py-3 bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white font-bold text-lg transition-all duration-300 ease-in-out rounded-full focus:outline-none focus:ring-2 focus:ring-[#FF4C4C] focus:ring-opacity-50">
-              Explore Jeju Tourism
-            </button>
-          </Link>
-        </div>
-        <div className="lg:w-1/2">
-          <div
-            className="relative w-full rounded-lg shadow-2xl overflow-hidden"
-            style={{ aspectRatio: "16/9" }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
-            {images.map((image, index) => (
-              <img
-                key={index}
-                src={image.src}
-                alt={image.alt}
-                className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                  index === currentImageIndex ? "opacity-100" : "opacity-0"
-                }`}
-              />
-            ))}
-            <div className="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-center">
-              <h3 className="text-white text-2xl font-bold">
-                {images[currentImageIndex].alt}
-              </h3>
-              <div className="flex items-center">
-                <button
-                  onClick={prevImage}
-                  className="btn btn-circle btn-sm bg-white bg-opacity-20 hover:bg-opacity-30 text-white border-none mr-2"
+    <section
+      id="home-tourism"
+      className="bg-gradient-to-b from-[#FF4C4C]/10 to-base-100 py-24 w-full"
+    >
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col lg:flex-row items-center gap-16">
+          <div className="lg:w-2/5 text-center lg:text-left">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight text-base-content">
+              Explore Jeju's <span className="text-[#FF4C4C]">Hidden Gems</span>
+            </h2>
+            <p className="text-lg text-base-content/80 leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0">
+              Uncover the lesser-known wonders of Jeju Island. From serene
+              beaches to mystical forests, embark on a journey of discovery.
+            </p>
+            <Link to="/tourism" className="inline-block">
+              <button className="btn bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white btn-lg px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-3">
+                <span className="text-lg font-semibold">Discover More</span>
+                <MapPin className="w-5 h-5" />
+              </button>
+            </Link>
+          </div>
+          <div className="lg:w-3/5 relative">
+            <div className="card w-full bg-base-100 shadow-2xl hover:shadow-3xl transition-shadow duration-300">
+              {isLoading ? (
+                <div className="flex items-center justify-center h-96 bg-base-300 animate-pulse">
+                  <span className="loading loading-spinner loading-lg text-[#FF4C4C]"></span>
+                </div>
+              ) : (
+                <figure
+                  className="relative overflow-hidden rounded-xl cursor-pointer"
+                  style={{ aspectRatio: "16/9" }}
+                  onClick={handleImageClick}
                 >
-                  <ChevronLeft size={20} />
-                </button>
-                <span className="text-white text-sm mx-2">
-                  {currentImageIndex + 1} / {images.length}
-                </span>
-                <button
-                  onClick={nextImage}
-                  className="btn btn-circle btn-sm bg-white bg-opacity-20 hover:bg-opacity-30 text-white border-none ml-2"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+                  {tourismData.map((item, index) =>
+                    item.firstImage ? (
+                      <img
+                        key={index}
+                        src={item.firstImage}
+                        alt={item.title}
+                        className={`absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                          index === currentImageIndex
+                            ? "opacity-100"
+                            : "opacity-0"
+                        }`}
+                      />
+                    ) : (
+                      <div
+                        key={index}
+                        className={`absolute top-0 left-0 w-full h-full flex items-center justify-center bg-base-200 transition-opacity duration-1000 ${
+                          index === currentImageIndex
+                            ? "opacity-100"
+                            : "opacity-0"
+                        }`}
+                      >
+                        <ImageIcon
+                          size={96}
+                          className="text-[#FF4C4C] opacity-20"
+                        />
+                      </div>
+                    )
+                  )}
+                  <div className="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-end">
+                    <h3 className="text-white text-xl font-bold drop-shadow-lg max-w-[80%]">
+                      {tourismData[currentImageIndex]?.title}
+                    </h3>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={prevImage}
+                        className="w-8 h-8 rounded-full bg-black/30 hover:bg-black/50 flex items-center justify-center transition-all duration-300"
+                      >
+                        <ChevronLeft size={18} className="text-white" />
+                      </button>
+                      <button
+                        onClick={nextImage}
+                        className="w-8 h-8 rounded-full bg-black/30 hover:bg-black/50 flex items-center justify-center transition-all duration-300"
+                      >
+                        <ChevronRight size={18} className="text-white" />
+                      </button>
+                    </div>
+                  </div>
+                </figure>
+              )}
             </div>
           </div>
         </div>
