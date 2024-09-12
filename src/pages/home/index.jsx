@@ -42,23 +42,21 @@ function Home() {
   }, []);
 
   return (
-    <>
+    <div className="bg-base-100">
       <Header />
       <MainBanner />
       <HomeTourism tourismData={tourismData} isLoading={loading.tourism} />
-      <div className="container mx-auto px-4">
-        <HomeShoppingRestaurant
-          shoppingData={shoppingData}
-          restaurantData={restaurantData}
-          isLoadingShopping={loading.shopping}
-          isLoadingRestaurant={loading.restaurant}
-        />
-        <HomeAccommodation
-          accommodationData={accommodationData}
-          isLoading={loading.accommodation}
-        />
-      </div>
-    </>
+      <HomeShoppingRestaurant
+        shoppingData={shoppingData}
+        restaurantData={restaurantData}
+        isLoadingShopping={loading.shopping}
+        isLoadingRestaurant={loading.restaurant}
+      />
+      <HomeAccommodation
+        accommodationData={accommodationData}
+        isLoading={loading.accommodation}
+      />
+    </div>
   );
 }
 

@@ -44,10 +44,7 @@ function HomeTourism({ tourismData, isLoading }) {
   };
 
   return (
-    <section
-      id="home-tourism"
-      className="bg-gradient-to-b from-[#FF4C4C]/10 to-base-100 py-24 w-full"
-    >
+    <section className="bg-gradient-to-b from-[#FF4C4C]/10 to-[#FFB74D]/10 pt-24 pb-12">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-2/5 text-center lg:text-left">
