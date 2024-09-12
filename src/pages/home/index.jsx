@@ -45,17 +45,19 @@ function Home() {
     <div className="bg-base-100">
       <Header />
       <MainBanner />
-      <HomeTourism tourismData={tourismData} isLoading={loading.tourism} />
-      <HomeShoppingRestaurant
-        shoppingData={shoppingData}
-        restaurantData={restaurantData}
-        isLoadingShopping={loading.shopping}
-        isLoadingRestaurant={loading.restaurant}
-      />
-      <HomeAccommodation
-        accommodationData={accommodationData}
-        isLoading={loading.accommodation}
-      />
+      <div className="bg-gradient-to-b from-[#FF4C4C]/10 via-[#FF6B6B]/5 to-[#FF4C4C]/10">
+        <HomeTourism tourismData={tourismData} isLoading={loading.tourism} />
+        <HomeShoppingRestaurant
+          shoppingData={shoppingData}
+          restaurantData={restaurantData}
+          isLoadingShopping={loading.shopping}
+          isLoadingRestaurant={loading.restaurant}
+        />
+        <HomeAccommodation
+          accommodationData={accommodationData}
+          isLoading={loading.accommodation}
+        />
+      </div>
     </div>
   );
 }

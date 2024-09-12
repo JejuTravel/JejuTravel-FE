@@ -77,23 +77,23 @@ function HomeShoppingRestaurant({
   };
 
   return (
-    <section className="bg-gradient-to-b from-[#FFB74D]/10 to-transparent pt-12 pb-24">
+    <section className="pt-12 pb-24">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold text-base-content">
-            <span className="text-[#FFB74D]">Shopping</span> &
-            <span className="text-[#FFB74D]"> Restaurants</span>
+          <h2 className="text-4xl font-bold text-base-content">
+            <span className="text-[#FF4C4C]">Shopping</span> &
+            <span className="text-[#FF4C4C]"> Restaurants</span>
           </h2>
           <div className="space-x-4">
             <Link
               to="/shopping"
-              className="px-6 py-2 bg-[#FFB74D] text-white rounded-full hover:bg-[#FFA726] transition duration-300 shadow-md hover:shadow-lg"
+              className="px-6 py-2 bg-[#FF4C4C] text-white rounded-full hover:bg-[#FF6B6B] transition duration-300 shadow-md hover:shadow-lg"
             >
               Explore Jeju Shops
             </Link>
             <Link
               to="/restaurant"
-              className="px-6 py-2 bg-[#FFB74D] text-white rounded-full hover:bg-[#FFA726] transition duration-300 shadow-md hover:shadow-lg"
+              className="px-6 py-2 bg-[#FF4C4C] text-white rounded-full hover:bg-[#FF6B6B] transition duration-300 shadow-md hover:shadow-lg"
             >
               Explore Jeju Restaurants
             </Link>
