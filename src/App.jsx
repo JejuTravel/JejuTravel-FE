@@ -14,6 +14,10 @@ import Wifi from "./pages/wifi";
 import RestaurantDetail from "./pages/restaurant/components/RestaurantDetail";
 import Schedule from "./pages/schedule";
 
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+// import OAuthCallback from './pages/OAuthCallback'; 
+
 function App() {
   return (
     <div className="App w-full max-w-none m-auto relative">
@@ -34,7 +38,11 @@ function App() {
           <Route path="/bus" element={<Bus />} />
           <Route path="/restroom" element={<Restroom />} />
           <Route path="/wifi" element={<Wifi />} />
+
           <Route path="/schedule" element={<Schedule />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          {/* <Route path="/oauth/callback" element={<OAuthCallback />} /> */}
         </Routes>
       </BrowserRouter>
     </div>
