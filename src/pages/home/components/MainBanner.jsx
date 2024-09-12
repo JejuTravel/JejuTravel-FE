@@ -3,7 +3,7 @@ import jeju1 from "../../../assets/jeju1.jpg";
 import jeju2 from "../../../assets/jeju2.jpg";
 import jeju3 from "../../../assets/jeju3.jpg";
 
-const MainBanner = () => {
+const MainBanner = ({ onExplore }) => {
   const [currentImage, setCurrentImage] = useState(0);
   const images = [jeju1, jeju2, jeju3];
 
@@ -13,13 +13,6 @@ const MainBanner = () => {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
-
-  const scrollToTourism = () => {
-    const tourismSection = document.getElementById("home-tourism");
-    if (tourismSection) {
-      tourismSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <section className="relative w-full h-[calc(100vh-64px)] overflow-hidden">
@@ -60,7 +53,7 @@ const MainBanner = () => {
             unforgettable adventures on Korea's premier island paradise.
           </p>
           <button
-            onClick={scrollToTourism}
+            onClick={onExplore}
             className="btn btn-lg rounded-full hover:scale-105 transition-all duration-300 
                        bg-transparent hover:bg-white/10 text-white border-2 border-white
                        hover:border-white px-8 py-3"
@@ -91,7 +84,7 @@ const MainBanner = () => {
       </div>
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
         <button
-          onClick={scrollToTourism}
+          onClick={onExplore}
           className="animate-bounce bg-white/20 p-2 w-10 h-10 ring-1 ring-slate-900/5 shadow-lg rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300"
         >
           <svg

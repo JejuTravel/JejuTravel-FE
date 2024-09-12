@@ -41,12 +41,21 @@ function Home() {
     fetchData(getAccommodationList, setAccommodationData, "accommodation");
   }, []);
 
+  const scrollToTourism = () => {
+    const tourismSection = document.getElementById("home-tourism");
+    if (tourismSection) {
+      tourismSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="bg-base-100">
       <Header />
-      <MainBanner />
+      <MainBanner onExplore={scrollToTourism} />
       <div className="bg-gradient-to-b from-[#FF4C4C]/10 via-[#FF6B6B]/5 to-[#FF4C4C]/10">
-        <HomeTourism tourismData={tourismData} isLoading={loading.tourism} />
+        <div id="home-tourism">
+          <HomeTourism tourismData={tourismData} isLoading={loading.tourism} />
+        </div>
         <HomeShoppingRestaurant
           shoppingData={shoppingData}
           restaurantData={restaurantData}
