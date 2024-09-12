@@ -30,7 +30,7 @@ function Header() {
           </Link>
           <div className="flex space-x-4">
             <Link
-              to="/"
+              to="/login"
               onMouseEnter={() => handleMouseEnter("login")}
               onMouseLeave={handleMouseLeave}
               className={`btn btn-sm transition-all duration-300 ${
@@ -42,7 +42,7 @@ function Header() {
               Login
             </Link>
             <Link
-              to="/"
+              to="/signup"
               onMouseEnter={() => handleMouseEnter("signup")}
               onMouseLeave={handleMouseLeave}
               className={`btn btn-sm transition-all duration-300 ${

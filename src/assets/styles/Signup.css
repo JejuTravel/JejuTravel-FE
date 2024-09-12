@@ -1,0 +1,166 @@
+/* 공통 스타일 */
+.signup-page {
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.signup-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.logo {
+    font-size: 28px;
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+.login-link {
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+
+.signup-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+input {
+    width: 100%;
+    border-bottom: 1px solid black;
+    font-size: 16px;
+    padding-bottom: 10px;
+    outline: none;
+}
+
+.signup-btn {
+    width: 100%;
+    background-color: #ff6b6b;
+    color: white;
+    font-size: 18px;
+    padding: 12px;
+    margin-top: 20px;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+.signup-btn:hover {
+    background-color: #ff4b4b;
+}
+
+.error,
+.success {
+    text-align: center;
+    font-size: 14px;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+/* Styles for password match feedback */
+.password-match {
+    font-size: 14px;
+    margin-top: -15px;
+    /* Adjust margin as needed */
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.password-match.match {
+    color: green;
+    /* 비밀번호가 일치합니다. */
+}
+
+.password-match.mismatch {
+    color: red;
+    /* 비밀번호가 일치하지 않습니다. */
+}
+
+/* 큰 화면에 대한 스타일 */
+@media (min-width: 1024px) {
+    .signup-page {
+        width: 60%;
+        max-width: 600px;
+        padding: 30px;
+    }
+
+    .signup-title {
+        font-size: 32px;
+    }
+
+    .signup-form {
+        gap: 30px;
+    }
+
+    input {
+        font-size: 18px;
+    }
+
+    .signup-btn {
+        font-size: 20px;
+        padding: 15px;
+    }
+}
+
+/* 작은 화면에 대한 스타일 */
+@media (max-width: 768px) {
+    .signup-page {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .signup-header {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .login-link {
+        font-size: 14px;
+    }
+
+    .signup-title {
+        font-size: 20px;
+    }
+
+    .signup-form {
+        gap: 15px;
+    }
+
+    input {
+        font-size: 14px;
+    }
+
+    .signup-btn {
+        font-size: 16px;
+        padding: 10px;
+    }
+}
