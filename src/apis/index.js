@@ -3,7 +3,7 @@ import axios from "axios";
 const api = axios.create({
   baseURL: "http://localhost:8080/api/v1",
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "application/x-www-form-urlencoded", // 기본 Content-Type을 설정
   },
   timeout: 60000,
 });
@@ -68,5 +68,53 @@ export const getPublicWifi = (pageNo = 1) =>
 
 export const searchPublicWifi = (apGroupName, pageNo = 1) =>
   api.get("/publicWifi/search", { params: { apGroupName, pageNo } });
+
+// schedule
+export const getScheduleList = (from, to, token) => {
+  return api.get("/events", {
+    params: { from, to },
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const createSchedule = (scheduleData, token) => {
+  const params = new URLSearchParams();
+  params.append("event", JSON.stringify(scheduleData)); // 데이터를 URLSearchParams로 변환
+
+  return api.post("/create/event", params, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/x-www-form-urlencoded", // Content-Type 설정
+    },
+  });
+};
+
+export const updateSchedule = (scheduleId, scheduleData, token) => {
+  const params = new URLSearchParams();
+  params.append("event", JSON.stringify(scheduleData));
+  params.append("event_id", scheduleId);
+  params.append("recur_update_type", "THIS"); // 기본 값 설정
+
+  return api.post("/update/event", params, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/x-www-form-urlencoded", // Content-Type 설정
+    },
+  });
+};
+
+export const deleteSchedule = (scheduleId, recurUpdateType = "THIS", token) => {
+  return api.delete("/delete/event", {
+    params: { event_id: scheduleId, recur_update_type: recurUpdateType },
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+export const getScheduleDetail = (eventId, token) => {
+  return api.get("/event", {
+    params: { event_id: eventId },
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
 
 export default api;

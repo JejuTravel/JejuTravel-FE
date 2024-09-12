@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
+import {
+  getScheduleList,
+  createSchedule,
+  updateSchedule,
+  deleteSchedule as deleteScheduleAPI,
+} from "../../apis"; // API 모듈 import
 
-// 일정 항목을 표시하는 컴포넌트
 function ScheduleComponent({ schedule, onEdit, onDelete }) {
   return (
     <div className="bg-white shadow-md rounded-lg p-4 mb-4">
       <div className="flex justify-between items-center">
         <div>
           <h3 className="text-xl font-semibold">{schedule.title}</h3>
-          <p>{schedule.start_time} - {schedule.end_time}</p>
+          <p>
+            {schedule.time.start_at} - {schedule.time.end_at}
+          </p>
           <p>{schedule.description}</p>
         </div>
         <div className="space-x-2">
@@ -33,75 +40,120 @@ function SchedulePage() {
   const [newDescription, setNewDescription] = useState("");
   const [newStartTime, setNewStartTime] = useState("");
   const [newEndTime, setNewEndTime] = useState("");
+  const [token, setToken] = useState("YOUR_ACCESS_TOKEN"); // 토큰을 상태로 관리
 
-  // 일정 추가
-  const addSchedule = () => {
-    if (newTitle && newStartTime && newEndTime) {
-      const newSchedule = {
-        id: schedules.length + 1,
-        title: newTitle,
-        start_time: newStartTime,
-        end_time: newEndTime,
-        description: newDescription,
-      };
-      setSchedules([...schedules, newSchedule]);
-      setNewTitle("");
-      setNewDescription("");
-      setNewStartTime("");
-      setNewEndTime("");
+  // 일정 추가 함수
+  const addSchedule = async () => {
+    if (!newTitle || !newStartTime || !newEndTime || !newDescription) {
+      alert("All fields are required!"); // 모든 필드가 입력되지 않은 경우 경고 메시지
+      return;
+    }
+
+    const newSchedule = {
+      title: newTitle,
+      time: {
+        start_at: newStartTime,
+        end_at: newEndTime,
+        time_zone: "Asia/Seoul",
+      },
+      description: newDescription,
+    };
+
+    try {
+      const response = await createSchedule(newSchedule, token); // API 호출에 토큰 전달
+      if (response.data.success) {
+        setSchedules([...schedules, response.data.result]);
+        resetForm();
+      } else {
+        alert("Failed to add schedule"); // 서버 응답 실패 시 경고 메시지
+      }
+    } catch (error) {
+      console.error("Error creating schedule:", error);
+      alert("An error occurred while adding the schedule."); // 에러 발생 시 경고 메시지
     }
   };
 
   // 일정 삭제
-  const deleteSchedule = (id) => {
-    setSchedules(schedules.filter((schedule) => schedule.id !== id));
+  const deleteSchedule = async (id) => {
+    try {
+      const response = await deleteScheduleAPI(id, "THIS", token); // 삭제 API 호출
+      if (response.data.success) {
+        setSchedules(schedules.filter((schedule) => schedule.id !== id));
+      }
+    } catch (error) {
+      console.error("Error deleting schedule:", error);
+    }
   };
 
-  // 일정 수정
+  // 일정 수정 시작
   const startEdit = (schedule) => {
     setEditSchedule(schedule);
     setNewTitle(schedule.title);
     setNewDescription(schedule.description);
-    setNewStartTime(schedule.start_time);
-    setNewEndTime(schedule.end_time);
+    setNewStartTime(schedule.time.start_at);
+    setNewEndTime(schedule.time.end_at);
   };
 
-  const applyEdit = () => {
-    setSchedules(
-      schedules.map((schedule) =>
-        schedule.id === editSchedule.id
-          ? { ...schedule, title: newTitle, description: newDescription, start_time: newStartTime, end_time: newEndTime }
-          : schedule
-      )
-    );
-    setEditSchedule(null);
-    setNewTitle("");
-    setNewDescription("");
-    setNewStartTime("");
-    setNewEndTime("");
+  // 일정 수정 적용
+  const applyEdit = async () => {
+    const updatedScheduleData = {
+      title: newTitle,
+      time: {
+        start_at: newStartTime,
+        end_at: newEndTime,
+        time_zone: "Asia/Seoul",
+        all_day: false,
+        lunar: false,
+      },
+      description: newDescription,
+      rule: editSchedule.rule,
+      location: editSchedule.location,
+      reminders: editSchedule.reminders,
+      color: editSchedule.color,
+    };
+
+    try {
+      const response = await updateSchedule(editSchedule.id, updatedScheduleData, token); // 수정 API 호출
+      if (response.data.success) {
+        setSchedules(
+          schedules.map((schedule) =>
+            schedule.id === editSchedule.id ? response.data.result : schedule
+          )
+        );
+        resetForm();
+      }
+    } catch (error) {
+      console.error("Error updating schedule:", error);
+    }
   };
 
-  // 일정 검색 요청 보내기 (백엔드에서 검색 처리)
+  // 일정 검색 요청
   const searchSchedules = async () => {
     try {
-      const response = await fetch(
-        `/api/v1/events?from=${searchFrom}&to=${searchTo}`
-      );
-      const data = await response.json();
-      if (data.success) {
-        setSchedules(data.result);  // Assuming `data.result` contains the list of schedules
+      const response = await getScheduleList(searchFrom, searchTo, token); // 목록 조회 API 호출
+      if (response.data.success) {
+        setSchedules(response.data.result);
       }
     } catch (error) {
       console.error("Error fetching schedules:", error);
     }
   };
 
-  // 일정 검색 버튼
+  // 일정 검색 버튼 클릭 또는 날짜 변경 시 자동 검색
   useEffect(() => {
     if (searchFrom && searchTo) {
       searchSchedules();
     }
   }, [searchFrom, searchTo]);
+
+  // 폼 초기화
+  const resetForm = () => {
+    setNewTitle("");
+    setNewDescription("");
+    setNewStartTime("");
+    setNewEndTime("");
+    setEditSchedule(null);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white">
@@ -140,10 +192,10 @@ function SchedulePage() {
           </div>
         </div>
 
-        {/* 일정 추가 영역 */}
+        {/* 일정 추가/수정 영역 */}
         <div className="mb-12">
           <div className="bg-[#FF6B35] text-white px-4 py-3 rounded-t-lg">
-            Add New Schedule
+            {editSchedule ? "Edit Schedule" : "Add New Schedule"}
           </div>
           <div className="bg-white p-4 rounded-b-lg shadow-lg">
             <input
@@ -174,12 +226,21 @@ function SchedulePage() {
               onChange={(e) => setNewDescription(e.target.value)}
               className="border w-full p-3 mb-4 rounded focus:outline-none focus:ring focus:ring-[#FF6B35]"
             />
-            <button
-              onClick={addSchedule}
-              className="bg-[#FF6B35] text-white w-full py-2 rounded-full"
-            >
-              Add Schedule
-            </button>
+            {editSchedule ? (
+              <button
+                onClick={applyEdit}
+                className="bg-[#FF6B35] text-white w-full py-2 rounded-full"
+              >
+                Update Schedule
+              </button>
+            ) : (
+              <button
+                onClick={addSchedule}
+                className="bg-[#FF6B35] text-white w-full py-2 rounded-full"
+              >
+                Add Schedule
+              </button>
+            )}
           </div>
         </div>
 
@@ -200,6 +261,3 @@ function SchedulePage() {
 }
 
 export default SchedulePage;
-
-
-
