@@ -18,6 +18,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 // import OAuthCallback from './pages/OAuthCallback'; 
 
+import AboutUs from './pages/aboutUs'; 
+
 function App() {
   return (
     <div className="App w-full max-w-none m-auto relative">
@@ -43,6 +45,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           {/* <Route path="/oauth/callback" element={<OAuthCallback />} /> */}
+          <Route path="/aboutus" element={<AboutUs />} /> 
         </Routes>
       </BrowserRouter>
     </div>
