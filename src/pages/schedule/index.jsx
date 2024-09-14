@@ -3,7 +3,6 @@ import Header from "../../components/Header";
 import {
   getScheduleList,
   createSchedule,
-  updateSchedule,
   deleteSchedule as deleteScheduleAPI,
 } from "../../apis"; // API 모듈 import
 
@@ -40,48 +39,55 @@ function SchedulePage() {
   const [newDescription, setNewDescription] = useState("");
   const [newStartTime, setNewStartTime] = useState("");
   const [newEndTime, setNewEndTime] = useState("");
-  const [token, setToken] = useState("YOUR_ACCESS_TOKEN"); // 토큰을 상태로 관리
+  const [token, setToken] = useState("leh9QNGSSkT8Zqls6xMus-gRx3MdAfX4AAAAAQo8JJsAAAGR7u6Po5CBbdpZdq0Z");  // 토큰을 상태로 관리
 
-  // 일정 추가 함수
   const addSchedule = async () => {
     if (!newTitle || !newStartTime || !newEndTime || !newDescription) {
-      alert("All fields are required!"); // 모든 필드가 입력되지 않은 경우 경고 메시지
+      alert("모든 필드를 입력해야 합니다!");
       return;
     }
-
+  
+    // 입력된 시간을 ISO 8601 UTC 형식으로 변환
     const newSchedule = {
       title: newTitle,
-      time: {
-        start_at: newStartTime,
-        end_at: newEndTime,
-        time_zone: "Asia/Seoul",
+      time: { // 정확한 형식으로 time 객체 추가
+        start_at: new Date(newStartTime).toISOString(),
+        end_at: new Date(newEndTime).toISOString(),
+        time_zone: "Asia/Seoul", // 시간대 추가
+        all_day: false, // 예시로 추가한 필드
+        lunar: false, // 예시로 추가한 필드
       },
       description: newDescription,
+      // 필요한 다른 필드들도 여기에 추가
     };
-
+  
     try {
-      const response = await createSchedule(newSchedule, token); // API 호출에 토큰 전달
+      const response = await createSchedule(newSchedule, token);
+      console.log(response); // 전체 응답을 출력
+      console.log(response.data); // 응답 데이터 구조를 확인
+  
       if (response.data.success) {
         setSchedules([...schedules, response.data.result]);
         resetForm();
       } else {
-        alert("Failed to add schedule"); // 서버 응답 실패 시 경고 메시지
+        alert(response.data.message || "일정 추가에 실패했습니다."); // 서버에서 반환된 메시지를 출력
       }
     } catch (error) {
-      console.error("Error creating schedule:", error);
-      alert("An error occurred while adding the schedule."); // 에러 발생 시 경고 메시지
+      console.error("일정 생성 중 오류:", error);
+      alert("일정 추가 중 오류가 발생했습니다.");
     }
   };
+  
 
   // 일정 삭제
   const deleteSchedule = async (id) => {
     try {
-      const response = await deleteScheduleAPI(id, "THIS", token); // 삭제 API 호출
+      const response = await deleteScheduleAPI(id, "THIS", token);
       if (response.data.success) {
         setSchedules(schedules.filter((schedule) => schedule.id !== id));
       }
     } catch (error) {
-      console.error("Error deleting schedule:", error);
+      console.error("일정 삭제 중 오류:", error);
     }
   };
 
@@ -94,48 +100,15 @@ function SchedulePage() {
     setNewEndTime(schedule.time.end_at);
   };
 
-  // 일정 수정 적용
-  const applyEdit = async () => {
-    const updatedScheduleData = {
-      title: newTitle,
-      time: {
-        start_at: newStartTime,
-        end_at: newEndTime,
-        time_zone: "Asia/Seoul",
-        all_day: false,
-        lunar: false,
-      },
-      description: newDescription,
-      rule: editSchedule.rule,
-      location: editSchedule.location,
-      reminders: editSchedule.reminders,
-      color: editSchedule.color,
-    };
-
-    try {
-      const response = await updateSchedule(editSchedule.id, updatedScheduleData, token); // 수정 API 호출
-      if (response.data.success) {
-        setSchedules(
-          schedules.map((schedule) =>
-            schedule.id === editSchedule.id ? response.data.result : schedule
-          )
-        );
-        resetForm();
-      }
-    } catch (error) {
-      console.error("Error updating schedule:", error);
-    }
-  };
-
   // 일정 검색 요청
   const searchSchedules = async () => {
     try {
-      const response = await getScheduleList(searchFrom, searchTo, token); // 목록 조회 API 호출
+      const response = await getScheduleList(searchFrom, searchTo, token);
       if (response.data.success) {
         setSchedules(response.data.result);
       }
     } catch (error) {
-      console.error("Error fetching schedules:", error);
+      console.error("일정 조회 중 오류:", error);
     }
   };
 
@@ -189,6 +162,12 @@ function SchedulePage() {
               onChange={(e) => setSearchTo(e.target.value)}
               className="border w-full p-3 mb-2 rounded focus:outline-none focus:ring focus:ring-[#FF6B35]"
             />
+            <button
+              onClick={searchSchedules}
+              className="bg-[#FF6B35] text-white w-full py-2 rounded-full mt-3"
+            >
+              Search
+            </button>
           </div>
         </div>
 
