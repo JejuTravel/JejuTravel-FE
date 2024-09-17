@@ -71,9 +71,8 @@ function AboutUs() {
           </div>
           <div className="bg-[#ECF0F1] p-6 rounded-b-lg shadow-lg">
         <p className="text-[#4A4A4A] text-xl mb-4">
-            <em>"I got the idea from Chinese friends I met during my exchange student period in China. I started thinking about creating a web service tailored for Chinese tourists in Jeju, which can be visited without a visa."</em>
+            <em>"We got the idea from Chinese friends that backend developer met during her exchange student period in China. We started thinking about creating a web service tailored for Chinese tourists in Jeju, which can be visited without a visa."</em>
             <br />
-            MIN KIM - BACKEND DEVELOPER
         </p>
         <p className="text-[#4A4A4A] text-lg mb-4">
             JEJU TRAVEL is a professional web service tailored for Chinese users, providing reliable information based on data from the Korea Tourism Organization and Jeju City. 
