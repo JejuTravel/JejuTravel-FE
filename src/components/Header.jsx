@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AuthenticationService from '../services/AuthenticationService';
-import logo from '../assets/logo.png'; // 로고 이미지 가져오기
 
 function Header() {
     const [hoveredItem, setHoveredItem] = useState(null);
@@ -34,17 +33,18 @@ function Header() {
                 className="container mx-auto flex justify-between items-center" 
                 style={{ maxHeight: '80px', paddingLeft: '0px' }} 
             >
-                <Link to="/" className="flex items-center" style={{ marginLeft: '-150px' }}> 
-                    <img 
-                        src={logo} 
-                        alt="Jeju Travel Logo" 
+                <Link to="/" className="flex items-center" style={{ marginLeft: '50px' }}> 
+                    <span 
+                        className="text-4xl font-bold" 
                         style={{ 
-                            height: '300px', // 로고의 높이
-                            width: '500px', // 로고의 너비
-                            marginRight: '1rem',
+                            marginRight: '1rem', 
                             marginLeft: '0px', 
-                        }} 
-                    />
+                            fontFamily: '"Noto Sans SC", sans-serif', 
+                            color: '#FF4C4C', 
+                        }}
+                    >
+                        济州旅游
+                    </span>
                 </Link>
                 <div className="flex space-x-4">
                     {isLoggedIn ? (
