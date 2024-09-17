@@ -29,7 +29,6 @@ function AboutUs() {
     ],
   };
 
-  // 커스텀 화살표 컴포넌트
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -61,7 +60,7 @@ function AboutUs() {
       <Header />
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-[#2C3E50] mb-4">About Us</h1>
+          <h1 className="text-4xl font-bold text-[#2C3E50] mb-4">About Us</h1>
           <p className="text-[#4A4A4A] text-2xl">Learn more about our project and team</p>
         </div>
 
