@@ -30,15 +30,19 @@ function Header() {
 
     return (
         <header className="p-4 fixed top-0 left-0 w-full z-10 bg-white bg-opacity-90 backdrop-filter backdrop-blur-lg shadow-md">
-            <div className="container mx-auto flex justify-between items-center" style={{ maxHeight: '80px' }}>
-                <Link to="/" className="flex items-center">
+            <div 
+                className="container mx-auto flex justify-between items-center" 
+                style={{ maxHeight: '80px', paddingLeft: '0px' }} 
+            >
+                <Link to="/" className="flex items-center" style={{ marginLeft: '-150px' }}> 
                     <img 
                         src={logo} 
                         alt="Jeju Travel Logo" 
                         style={{ 
-                            height: '300px',
-                            width: '340px',
+                            height: '300px', // 로고의 높이
+                            width: '500px', // 로고의 너비
                             marginRight: '1rem',
+                            marginLeft: '0px', 
                         }} 
                     />
                 </Link>
