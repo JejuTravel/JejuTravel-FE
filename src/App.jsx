@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home";
 import Tourism from "./pages/tourism";
 import TourismDetail from "./pages/tourism/components/TourismDetail";
@@ -13,12 +13,19 @@ import AccommodationDetail from "./pages/accommodation/components/AccommodationD
 import Wifi from "./pages/wifi";
 import RestaurantDetail from "./pages/restaurant/components/RestaurantDetail";
 import Schedule from "./pages/schedule";
-
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-// import OAuthCallback from './pages/OAuthCallback'; 
-
+// import OAuthCallback from './pages/OAuthCallback';
 import AboutUs from './pages/aboutUs'; 
+
+// 마이페이지와 로그아웃 컴포넌트 import
+import Mypage from './pages/Mypage';
+import Logout from './pages/Logout';
+
+// 사용자 인증 상태 확인 함수
+const isAuthenticated = () => {
+  return localStorage.getItem('accessToken') !== null;
+};
 
 function App() {
   return (
@@ -40,12 +47,19 @@ function App() {
           <Route path="/bus" element={<Bus />} />
           <Route path="/restroom" element={<Restroom />} />
           <Route path="/wifi" element={<Wifi />} />
-
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           {/* <Route path="/oauth/callback" element={<OAuthCallback />} /> */}
-          <Route path="/aboutus" element={<AboutUs />} /> 
+          <Route path="/aboutus" element={<AboutUs />} />
+
+          {/* 마이페이지 경로 - 인증된 사용자만 접근 가능 */}
+          <Route
+            path="/mypage"
+            element={isAuthenticated() ? <Mypage /> : <Navigate to="/login" />}
+          />
+          {/* 로그아웃 경로 */}
+          <Route path="/logout" element={<Logout />} />
         </Routes>
       </BrowserRouter>
     </div>
@@ -53,3 +67,4 @@ function App() {
 }
 
 export default App;
+
