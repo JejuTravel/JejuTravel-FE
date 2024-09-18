@@ -16,6 +16,7 @@ function Header() {
     { name: "Restroom", link: "/restroom" },
     { name: "Wifi", link: "/wifi" },
     { name: "Schedule", link: "/schedule" }, 
+    { name: "About Us", link: "/aboutus" }, 
   ];
 
   return (
