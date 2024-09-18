@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/api/v1",
+  baseURL: "http://localhost:8080/api/v1", // 백엔드 API의 베이스 URL
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "application/x-www-form-urlencoded", // 기본 Content-Type 설정
   },
   timeout: 60000,
 });
@@ -69,4 +69,49 @@ export const getPublicWifi = (pageNo = 1) =>
 export const searchPublicWifi = (apGroupName, pageNo = 1) =>
   api.get("/publicWifi/search", { params: { apGroupName, pageNo } });
 
-export default api;
+// 카카오 API를 백엔드와 연동된 API로 변경
+
+// 일정 목록 조회
+export const getScheduleList = (from, to, token) => {
+  return api.get("/events", {
+    params: { from, to },
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+// 일정 생성
+// apis.js
+export const createSchedule = (scheduleData, token) => {
+  const params = new URLSearchParams();
+
+  // 백엔드가 기대하는 'event' 객체 구조로 페이로드를 구성
+  params.append('event', JSON.stringify({
+    title: scheduleData.title,
+    time: {
+      start_at: scheduleData.start_at,
+      end_at: scheduleData.end_at,
+      time_zone: 'Asia/Seoul', // 타임존을 Asia/Seoul로 설정
+    },
+    description: scheduleData.description
+  }));
+
+  return api.post("/create/event", params, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+};
+
+
+// 일정 삭제
+export const deleteSchedule = (scheduleId, recurUpdateType = "THIS", token) => {
+  return api.delete("/delete/event", {
+    params: { event_id: scheduleId, recur_update_type: recurUpdateType },
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+// 일정 수정 기능을 백엔드에서 제공하지 않기 때문에 제거 또는 추가 기능 필요시 구현
+
+export { api };
