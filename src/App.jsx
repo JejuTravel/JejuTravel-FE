@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 import Home from "./pages/home";
 import Tourism from "./pages/tourism";
 import TourismDetail from "./pages/tourism/components/TourismDetail";
@@ -13,58 +14,158 @@ import AccommodationDetail from "./pages/accommodation/components/AccommodationD
 import Wifi from "./pages/wifi";
 import RestaurantDetail from "./pages/restaurant/components/RestaurantDetail";
 import Schedule from "./pages/schedule";
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-// import OAuthCallback from './pages/OAuthCallback';
-import AboutUs from './pages/aboutUs'; 
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import AboutUs from "./pages/aboutUs";
+import Mypage from "./pages/Mypage";
+import Logout from "./pages/Logout";
 
-// 마이페이지와 로그아웃 컴포넌트 import
-import Mypage from './pages/Mypage';
-import Logout from './pages/Logout';
+// QueryClient 인스턴스 생성
+const queryClient = new QueryClient();
 
 // 사용자 인증 상태 확인 함수
 const isAuthenticated = () => {
-  return localStorage.getItem('accessToken') !== null;
+  return localStorage.getItem("accessToken") !== null;
+};
+
+// 보호된 라우트 컴포넌트
+const ProtectedRoute = ({ children }) => {
+  if (!isAuthenticated()) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
 };
 
 function App() {
   return (
-    <div className="App w-full max-w-none m-auto relative">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/tourism" element={<Tourism />} />
-          <Route path="/tourism/:contentId" element={<TourismDetail />} />
-          <Route path="/shopping" element={<Shopping />} />
-          <Route path="/shopping/:contentId" element={<ShoppingDetail />} />
-          <Route path="/restaurant" element={<Restaurant />} />
-          <Route path="/restaurant/:contentId" element={<RestaurantDetail />} />
-          <Route path="/accommodation" element={<Accommodation />} />
-          <Route
-            path="/accommodation/:contentId"
-            element={<AccommodationDetail />}
-          />
-          <Route path="/bus" element={<Bus />} />
-          <Route path="/restroom" element={<Restroom />} />
-          <Route path="/wifi" element={<Wifi />} />
-          <Route path="/schedule" element={<Schedule />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          {/* <Route path="/oauth/callback" element={<OAuthCallback />} /> */}
-          <Route path="/aboutus" element={<AboutUs />} />
+    <QueryClientProvider client={queryClient}>
+      <div className="App w-full max-w-none m-auto relative">
+        <BrowserRouter>
+          <Routes>
+            {/* 인증이 필요 없는 라우트 */}
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/aboutus" element={<AboutUs />} />
 
-          {/* 마이페이지 경로 - 인증된 사용자만 접근 가능 */}
-          <Route
-            path="/mypage"
-            element={isAuthenticated() ? <Mypage /> : <Navigate to="/login" />}
-          />
-          {/* 로그아웃 경로 */}
-          <Route path="/logout" element={<Logout />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+            {/* 인증이 필요한 라우트 */}
+            <Route
+              path="/tourism"
+              element={
+                <ProtectedRoute>
+                  <Tourism />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tourism/:contentId"
+              element={
+                <ProtectedRoute>
+                  <TourismDetail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/shopping"
+              element={
+                <ProtectedRoute>
+                  <Shopping />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/shopping/:contentId"
+              element={
+                <ProtectedRoute>
+                  <ShoppingDetail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/restaurant"
+              element={
+                <ProtectedRoute>
+                  <Restaurant />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/restaurant/:contentId"
+              element={
+                <ProtectedRoute>
+                  <RestaurantDetail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/accommodation"
+              element={
+                <ProtectedRoute>
+                  <Accommodation />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/accommodation/:contentId"
+              element={
+                <ProtectedRoute>
+                  <AccommodationDetail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/bus"
+              element={
+                <ProtectedRoute>
+                  <Bus />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/restroom"
+              element={
+                <ProtectedRoute>
+                  <Restroom />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/wifi"
+              element={
+                <ProtectedRoute>
+                  <Wifi />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/schedule"
+              element={
+                <ProtectedRoute>
+                  <Schedule />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/mypage"
+              element={
+                <ProtectedRoute>
+                  <Mypage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/logout"
+              element={
+                <ProtectedRoute>
+                  <Logout />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </QueryClientProvider>
   );
 }
 
 export default App;
-
