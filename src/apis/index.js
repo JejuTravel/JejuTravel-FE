@@ -93,3 +93,31 @@ export const deleteSchedule = (scheduleId, recurUpdateType = "THIS") =>
   axiosInstance.delete("/delete/event", {
     params: { event_id: scheduleId, recur_update_type: recurUpdateType },
   });
+
+// review
+export const getReviews = (contentId) =>
+  axiosInstance.get(`/review/${contentId}`);
+
+export const getReviewAverage = (contentId) =>
+  axiosInstance.get(`/review/average/${contentId}`);
+
+export const saveReview = (reviewData) => {
+  console.log("Review data in API call:", reviewData);
+  return axiosInstance.post("/review/save", {
+    userId: reviewData.userId,
+    contentId: reviewData.contentId,
+    contentTypeId: reviewData.contentTypeId,
+    cat3: reviewData.cat3,
+    reviewContent: reviewData.reviewContent,
+    reviewRating: reviewData.reviewRating,
+  });
+};
+export const updateReview = (reviewData) =>
+  axiosInstance.post("/review/update", {
+    reviewId: reviewData.reviewId,
+    reviewContent: reviewData.reviewContent,
+    reviewRating: reviewData.reviewRating,
+  });
+
+export const deleteReview = (reviewId) =>
+  axiosInstance.post(`/review/delete/${reviewId}`);
