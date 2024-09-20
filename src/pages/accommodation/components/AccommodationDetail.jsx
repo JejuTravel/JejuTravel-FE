@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getAccommodationDetail } from "../../../apis";
 import Header from "../../../components/Header";
+import ReviewComponent from "../../../components/ReviewComponent";
 import {
   Loader,
   Phone,
@@ -42,6 +43,8 @@ function AccommodationDetail() {
   const [accommodation, setAccommodation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const fetchAccommodationDetail = async () => {
@@ -63,6 +66,18 @@ function AccommodationDetail() {
     };
 
     fetchAccommodationDetail();
+    const storedUserId = localStorage.getItem("userId");
+    const storedUserName = localStorage.getItem("userName");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    } else {
+      console.error("User ID not found in localStorage");
+    }
+    if (storedUserName) {
+      setUserName(storedUserName);
+    } else {
+      console.error("User Name not found in localStorage");
+    }
   }, [contentId]);
 
   const handleBackClick = () => {
@@ -271,6 +286,15 @@ function AccommodationDetail() {
               {showGoodstay && <Tag text="Goodstay" color="green" />}
               {showHanok && <Tag text="Hanok" color="red" />}
             </div>
+          </div>
+          <div className="mt-8 p-6">
+            <ReviewComponent
+              contentId={contentId}
+              contentTypeId={accommodation.contentTypeId}
+              cat3={accommodation.cat3}
+              userId={userId}
+              userName={userName}
+            />
           </div>
         </div>
       </div>
