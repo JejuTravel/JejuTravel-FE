@@ -66,18 +66,20 @@ function AccommodationDetail() {
     };
 
     fetchAccommodationDetail();
+
     const storedUserId = localStorage.getItem("userId");
-    const storedUserName = localStorage.getItem("userName");
+    const storedUserName = localStorage.getItem("userName") || "";
+
     if (storedUserId) {
       setUserId(storedUserId);
     } else {
-      console.error("User ID not found in localStorage");
+      console.warn("User ID not found in localStorage");
     }
-    if (storedUserName) {
-      setUserName(storedUserName);
-    } else {
-      console.error("User Name not found in localStorage");
-    }
+
+    setUserName(storedUserName);
+
+    console.log("Stored userId:", storedUserId);
+    console.log("Stored userName:", storedUserName);
   }, [contentId]);
 
   const handleBackClick = () => {
