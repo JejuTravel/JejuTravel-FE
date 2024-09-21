@@ -12,6 +12,7 @@ const AuthenticationService = {
         localStorage.setItem("accessToken", response.data.data.accessToken);
         localStorage.setItem("refreshToken", response.data.data.refreshToken);
         localStorage.setItem("userId", response.data.data.userId);
+        localStorage.setItem("userName", response.data.data.userName); // 추가
         return response.data;
       } else {
         throw new Error(response.data.message || "로그인 실패");
@@ -116,6 +117,7 @@ const AuthenticationService = {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("userId");
+    localStorage.removeItem("userName");
   },
 };
 

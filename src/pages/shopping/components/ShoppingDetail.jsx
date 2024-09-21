@@ -14,6 +14,7 @@ import {
   Car,
 } from "lucide-react";
 import Header from "../../../components/Header";
+import ReviewComponent from "../../../components/ReviewComponent";
 
 const removeHtmlTags = (str) => {
   if (str === null || str === "") return "";
@@ -33,6 +34,8 @@ function ShoppingDetail() {
   const [itemDetails, setItemDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const fetchShoppingDetail = async () => {
@@ -58,6 +61,19 @@ function ShoppingDetail() {
     };
 
     fetchShoppingDetail();
+    const storedUserId = localStorage.getItem("userId");
+    const storedUserName = localStorage.getItem("userName") || "";
+
+    if (storedUserId) {
+      setUserId(storedUserId);
+    } else {
+      console.warn("User ID not found in localStorage");
+    }
+
+    setUserName(storedUserName);
+
+    console.log("Stored userId:", storedUserId);
+    console.log("Stored userName:", storedUserName);
   }, [contentId]);
 
   const handleBackClick = () => {
@@ -178,6 +194,15 @@ function ShoppingDetail() {
               title="Sale Items"
               content={itemDetails.saleitem}
               defaultContent="Sale items information not available"
+            />
+          </div>
+          <div className="mt-8">
+            <ReviewComponent
+              contentId={contentId}
+              contentTypeId={itemDetails.contentTypeId}
+              cat3={itemDetails.cat3}
+              userId={userId}
+              userName={userName}
             />
           </div>
         </div>

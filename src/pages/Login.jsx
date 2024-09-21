@@ -17,9 +17,9 @@ const Login = () => {
       const response = await AuthenticationService.signIn(username, password);
 
       if (response.status === "success" && response.data) {
-        const { accessToken, refreshToken, userId } = response.data;
+        const { accessToken, refreshToken, userId, userName } = response.data;
 
-        if (!accessToken || !refreshToken || !userId) {
+        if (!accessToken || !refreshToken || !userId || !userName) {
           setError("로그인 실패: 필요한 정보가 누락되었습니다.");
           return;
         }
@@ -27,6 +27,7 @@ const Login = () => {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         localStorage.setItem("userId", userId);
+        localStorage.setItem("userName", userName); // 추가
         navigate("/"); // Redirect to home on successful login
       } else {
         setError(response.message || "로그인 실패");

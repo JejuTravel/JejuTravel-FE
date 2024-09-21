@@ -12,6 +12,7 @@ import {
   Image,
 } from "lucide-react";
 import Header from "../../../components/Header";
+import ReviewComponent from "../../../components/ReviewComponent";
 
 const removeHtmlTags = (str) => {
   if (str === null || str === "") return "";
@@ -31,6 +32,8 @@ function TourismDetail() {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const fetchEventDetail = async () => {
@@ -56,6 +59,19 @@ function TourismDetail() {
     };
 
     fetchEventDetail();
+    const storedUserId = localStorage.getItem("userId");
+    const storedUserName = localStorage.getItem("userName") || "";
+
+    if (storedUserId) {
+      setUserId(storedUserId);
+    } else {
+      console.warn("User ID not found in localStorage");
+    }
+
+    setUserName(storedUserName);
+
+    console.log("Stored userId:", storedUserId);
+    console.log("Stored userName:", storedUserName);
   }, [contentId]);
 
   const handleBackClick = () => {
@@ -176,6 +192,15 @@ function TourismDetail() {
                 defaultText="No information center details available"
               />
             )}
+          </div>
+          <div className="mt-8">
+            <ReviewComponent
+              contentId={contentId}
+              contentTypeId={event.contentTypeId}
+              cat3={event.cat3}
+              userId={userId}
+              userName={userName}
+            />
           </div>
         </div>
       </div>
