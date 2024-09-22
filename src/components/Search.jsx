@@ -22,7 +22,7 @@ function Search({ onSearch, placeholder }) {
           type="submit"
           className="bg-[#FF4C4C] text-white px-4 py-2 rounded-r-lg hover:bg-[#FF6B6B] transition-colors duration-300"
         >
-          Search
+          搜索
         </button>
       </div>
     </form>

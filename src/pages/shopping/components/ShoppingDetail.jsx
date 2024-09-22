@@ -54,7 +54,7 @@ function ShoppingDetail() {
         });
         setItemDetails(data);
       } catch (err) {
-        setError("Failed to load detailed information.");
+        setError("无法加载详细信息。");
       } finally {
         setLoading(false);
       }
@@ -67,13 +67,13 @@ function ShoppingDetail() {
     if (storedUserId) {
       setUserId(storedUserId);
     } else {
-      console.warn("User ID not found in localStorage");
+      console.warn("在 localStorage 中未找到用户ID");
     }
 
     setUserName(storedUserName);
 
-    console.log("Stored userId:", storedUserId);
-    console.log("Stored userName:", storedUserName);
+    console.log("已存储的 userId:", storedUserId);
+    console.log("已存储的 userName:", storedUserName);
   }, [contentId]);
 
   const handleBackClick = () => {
@@ -87,7 +87,7 @@ function ShoppingDetail() {
       <div className="flex justify-center items-center h-screen bg-gradient-to-b from-red-50 to-white">
         <div className="text-center">
           <Loader className="w-12 h-12 text-[#FF4C4C] animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 text-lg">Loading shopping details...</p>
+          <p className="text-gray-600 text-lg">正在加载购物详情...</p>
         </div>
       </div>
     );
@@ -102,7 +102,7 @@ function ShoppingDetail() {
             onClick={handleBackClick}
             className="px-4 py-2 bg-[#FF4C4C] text-white rounded hover:bg-[#FF6B6B] transition duration-300"
           >
-            Back to List
+            返回列表
           </button>
         </div>
       </div>
@@ -121,7 +121,7 @@ function ShoppingDetail() {
             className="mb-6 text-[#FF4C4C] hover:text-[#FF6B6B] flex items-center transition duration-300"
           >
             <ArrowLeft className="mr-2" />
-            Back to List
+            返回列表
           </button>
           <h2 className="text-3xl font-bold text-[#FF4C4C] mb-6">
             {itemDetails.title}
@@ -144,56 +144,56 @@ function ShoppingDetail() {
           </div>
           <div className="mb-8">
             <h3 className="text-xl font-semibold text-[#FF4C4C] mb-2">
-              Overview
+              概述
             </h3>
             <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-              {itemDetails.overview || "No detailed information available."}
+              {itemDetails.overview || "无详细信息可用。"}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <InfoCard
               icon={MapPin}
-              title="Location"
+              title="位置"
               content={itemDetails.address}
-              defaultContent="Address not available"
+              defaultContent="无可用地址"
             />
             <InfoCard
               icon={Phone}
-              title="Contact"
+              title="联系方式"
               content={itemDetails.tel}
-              defaultContent="Phone number not available"
+              defaultContent="无可用电话号码"
             />
             <InfoCard
               icon={Globe}
-              title="Website"
+              title="网站"
               content={itemDetails.homepage}
-              defaultContent="Website not available"
+              defaultContent="无可用网站"
               isLink
             />
             <InfoCard
               icon={Clock}
-              title="Opening Hours"
+              title="营业时间"
               content={itemDetails.opentime}
-              defaultContent="Opening hours not available"
+              defaultContent="无可用营业时间"
             />
             <InfoCard
               icon={Calendar}
-              title="Closed Days"
+              title="休息日"
               content={itemDetails.restdateshopping}
-              defaultContent="Closed days information not available"
+              defaultContent="无可用休息日信息"
             />
             <InfoCard
               icon={Car}
-              title="Parking"
+              title="停车场"
               content={itemDetails.parkingshopping}
-              defaultContent="Parking information not available"
+              defaultContent="无可用停车场信息"
             />
             <InfoCard
               icon={DollarSign}
-              title="Sale Items"
+              title="出售商品"
               content={itemDetails.saleitem}
-              defaultContent="Sale items information not available"
+              defaultContent="无可用商品信息"
             />
           </div>
           <div className="mt-8">

@@ -36,11 +36,11 @@ function Bus() {
         setBusStops(content);
         setTotalPages(Math.ceil(totalCount / numOfRows));
       } else {
-        throw new Error("Unexpected API response structure");
+        throw new Error("API 响应结构不符合预期");
       }
     } catch (error) {
-      console.error("Error fetching bus stops:", error);
-      setError("Failed to fetch bus stops. Please try again later.");
+      console.error("获取公交站点时出错:", error);
+      setError("获取公交站点失败，请稍后再试。");
     } finally {
       setIsLoading(false);
     }
@@ -57,11 +57,11 @@ function Bus() {
         setTotalPages(Math.ceil(totalCount / numOfRows));
         setPageNo(1);
       } else {
-        throw new Error("Unexpected API response structure");
+        throw new Error("API 响应结构不符合预期");
       }
     } catch (error) {
-      console.error("Error searching bus stops:", error);
-      setError("Failed to search bus stops. Please try again.");
+      console.error("搜索公交站点时出错:", error);
+      setError("搜索公交站点失败，请再试一次。");
     } finally {
       setIsLoading(false);
     }
@@ -94,7 +94,7 @@ function Bus() {
               ? "bg-[#FF4C4C] scale-125"
               : "bg-gray-300 hover:bg-[#FF8585] hover:scale-110"
           }`}
-          aria-label={`Go to page ${i}`}
+          aria-label={`跳到第 ${i} 页`}
         ></button>
       );
     }
@@ -105,7 +105,7 @@ function Bus() {
           onClick={() => handlePageChange(Math.max(1, pageNo - 1))}
           disabled={pageNo === 1}
           className="p-2 mr-4 bg-white text-gray-700 rounded-full border border-gray-300 hover:bg-gray-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Previous page"
+          aria-label="上一页"
         >
           <ChevronLeft size={20} />
         </button>
@@ -114,7 +114,7 @@ function Bus() {
           onClick={() => handlePageChange(Math.min(totalPages, pageNo + 1))}
           disabled={pageNo === totalPages}
           className="p-2 ml-4 bg-white text-gray-700 rounded-full border border-gray-300 hover:bg-gray-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Next page"
+          aria-label="下一页"
         >
           <ChevronRight size={20} />
         </button>
@@ -128,9 +128,9 @@ function Bus() {
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#FF4C4C] mb-2">
-            Jeju Bus Information
+            济州公交信息
           </h1>
-          <p className="text-gray-600 text-lg">Find all Bus Stops in Jeju</p>
+          <p className="text-gray-600 text-lg">查找济州的所有公交站点</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
@@ -138,7 +138,7 @@ function Bus() {
               <div className="bg-[#FF4C4C] text-white p-4 flex items-center justify-between">
                 <div className="flex items-center">
                   <MapPin className="mr-2" />
-                  <h2 className="text-xl font-semibold">Bus Map</h2>
+                  <h2 className="text-xl font-semibold">公交地图</h2>
                 </div>
               </div>
               <Map
@@ -157,12 +157,12 @@ function Bus() {
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="bg-[#FF6B6B] text-white p-4 flex items-center">
                 <SearchIcon className="mr-2" />
-                <h2 className="text-xl font-semibold">Search Bus Stops</h2>
+                <h2 className="text-xl font-semibold">搜索公交站点</h2>
               </div>
               <div className="p-4">
                 <Search
                   onSearch={handleSearch}
-                  placeholder="Search for bus stop..."
+                  placeholder="搜索公交站点..."
                 />
               </div>
             </div>
@@ -170,7 +170,7 @@ function Bus() {
               <div className="bg-[#FF8585] text-white p-4 flex items-center justify-between">
                 <div className="flex items-center">
                   <BusIcon className="mr-2" />
-                  <h2 className="text-xl font-semibold">Bus Stops</h2>
+                  <h2 className="text-xl font-semibold">公交站点</h2>
                 </div>
                 {isLoading && <Loader className="animate-spin" />}
               </div>

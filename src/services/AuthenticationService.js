@@ -9,16 +9,16 @@ const AuthenticationService = {
         userPassword,
       });
       if (response.data.status === "success") {
-        localStorage.setItem("accessToken", response.data.data.accessToken);
-        localStorage.setItem("refreshToken", response.data.data.refreshToken);
-        localStorage.setItem("userId", response.data.data.userId);
-        localStorage.setItem("userName", response.data.data.userName); // 추가
+        localStorage.setItem("accessToken", response.data.data.accessToken); // accessToken 저장
+        localStorage.setItem("refreshToken", response.data.data.refreshToken); // refreshToken 저장
+        localStorage.setItem("userId", response.data.data.userId); // userId 저장
+        localStorage.setItem("userName", response.data.data.userName); // userName 저장
         return response.data;
       } else {
-        throw new Error(response.data.message || "로그인 실패");
+        throw new Error(response.data.message || "登录失败"); // 로그인 실패 시 에러 처리
       }
     } catch (error) {
-      console.error("로그인 오류:", error);
+      console.error("登录错误:", error); // 로그인 오류 출력
       throw error;
     }
   },
@@ -26,40 +26,40 @@ const AuthenticationService = {
   // 토큰 갱신
   async refreshToken() {
     try {
-      const refreshToken = localStorage.getItem("refreshToken");
+      const refreshToken = localStorage.getItem("refreshToken"); 
       const response = await axiosInstance.post("/auth/refresh", {
         refreshToken,
       });
       if (response.data.status === "success") {
-        localStorage.setItem("accessToken", response.data.data.accessToken);
-        localStorage.setItem("refreshToken", response.data.data.refreshToken);
+        localStorage.setItem("accessToken", response.data.data.accessToken); // accessToken 업데이트
+        localStorage.setItem("refreshToken", response.data.data.refreshToken); // refreshToken 업데이트
         return true;
       } else {
-        console.error("토큰 재발급 실패:", response.data.message);
+        console.error("刷新令牌失败:", response.data.message); // 토큰 재발급 실패 시 오류 메시지 출력
         return false;
       }
     } catch (error) {
-      console.error("토큰 재발급 중 오류 발생:", error);
+      console.error("刷新令牌时发生错误:", error); // 토큰 재발급 오류 발생 시 처리
       return false;
     }
   },
 
   // 개인정보 조회
   async getUserProfile() {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken"); 
     try {
       const response = await axiosInstance.get("/api/mypage/me", {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`, // accessToken을 이용한 권한 설정
         },
       });
       if (response.data.status === "success") {
-        return response.data.data;
+        return response.data.data; 
       } else {
-        throw new Error(response.data.message || "개인정보 조회 실패");
+        throw new Error(response.data.message || "获取个人信息失败"); // 개인정보 조회 실패 시 에러 발생
       }
     } catch (error) {
-      console.error("개인정보 조회 오류:", error);
+      console.error("获取个人信息时发生错误:", error); // 개인정보 조회 시 오류 처리
       throw error;
     }
   },
@@ -73,17 +73,17 @@ const AuthenticationService = {
         profileData,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`, // accessToken을 이용한 권한 설정
           },
         }
       );
       if (response.data.status === "success") {
-        return response.data.data;
+        return response.data.data; 
       } else {
-        throw new Error(response.data.message || "개인정보 수정 실패");
+        throw new Error(response.data.message || "更新个人信息失败"); // 개인정보 수정 실패 시 에러 발생
       }
     } catch (error) {
-      console.error("개인정보 수정 오류:", error);
+      console.error("更新个人信息时发生错误:", error); // 개인정보 수정 시 오류 처리
       throw error;
     }
   },
@@ -97,27 +97,27 @@ const AuthenticationService = {
         passwordData,
         {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`, // accessToken을 이용한 권한 설정
           },
         }
       );
       if (response.data.status === "success") {
-        return true;
+        return true; 
       } else {
-        throw new Error(response.data.message || "비밀번호 변경 실패");
+        throw new Error(response.data.message || "修改密码失败"); // 비밀번호 변경 실패 시 에러 발생
       }
     } catch (error) {
-      console.error("비밀번호 변경 오류:", error);
+      console.error("修改密码时发生错误:", error); // 비밀번호 변경 시 오류 처리
       throw error;
     }
   },
 
   // 로그아웃
   logout() {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("userName");
+    localStorage.removeItem("accessToken"); // accessToken 삭제
+    localStorage.removeItem("refreshToken"); // refreshToken 삭제
+    localStorage.removeItem("userId"); // userId 삭제
+    localStorage.removeItem("userName"); // userName 삭제
   },
 };
 

@@ -14,16 +14,16 @@ import {
 import { getPublicWifi, searchPublicWifi } from "../../apis";
 
 function Wifi() {
-  const [wifiSpots, setWifiSpots] = useState([]);
-  const [hoveredWifi, setHoveredWifi] = useState(null);
-  const [selectedWifi, setSelectedWifi] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [pageNo, setPageNo] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [wifiSpots, setWifiSpots] = useState([]); 
+  const [hoveredWifi, setHoveredWifi] = useState(null); 
+  const [selectedWifi, setSelectedWifi] = useState(null); 
+  const [isLoading, setIsLoading] = useState(false); 
+  const [error, setError] = useState(null); 
+  const [pageNo, setPageNo] = useState(1); 
+  const [totalPages, setTotalPages] = useState(1); 
 
   useEffect(() => {
-    fetchWifiSpots();
+    fetchWifiSpots(); 
   }, [pageNo]);
 
   const fetchWifiSpots = async () => {
@@ -33,14 +33,14 @@ function Wifi() {
       const response = await getPublicWifi(pageNo);
       if (response.data && response.data.data && response.data.data.content) {
         const { content, totalCount, numOfRows } = response.data.data;
-        setWifiSpots(content);
+        setWifiSpots(content); 
         setTotalPages(Math.ceil(totalCount / numOfRows));
       } else {
-        throw new Error("Unexpected API response structure");
+        throw new Error("API响应结构异常");
       }
     } catch (error) {
-      console.error("Error fetching wifi spots:", error);
-      setError("Failed to fetch wifi spots. Please try again later.");
+      console.error("获取Wi-Fi点时出错:", error); 
+      setError("无法获取Wi-Fi点。请稍后再试。");
     } finally {
       setIsLoading(false);
     }
@@ -53,30 +53,30 @@ function Wifi() {
       const response = await searchPublicWifi(apGroupName);
       if (response.data && response.data.data && response.data.data.content) {
         const { content, totalCount, numOfRows } = response.data.data;
-        setWifiSpots(content);
-        setTotalPages(Math.ceil(totalCount / numOfRows));
+        setWifiSpots(content); 
+        setTotalPages(Math.ceil(totalCount / numOfRows)); 
         setPageNo(1);
       } else {
-        throw new Error("Unexpected API response structure");
+        throw new Error("API响应结构异常");
       }
     } catch (error) {
-      console.error("Error searching wifi spots:", error);
-      setError("Failed to search wifi spots. Please try again.");
+      console.error("搜索Wi-Fi点时出错:", error);
+      setError("无法搜索Wi-Fi点。请重试。");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleHover = (wifi) => {
-    setHoveredWifi(wifi);
+    setHoveredWifi(wifi); 
   };
 
   const handleClick = (wifi) => {
-    setSelectedWifi(wifi);
+    setSelectedWifi(wifi); 
   };
 
   const handlePageChange = (newPage) => {
-    setPageNo(newPage);
+    setPageNo(newPage); 
   };
 
   const renderPagination = () => {
@@ -105,7 +105,7 @@ function Wifi() {
           onClick={() => handlePageChange(Math.max(1, pageNo - 1))}
           disabled={pageNo === 1}
           className="p-2 mr-4 bg-white text-gray-700 rounded-full border border-gray-300 hover:bg-gray-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Previous page"
+          aria-label="上一页"
         >
           <ChevronLeft size={20} />
         </button>
@@ -114,7 +114,7 @@ function Wifi() {
           onClick={() => handlePageChange(Math.min(totalPages, pageNo + 1))}
           disabled={pageNo === totalPages}
           className="p-2 ml-4 bg-white text-gray-700 rounded-full border border-gray-300 hover:bg-gray-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Next page"
+          aria-label="下一页"
         >
           <ChevronRight size={20} />
         </button>
@@ -128,11 +128,9 @@ function Wifi() {
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#FF4C4C] mb-2">
-            Jeju Public Wi-Fi Information
+            济州公共Wi-Fi信息
           </h1>
-          <p className="text-gray-600 text-lg">
-            Find all Public Wi-Fi Spots in Jeju
-          </p>
+          <p className="text-gray-600 text-lg">查找济州的所有公共Wi-Fi热点</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
@@ -140,7 +138,7 @@ function Wifi() {
               <div className="bg-[#FF4C4C] text-white p-4 flex items-center justify-between">
                 <div className="flex items-center">
                   <MapPin className="mr-2" />
-                  <h2 className="text-xl font-semibold">Wi-Fi Map</h2>
+                  <h2 className="text-xl font-semibold">Wi-Fi地图</h2>
                 </div>
               </div>
               <Map
@@ -160,12 +158,12 @@ function Wifi() {
             <div className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="bg-[#FF6B6B] text-white p-4 flex items-center">
                 <SearchIcon className="mr-2" />
-                <h2 className="text-xl font-semibold">Search Wi-Fi Spots</h2>
+                <h2 className="text-xl font-semibold">搜索Wi-Fi热点</h2>
               </div>
               <div className="p-4">
                 <Search
                   onSearch={handleSearch}
-                  placeholder="Search for Wi-Fi..."
+                  placeholder="搜索Wi-Fi..."
                 />
               </div>
             </div>
@@ -173,7 +171,7 @@ function Wifi() {
               <div className="bg-[#FF8585] text-white p-4 flex items-center justify-between">
                 <div className="flex items-center">
                   <WifiIcon className="mr-2" />
-                  <h2 className="text-xl font-semibold">Wi-Fi Spots</h2>
+                  <h2 className="text-xl font-semibold">Wi-Fi热点</h2>
                 </div>
                 {isLoading && <Loader className="animate-spin" />}
               </div>

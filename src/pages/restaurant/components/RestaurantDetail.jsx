@@ -55,7 +55,7 @@ function RestaurantDetail() {
         });
         setItemDetails(data);
       } catch (err) {
-        setError("Failed to load detailed information.");
+        setError("加载详细信息失败。");
       } finally {
         setLoading(false);
       }
@@ -69,7 +69,7 @@ function RestaurantDetail() {
     if (storedUserId) {
       setUserId(storedUserId);
     } else {
-      console.warn("User ID not found in localStorage");
+      console.warn("localStorage中未找到用户ID。");
     }
 
     setUserName(storedUserName);
@@ -89,7 +89,7 @@ function RestaurantDetail() {
       <div className="flex justify-center items-center h-screen bg-gradient-to-b from-orange-50 to-white">
         <div className="text-center">
           <Loader className="w-12 h-12 text-[#FF6B35] animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 text-lg">Loading restaurant details...</p>
+          <p className="text-gray-600 text-lg">加载餐厅详细信息...</p>
         </div>
       </div>
     );
@@ -104,7 +104,7 @@ function RestaurantDetail() {
             onClick={handleBackClick}
             className="px-4 py-2 bg-[#FF6B35] text-white rounded hover:bg-[#FF8C61] transition duration-300"
           >
-            Back to List
+            返回列表
           </button>
         </div>
       </div>
@@ -123,7 +123,7 @@ function RestaurantDetail() {
             className="mb-6 text-[#FF6B35] hover:text-[#FF8C61] flex items-center transition duration-300"
           >
             <ArrowLeft className="mr-2" />
-            Back to List
+            返回列表
           </button>
           <h2 className="text-3xl font-bold text-[#FF6B35] mb-6">
             {itemDetails.title}
@@ -146,71 +146,71 @@ function RestaurantDetail() {
           </div>
           <div className="mb-8">
             <h3 className="text-xl font-semibold text-[#FF6B35] mb-2">
-              Overview
+              餐厅概述
             </h3>
             <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-              {itemDetails.overview || "No detailed information available."}
+              {itemDetails.overview || "暂无详细信息。"}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <InfoCard
               icon={MapPin}
-              title="Location"
+              title="地址"
               content={itemDetails.address}
-              defaultContent="Address not available"
+              defaultContent="无地址信息"
             />
             <InfoCard
               icon={Phone}
-              title="Contact"
+              title="联系方式"
               content={[
-                { label: "Tel", value: itemDetails.tel },
-                { label: "Info Center", value: itemDetails.infocenterfood },
+                { label: "电话", value: itemDetails.tel },
+                { label: "信息中心", value: itemDetails.infocenterfood },
               ]}
-              defaultContent="Contact information not available"
+              defaultContent="无联系信息"
             />
             <InfoCard
               icon={Globe}
-              title="Website"
+              title="网站"
               content={itemDetails.homepage}
-              defaultContent="Website not available"
+              defaultContent="无网站信息"
               isLink
             />
             <InfoCard
               icon={Clock}
-              title="Opening Hours"
+              title="营业时间"
               content={itemDetails.opentimefood}
-              defaultContent="Opening hours not available"
+              defaultContent="无营业时间信息"
             />
             <InfoCard
               icon={Calendar}
-              title="Closed Days"
+              title="休息日"
               content={itemDetails.restdatefood}
-              defaultContent="Closed days information not available"
+              defaultContent="无休息日信息"
             />
             <InfoCard
               icon={Car}
-              title="Parking"
+              title="停车"
               content={itemDetails.parkingfood}
-              defaultContent="Parking information not available"
+              defaultContent="无停车信息"
             />
             <InfoCard
               icon={DollarSign}
-              title="Main Menu"
+              title="主菜单"
               content={itemDetails.firstmenu}
-              defaultContent="Menu information not available"
+              defaultContent="无菜单信息"
             />
             <InfoCard
               icon={Utensils}
-              title="Additional Menu"
+              title="附加菜单"
               content={itemDetails.treatmenu}
-              defaultContent="Additional menu information not available"
+              defaultContent="无附加菜单信息"
             />
             <InfoCard
               icon={BookOpen}
-              title="Reservation"
+              title="预订"
               content={itemDetails.reservationfood}
-              defaultContent="Reservation information not available"
+              defaultContent="无预订信息"
             />
           </div>
           <div className="mt-8">

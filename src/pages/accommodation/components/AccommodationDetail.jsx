@@ -19,18 +19,21 @@ import {
   MapPin,
 } from "lucide-react";
 
+// HTML 태그 제거하는 함수
 const removeHtmlTags = (str) => {
   if (str === null || str === "") return "";
   else str = str.toString();
   return str.replace(/(<([^>]+)>)/gi, "").replace(/&nbsp;/g, " ");
 };
 
+// <br> 태그를 개행 문자로 변환하는 함수
 const convertBrToNewline = (str) => {
   if (str === null || str === "") return "";
   else str = str.toString();
   return str.replace(/<br\s*\/?>/gi, "\n");
 };
 
+// URL을 추출하는 함수
 const extractUrl = (str) => {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const match = str.match(urlRegex);
@@ -58,8 +61,8 @@ function AccommodationDetail() {
         });
         setAccommodation(data);
       } catch (err) {
-        console.error("Error fetching accommodation detail:", err);
-        setError("Failed to load accommodation information.");
+        console.error("住宿详细信息加载出错:", err);
+        setError("加载住宿信息失败。");
       } finally {
         setLoading(false);
       }
@@ -73,13 +76,13 @@ function AccommodationDetail() {
     if (storedUserId) {
       setUserId(storedUserId);
     } else {
-      console.warn("User ID not found in localStorage");
+      console.warn("本地存储中找不到用户 ID");
     }
 
     setUserName(storedUserName);
 
-    console.log("Stored userId:", storedUserId);
-    console.log("Stored userName:", storedUserName);
+    console.log("存储的 userId:", storedUserId);
+    console.log("存储的 userName:", storedUserName);
   }, [contentId]);
 
   const handleBackClick = () => {
@@ -132,7 +135,7 @@ function AccommodationDetail() {
             className="m-6 text-blue-500 hover:text-blue-700 flex items-center transition duration-300"
           >
             <ArrowLeft className="mr-2" />
-            Back to List
+            返回列表
           </button>
           <div className="relative h-96">
             {accommodation.firstImage ? (
@@ -156,36 +159,28 @@ function AccommodationDetail() {
           <div className="p-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <InfoSection
-                title="Basic Information"
+                title="基本信息"
                 icon={<Home className="text-blue-500" />}
               >
                 <InfoItem
                   icon={<Phone />}
-                  text={accommodation.tel || "Not available"}
+                  text={accommodation.tel || "不可用"}
                 />
                 <InfoItem
                   icon={<Clock />}
-                  text={`Check-in: ${
-                    accommodation.checkintime || "Not available"
-                  }`}
+                  text={`入住时间: ${accommodation.checkintime || "不可用"}`}
                 />
                 <InfoItem
                   icon={<Clock />}
-                  text={`Check-out: ${
-                    accommodation.checkouttime || "Not available"
-                  }`}
+                  text={`退房时间: ${accommodation.checkouttime || "不可用"}`}
                 />
                 <InfoItem
                   icon={<Home />}
-                  text={`Scale: ${
-                    accommodation.scalelodging || "Not available"
-                  }`}
+                  text={`规模: ${accommodation.scalelodging || "不可用"}`}
                 />
                 <InfoItem
                   icon={<Users />}
-                  text={`Capacity: ${
-                    accommodation.accomcountlodging || "Not available"
-                  }`}
+                  text={`容量: ${accommodation.accomcountlodging || "不可用"}`}
                 />
                 {homepageUrl && (
                   <InfoItem
@@ -197,67 +192,55 @@ function AccommodationDetail() {
                         rel="noopener noreferrer"
                         className="text-blue-500 hover:underline"
                       >
-                        Visit Website
+                        访问官网
                       </a>
                     }
                   />
                 )}
               </InfoSection>
               <InfoSection
-                title="Facilities & Services"
+                title="设施 & 服务"
                 icon={<Coffee className="text-green-500" />}
               >
                 <InfoItem
                   icon={<Car />}
-                  text={`Parking: ${
-                    accommodation.parkinglodging || "Not available"
-                  }`}
+                  text={`停车: ${accommodation.parkinglodging || "不可用"}`}
                 />
                 <InfoItem
                   icon={<Coffee />}
-                  text={`Facilities: ${
-                    accommodation.subfacility || "Not available"
-                  }`}
+                  text={`设施: ${accommodation.subfacility || "不可用"}`}
                 />
                 <InfoItem
                   icon={<Bed />}
-                  text={`Room count: ${
-                    accommodation.roomcount || "Not available"
-                  }`}
+                  text={`房间数: ${accommodation.roomcount || "不可用"}`}
                 />
                 <InfoItem
                   icon={<Bed />}
-                  text={`Room types: ${
-                    accommodation.roomtype || "Not available"
-                  }`}
+                  text={`房型: ${accommodation.roomtype || "不可用"}`}
                 />
                 <InfoItem
                   icon={<Utensils />}
-                  text={`Food Place: ${
-                    accommodation.foodplace || "Not available"
-                  }`}
+                  text={`餐饮: ${accommodation.foodplace || "不可用"}`}
                 />
                 <InfoItem
                   icon={<Info />}
-                  text={`Info center: ${
-                    accommodation.infocenterlodging || "Not available"
+                  text={`信息中心: ${
+                    accommodation.infocenterlodging || "不可用"
                   }`}
                 />
               </InfoSection>
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
-              <h2 className="text-2xl font-semibold mb-4">
-                About the Accommodation
-              </h2>
+              <h2 className="text-2xl font-semibold mb-4">关于住宿</h2>
               <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-                {accommodation.overview || "No information available."}
+                {accommodation.overview || "暂无信息。"}
               </p>
             </div>
             {accommodation.directions && (
               <div className="bg-blue-50 p-6 rounded-lg">
                 <h2 className="text-2xl font-semibold mb-4 flex items-center gap-2">
                   <MapPin className="text-blue-500" />
-                  How to Get There
+                  交通方式
                 </h2>
                 <p className="text-gray-700 leading-relaxed whitespace-pre-line">
                   {accommodation.directions}
@@ -266,12 +249,10 @@ function AccommodationDetail() {
             )}
             {reservationUrl && (
               <div className="bg-green-50 p-6 rounded-lg">
-                <h2 className="text-2xl font-semibold mb-4">
-                  Reservation Information
-                </h2>
+                <h2 className="text-2xl font-semibold mb-4">预订信息</h2>
                 <p className="mb-2">
-                  <strong>Reservation phone:</strong>{" "}
-                  {accommodation.reservationlodging || "Not available"}
+                  <strong>预订电话:</strong>{" "}
+                  {accommodation.reservationlodging || "不可用"}
                 </p>
                 <a
                   href={reservationUrl}
@@ -279,14 +260,14 @@ function AccommodationDetail() {
                   rel="noopener noreferrer"
                   className="inline-block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-300"
                 >
-                  Visit Reservation Website
+                  访问预订网站
                 </a>
               </div>
             )}
             <div className="flex flex-wrap gap-2">
               {showBenikia && <Tag text="Benikia" color="blue" />}
               {showGoodstay && <Tag text="Goodstay" color="green" />}
-              {showHanok && <Tag text="Hanok" color="red" />}
+              {showHanok && <Tag text="韩屋" color="red" />}
             </div>
           </div>
           <div className="mt-8 p-6">
@@ -304,6 +285,7 @@ function AccommodationDetail() {
   );
 }
 
+// 정보 섹션 컴포넌트
 function InfoSection({ title, icon, children }) {
   return (
     <div className="bg-gray-50 p-6 rounded-lg">
@@ -316,6 +298,7 @@ function InfoSection({ title, icon, children }) {
   );
 }
 
+// 정보 아이템 컴포넌트
 function InfoItem({ icon, text }) {
   return (
     <div className="flex items-center gap-2 text-gray-700">
@@ -325,6 +308,7 @@ function InfoItem({ icon, text }) {
   );
 }
 
+// 태그 컴포넌트
 function Tag({ text, color }) {
   const colorClasses = {
     blue: "bg-blue-100 text-blue-800",

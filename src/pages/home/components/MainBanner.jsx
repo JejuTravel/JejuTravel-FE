@@ -27,7 +27,7 @@ const MainBanner = ({ onExplore }) => {
         >
           <img
             src={src}
-            alt={`Jeju Scenery ${index + 1}`}
+            alt={`济州风光 ${index + 1}`}
             className="w-full h-full object-cover"
           />
         </div>
@@ -38,19 +38,18 @@ const MainBanner = ({ onExplore }) => {
           <div className="flex items-center space-x-4">
             <div className="w-24 h-[2px] bg-white"></div>
             <span className="text-white text-lg font-semibold tracking-widest">
-              DISCOVER
+              探索
             </span>
           </div>
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-none">
-            The Magic of
+            神秘的
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 drop-shadow-lg">
-              JEJU ISLAND
+              济州岛
             </span>
           </h1>
           <p className="text-xl sm:text-2xl text-gray-200 max-w-xl leading-relaxed">
-            Immerse yourself in breathtaking landscapes, rich culture, and
-            unforgettable adventures on Korea's premier island paradise.
+            沉浸在令人惊叹的风景、丰富的文化和难忘的冒险中，体验韩国首屈一指的岛屿天堂。
           </p>
           <button
             onClick={onExplore}
@@ -58,7 +57,7 @@ const MainBanner = ({ onExplore }) => {
                        bg-transparent hover:bg-white/10 text-white border-2 border-white
                        hover:border-white px-8 py-3"
           >
-            <span className="px-4">Explore Now</span>
+            <span className="px-4">立即探索</span>
           </button>
         </div>
       </div>
@@ -105,3 +104,4 @@ const MainBanner = ({ onExplore }) => {
 };
 
 export default MainBanner;
+

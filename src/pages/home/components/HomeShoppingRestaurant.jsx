@@ -69,7 +69,7 @@ function HomeShoppingRestaurant({
             ) : (
               <Coffee size={16} className="mr-2" />
             )}
-            <span>{type}</span>
+            <span>{type === "Shopping" ? "购物" : "餐馆"}</span>
           </div>
         </div>
       </div>
@@ -81,21 +81,21 @@ function HomeShoppingRestaurant({
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-4xl font-bold text-base-content">
-            <span className="text-[#FF4C4C]">Shopping</span> &
-            <span className="text-[#FF4C4C]"> Restaurants</span>
+            <span className="text-[#FF4C4C]">购物</span> 和
+            <span className="text-[#FF4C4C]"> 餐馆</span>
           </h2>
           <div className="space-x-4">
             <Link
               to="/shopping"
               className="px-6 py-2 bg-[#FF4C4C] text-white rounded-full hover:bg-[#FF6B6B] transition duration-300 shadow-md hover:shadow-lg"
             >
-              Explore Jeju Shops
+              探索济州商店
             </Link>
             <Link
               to="/restaurant"
               className="px-6 py-2 bg-[#FF4C4C] text-white rounded-full hover:bg-[#FF6B6B] transition duration-300 shadow-md hover:shadow-lg"
             >
-              Explore Jeju Restaurants
+              探索济州餐馆
             </Link>
           </div>
         </div>

@@ -5,7 +5,6 @@ import {
   Phone,
   ChevronLeft,
   ChevronRight,
-  Image as ImageIcon,
   Bed,
 } from "lucide-react";
 
@@ -44,7 +43,7 @@ function HomeAccommodation({ accommodationData, isLoading }) {
       ) : (
         <div
           className="w-full h-40 bg-base-200 flex items-center justify-center"
-          aria-label="No image available"
+          aria-label="没有可用的图片"
         >
           <Bed size={48} className="text-base-content opacity-20" />
         </div>
@@ -85,19 +84,19 @@ function HomeAccommodation({ accommodationData, isLoading }) {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-4xl font-bold text-base-content">
-            Where to <span className="text-[#FF4C4C]">Stay</span> in Jeju
+            在济州 <span className="text-[#FF4C4C]">住宿</span>
           </h2>
           <div className="space-x-4">
             <Link
               to="/accommodation"
               className="px-6 py-2 bg-[#FF4C4C] text-white rounded-full hover:bg-[#FF6B6B] transition duration-300 shadow-md hover:shadow-lg"
             >
-              Explore All Accommodations
+              探索所有住宿
             </Link>
           </div>
         </div>
         <p className="text-lg text-base-content/80 mb-8">
-          Discover comfort and luxury in the heart of nature
+          在大自然的中心发现舒适与奢华
         </p>
         <div className="relative">
           <div

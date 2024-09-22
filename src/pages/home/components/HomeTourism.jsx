@@ -49,15 +49,14 @@ function HomeTourism({ tourismData, isLoading }) {
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-2/5 text-center lg:text-left">
             <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight text-base-content">
-              Explore Jeju's <span className="text-[#FF4C4C]">Hidden Gems</span>
+              探索济州的 <span className="text-[#FF4C4C]">隐藏宝石</span>
             </h2>
             <p className="text-lg text-base-content/80 leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0">
-              Uncover the lesser-known wonders of Jeju Island. From serene
-              beaches to mystical forests, embark on a journey of discovery.
+              揭开济州岛鲜为人知的奇观。从宁静的海滩到神秘的森林，踏上探索之旅。
             </p>
             <Link to="/tourism" className="inline-block">
               <button className="btn bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white btn-lg px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-3">
-                <span className="text-lg font-semibold">Discover More</span>
+                <span className="text-lg font-semibold">发现更多</span>
                 <MapPin className="w-5 h-5" />
               </button>
             </Link>

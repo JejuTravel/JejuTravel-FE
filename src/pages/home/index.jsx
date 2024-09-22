@@ -37,6 +37,7 @@ function Home() {
     error: accommodationError,
   } = useQuery("accommodation", () => getAccommodationList(1), { retry: 3 });
 
+  // 특정 섹션으로 스크롤 이동
   const scrollToTourism = () => {
     const tourismSection = document.getElementById("home-tourism");
     if (tourismSection) {
@@ -44,17 +45,19 @@ function Home() {
     }
   };
 
+  // 오류 발생 시
   if (tourismError || shoppingError || restaurantError || accommodationError) {
-    return <div>Error loading data. Please try again later.</div>;
+    return <div>加载数据时出错。请稍后再试。</div>;  // "Error loading data. Please try again later."
   }
 
+  // 데이터 로딩 중일 때
   if (
     tourismLoading ||
     shoppingLoading ||
     restaurantLoading ||
     accommodationLoading
   ) {
-    return <div>Loading...</div>;
+    return <div>加载中...</div>;  // "Loading..."
   }
 
   return (
@@ -86,3 +89,4 @@ function Home() {
 }
 
 export default Home;
+

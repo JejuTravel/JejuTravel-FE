@@ -34,7 +34,7 @@ function TouristInfoSearch({
             className="p-2 bg-[#FF4C4C] text-white rounded-r-md hover:bg-[#FF6B6B] transition duration-300"
             onClick={onSearch}
           >
-            Search
+            搜索
           </button>
         </div>
       </div>
