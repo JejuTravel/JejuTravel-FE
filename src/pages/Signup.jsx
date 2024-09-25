@@ -12,66 +12,71 @@ const Signup = () => {
         confirmPassword: '',
         userName: '',
         userPhoneNumber: '',
-        userGender: '', // initially empty to handle selection
+        userGender: '', 
         userDateOfBirth: '',
         userEmail: ''
     });
+
     const [error, setError] = useState('');
+
     const [success, setSuccess] = useState('');
+
     const [passwordMatchMessage, setPasswordMatchMessage] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // Handle gender conversion to boolean
+
         const convertedValue = name === 'userGender' ? (value === 'male') : value;
+
 
         setFormData({
             ...formData,
             [name]: convertedValue,
         });
 
-        // Check password match
+
         if (name === 'confirmPassword' || name === 'userPassword') {
             if (formData.userPassword !== formData.confirmPassword) {
-                setPasswordMatchMessage('비밀번호가 일치하지 않습니다.');
+                setPasswordMatchMessage('密码不匹配。');
             } else {
-                setPasswordMatchMessage('비밀번호가 일치합니다.');
+                setPasswordMatchMessage('密码匹配。');
             }
         }
     };
 
+
     const handleSignup = async (e) => {
         e.preventDefault();
         if (formData.userPassword !== formData.confirmPassword) {
-            setError('Passwords do not match');
+            setError('密码不匹配');
             return;
         }
 
         try {
             const response = await axiosInstance.post('/api/auth/signup', formData);
             if (response.data.status === 'success') {
-                setSuccess('회원가입 성공');
+                setSuccess('注册成功');
                 setError('');
-                window.location.href = '/login';
+                window.location.href = '/login'; 
             } else {
                 setError(response.data.message);
             }
         } catch (error) {
-            setError('회원가입 실패. 입력 정보를 확인하세요.');
+            setError('注册失败。请检查您的输入信息。');
         }
     };
 
     return (
         <div className="signup-page">
             <div className="signup-header">
-                <Link to="/"> {/* Link to navigate to home */}
-                    <h1 className="logo">JEJU TRAVEL</h1>
+                <Link to="/"> 
+                    <h1 className="logo">济州旅行</h1>
                 </Link>
-                <a href="/login" className="login-link">로그인</a>
+                <a href="/login" className="login-link">登录</a>
             </div>
 
-            <h2 className="signup-title">회원가입</h2>
+            <h2 className="signup-title">注册</h2>
             
             {error && <p className="error">{error}</p>}
             {success && <p className="success">{success}</p>}
@@ -79,25 +84,26 @@ const Signup = () => {
             <form className="signup-form" onSubmit={handleSignup}>
                 <Input
                     type="text"
-                    placeholder="ID"
+                    placeholder="用户名"
                     name="userUsername"
                     value={formData.userUsername}
                     onChange={handleChange}
                 />
                 <Input
                     type="password"
-                    placeholder="PASSWORD"
+                    placeholder="密码"
                     name="userPassword"
                     value={formData.userPassword}
                     onChange={handleChange}
                 />
                 <Input
                     type="password"
-                    placeholder="VERIFY PASSWORD"
+                    placeholder="确认密码"
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
                 />
+                {/* 密码匹配提示 */}
                 {passwordMatchMessage && (
                     <p className={`password-match ${formData.userPassword === formData.confirmPassword ? 'match' : 'mismatch'}`}>
                         {passwordMatchMessage}
@@ -105,14 +111,14 @@ const Signup = () => {
                 )}
                 <Input
                     type="text"
-                    placeholder="NAME"
+                    placeholder="姓名"
                     name="userName"
                     value={formData.userName}
                     onChange={handleChange}
                 />
                 <Input
                     type="text"
-                    placeholder="PHONE NUMBER"
+                    placeholder="电话号码"
                     name="userPhoneNumber"
                     value={formData.userPhoneNumber}
                     onChange={handleChange}
@@ -122,25 +128,25 @@ const Signup = () => {
                     value={formData.userGender ? 'male' : 'female'}
                     onChange={handleChange}
                 >
-                    <option value="" disabled>Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
+                    <option value="" disabled>选择性别</option>
+                    <option value="male">男</option>
+                    <option value="female">女</option>
                 </select>
                 <Input
                     type="date"
-                    placeholder="BIRTH DATE"
+                    placeholder="出生日期"
                     name="userDateOfBirth"
                     value={formData.userDateOfBirth}
                     onChange={handleChange}
                 />
                 <Input
                     type="email"
-                    placeholder="EMAIL"
+                    placeholder="电子邮箱"
                     name="userEmail"
                     value={formData.userEmail}
                     onChange={handleChange}
                 />
-                <Button type="submit" className="signup-btn">SIGNUP</Button>
+                <Button type="submit" className="signup-btn">注册</Button>
             </form>
         </div>
     );

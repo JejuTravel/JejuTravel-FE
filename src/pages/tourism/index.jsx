@@ -8,14 +8,14 @@ import { Loader } from "lucide-react";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 
 function Tourism() {
-  const [events, setEvents] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [hasMore, setHasMore] = useState(true);
-  const [page, setPage] = useState(1);
+  const [events, setEvents] = useState([]); 
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(null); 
+  const [hasMore, setHasMore] = useState(true); 
+  const [page, setPage] = useState(1); 
   const navigate = useNavigate();
-  const loader = useRef(null);
+  const loader = useRef(null); 
 
   const loadMore = useCallback(
     async (query = searchQuery, pageNum = page) => {
@@ -25,9 +25,9 @@ function Tourism() {
         const response = query
           ? await searchTourism(query, pageNum)
           : await getTourismList(pageNum);
-        const newEvents = response.data.data.content;
+        const newEvents = response.data.data.content; 
         if (newEvents.length === 0) {
-          setHasMore(false);
+          setHasMore(false); 
         } else {
           setEvents((prevEvents) =>
             pageNum === 1 ? newEvents : [...prevEvents, ...newEvents]
@@ -35,8 +35,8 @@ function Tourism() {
           setPage((prevPage) => (pageNum === 1 ? 2 : prevPage + 1));
         }
       } catch (err) {
-        console.error("Error loading tourism data:", err);
-        setError("Failed to load tourism information.");
+        console.error("加载旅游数据时出错:", err); 
+        setError("无法加载旅游信息。");
       }
       setLoading(false);
     },
@@ -46,27 +46,27 @@ function Tourism() {
   const handleSearch = useCallback(
     (event) => {
       event.preventDefault();
-      setPage(1);
-      setEvents([]);
+      setPage(1); 
+      setEvents([]); 
       setHasMore(true);
-      loadMore(searchQuery, 1);
+      loadMore(searchQuery, 1); 
     },
     [searchQuery, loadMore]
   );
 
   const handleSearchChange = useCallback((event) => {
-    setSearchQuery(event.target.value);
+    setSearchQuery(event.target.value); 
   }, []);
 
   useEffect(() => {
-    loadMore("", 1);
+    loadMore("", 1); 
   }, []);
 
   useInfiniteScroll(loader, () => loadMore(searchQuery));
 
   const handleEventClick = useCallback(
     (contentId) => {
-      navigate(`/tourism/${contentId}`);
+      navigate(`/tourism/${contentId}`); 
     },
     [navigate]
   );
@@ -77,14 +77,14 @@ function Tourism() {
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#FF4C4C] mb-2">
-            Jeju Tourism Information
+            济州旅游信息
           </h1>
-          <p className="text-gray-600 text-lg">Explore the wonders of Jeju</p>
+          <p className="text-gray-600 text-lg">探索济州的奇迹</p>
         </div>
 
         <TouristInfoSearch
-          title="Search Tourism"
-          placeholder="Search for tourism..."
+          title="搜索旅游"
+          placeholder="搜索旅游..."
           searchTerm={searchQuery}
           onSearchChange={handleSearchChange}
           onSearch={handleSearch}
@@ -98,7 +98,7 @@ function Tourism() {
 
         {events.length === 0 && !loading && (
           <p className="text-gray-500 text-center mb-4">
-            No results found. Please try a different search term.
+            没有找到结果。请尝试不同的搜索词。
           </p>
         )}
 

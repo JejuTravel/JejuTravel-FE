@@ -33,23 +33,23 @@ function AccommodationSection({ accommodation, onAccommodationClick }) {
         <div className="flex items-center text-indigo-700 mb-3">
           <Phone size={16} className="mr-2 flex-shrink-0" />
           <p className="text-sm">
-            {accommodation.tel || "No phone number available"}
+            {accommodation.tel || "无可用电话号码"}
           </p>
         </div>
         <div className="flex flex-wrap gap-2 mt-3">
           {accommodation.benikia && (
             <span className="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-              Benikia
+              贝尼基亚
             </span>
           )}
           {accommodation.goodstay && (
             <span className="bg-purple-100 text-purple-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-              Goodstay
+              好住
             </span>
           )}
           {accommodation.hanok && (
             <span className="bg-pink-100 text-pink-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-              Hanok
+              韩屋
             </span>
           )}
         </div>

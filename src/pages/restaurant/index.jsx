@@ -37,7 +37,7 @@ function Restaurant() {
         }
       } catch (err) {
         console.error("Error fetching restaurant data:", err);
-        setError("Failed to load restaurant information.");
+        setError("无法加载餐厅信息。");
       }
       setLoading(false);
     },
@@ -72,16 +72,16 @@ function Restaurant() {
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#FF6B35] mb-2">
-            Jeju Restaurants
+            济州岛餐厅
           </h1>
           <p className="text-gray-600 text-lg">
-            Discover the best dining experiences in Jeju
+            发现济州岛最好的餐饮体验
           </p>
         </div>
 
         <TouristInfoSearch
-          title="Search Restaurants"
-          placeholder="Search for restaurants..."
+          title="搜索餐厅"
+          placeholder="搜索餐厅..."
           searchTerm={searchTerm}
           onSearchChange={handleSearchChange}
           onSearch={handleSearch}
@@ -95,7 +95,7 @@ function Restaurant() {
 
         {restaurantData.length === 0 && !loading && (
           <p className="text-gray-500 text-center mb-4">
-            No results found. Please try a different search term.
+            未找到结果。请尝试使用其他搜索词。
           </p>
         )}
 
@@ -114,7 +114,7 @@ function Restaurant() {
 
         {!hasMore && restaurantData.length > 0 && (
           <p className="text-center text-gray-500 mt-4">
-            No more items to load
+            没有更多内容可加载
           </p>
         )}
         <div ref={loader} />

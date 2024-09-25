@@ -9,13 +9,12 @@ const Logout = () => {
     useEffect(() => {
         // 로그아웃 처리
         AuthenticationService.logout();
-        // 로그아웃 후 로그인 페이지로 리다이렉트
-        navigate('/login');
+        navigate('/');
     }, [navigate]);
 
     return (
         <div>
-            Logout...
+            注销中...
         </div>
     );
 };

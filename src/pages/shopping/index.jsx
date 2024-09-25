@@ -37,7 +37,7 @@ function Shopping() {
         }
       } catch (err) {
         console.error("Error fetching shopping data:", err);
-        setError("Failed to load shopping information.");
+        setError("加载购物信息失败。");
       }
       setLoading(false);
     },
@@ -72,16 +72,16 @@ function Shopping() {
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#FF4C4C] mb-2">
-            Jeju Shopping
+            济州购物
           </h1>
           <p className="text-gray-600 text-lg">
-            Discover the best shopping experiences in Jeju
+            探索济州岛最佳购物体验
           </p>
         </div>
 
         <TouristInfoSearch
-          title="Search Shopping"
-          placeholder="Search for shopping..."
+          title="搜索购物"
+          placeholder="搜索购物..."
           searchTerm={searchTerm}
           onSearchChange={handleSearchChange}
           onSearch={handleSearch}
@@ -95,7 +95,7 @@ function Shopping() {
 
         {shoppingData.length === 0 && !loading && (
           <p className="text-gray-500 text-center mb-4">
-            No results found. Please try a different search term.
+            未找到结果。请尝试使用不同的搜索词。
           </p>
         )}
 
@@ -111,7 +111,7 @@ function Shopping() {
 
         {!hasMore && shoppingData.length > 0 && (
           <p className="text-center text-gray-500 mt-4">
-            No more items to load
+            没有更多内容可加载
           </p>
         )}
         <div ref={loader} />

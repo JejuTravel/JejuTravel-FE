@@ -39,8 +39,8 @@ function Accommodation() {
           setPage((prevPage) => (pageNum === 1 ? 2 : prevPage + 1));
         }
       } catch (err) {
-        console.error("Error loading accommodation data:", err);
-        setError("Failed to load accommodation information.");
+        console.error("住宿数据加载出错：", err);
+        setError("加载住宿信息失败。");
       }
       setLoading(false);
     },
@@ -95,16 +95,16 @@ function Accommodation() {
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#4A90E2] mb-2">
-            Jeju Accommodation
+            济州住宿
           </h1>
           <p className="text-gray-600 text-lg">
-            Find the perfect place to stay in Jeju
+            找到您在济州的完美住宿地点
           </p>
         </div>
 
         <TouristInfoSearch
-          title="Search Accommodation"
-          placeholder="Search for accommodations..."
+          title="搜索住宿"
+          placeholder="搜索住宿..."
           searchTerm={searchQuery}
           onSearchChange={handleSearchChange}
           onSearch={handleSearch}
@@ -116,19 +116,19 @@ function Accommodation() {
             onChange={handleStayTypeChange}
             className="p-2 border rounded-md bg-white text-gray-700"
           >
-            <option value="">All Stay Types</option>
-            <option value="benikia">Benikia</option>
-            <option value="goodstay">Goodstay</option>
-            <option value="hanok">Hanok</option>
+            <option value="">所有住宿类型</option>
+            <option value="benikia">贝尼基亚</option>
+            <option value="goodstay">好住</option>
+            <option value="hanok">韩屋</option>
           </select>
           <select
             value={sigunguCode}
             onChange={handleSigunguCodeChange}
             className="p-2 border rounded-md bg-white text-gray-700"
           >
-            <option value="">All Areas</option>
-            <option value="3">Seogwipo-si</option>
-            <option value="4">Jeju-si</option>
+            <option value="">所有地区</option>
+            <option value="3">西归浦市</option>
+            <option value="4">济州市</option>
           </select>
         </div>
 
@@ -140,7 +140,7 @@ function Accommodation() {
 
         {accommodations.length === 0 && !loading && (
           <p className="text-gray-500 text-center mb-4 bg-gray-50 p-3 rounded-lg">
-            No results found. Try a different search term or filter.
+            未找到结果。请尝试使用不同的搜索词或过滤条件。
           </p>
         )}
 

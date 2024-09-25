@@ -27,7 +27,7 @@ const TourismSection = ({ event, onEventClick }) => {
         />
         {(!event.firstImage || event.firstImage === "") && imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
-            <span className="text-gray-500 text-lg">No Image Available</span>
+            <span className="text-gray-500 text-lg">没有可用的图片</span>
           </div>
         )}
       </div>
@@ -39,7 +39,7 @@ const TourismSection = ({ event, onEventClick }) => {
           {event.address}
         </p>
         <p className="text-gray-500 text-xs">
-          {event.tel || "No phone number available"}
+          {event.tel || "没有可用的电话号码"}
         </p>
       </div>
     </div>

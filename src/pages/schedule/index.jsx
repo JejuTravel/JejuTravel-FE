@@ -19,10 +19,10 @@ function ScheduleComponent({ schedule, onEdit, onDelete }) {
         </div>
         <div className="space-x-2">
           <button onClick={() => onEdit(schedule)} className="text-blue-500">
-            Edit
+            编辑
           </button>
           <button onClick={() => onDelete(schedule.id)} className="text-red-500">
-            Delete
+            删除
           </button>
         </div>
       </div>
@@ -43,7 +43,7 @@ function SchedulePage() {
 
   const addSchedule = async () => {
     if (!newTitle || !newStartTime || !newEndTime || !newDescription) {
-      alert("모든 필드를 입력해야 합니다!");
+      alert("所有字段必须填写！");
       return;
     }
 
@@ -69,11 +69,11 @@ function SchedulePage() {
         setSchedules([...schedules, response.data.result]);
         resetForm();
       } else {
-        alert(response.data.message || "일정 추가에 실패했습니다.");
+        alert(response.data.message || "添加日程失败。");
       }
     } catch (error) {
-      console.error("일정 생성 중 오류:", error);
-      alert("일정 추가 중 오류가 발생했습니다.");
+      console.error("日程创建错误:", error);
+      alert("添加日程时发生错误。");
     }
   };
 
@@ -85,7 +85,7 @@ function SchedulePage() {
         setSchedules(schedules.filter((schedule) => schedule.id !== id));
       }
     } catch (error) {
-      console.error("일정 삭제 중 오류:", error);
+      console.error("删除日程时出错:", error);
     }
   };
 
@@ -100,7 +100,7 @@ function SchedulePage() {
 
   const applyEdit = async () => {
     if (!newTitle || !newStartTime || !newEndTime || !newDescription) {
-      alert("모든 필드를 입력해야 합니다!");
+      alert("所有字段必须填写！");
       return;
     }
 
@@ -127,11 +127,11 @@ function SchedulePage() {
         setSchedules(updatedSchedules);
         resetForm();
       } else {
-        alert(response.data.message || "일정 수정에 실패했습니다.");
+        alert(response.data.message || "日程更新失败。");
       }
     } catch (error) {
-      console.error("일정 수정 중 오류:", error);
-      alert("일정 수정 중 오류가 발생했습니다.");
+      console.error("日程更新时出错:", error);
+      alert("日程更新时发生错误。");
     }
   };
 
@@ -143,7 +143,7 @@ function SchedulePage() {
         setSchedules(response.data.result);
       }
     } catch (error) {
-      console.error("일정 조회 중 오류:", error);
+      console.error("检索日程时出错:", error);
     }
   };
 
@@ -167,28 +167,28 @@ function SchedulePage() {
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#FF6B35] mb-2">
-            Schedule Management
+            日程管理
           </h1>
           <p className="text-gray-600 text-lg">
-            Manage your schedule efficiently
+            高效管理您的日程
           </p>
         </div>
 
         <div className="mb-12">
           <div className="bg-[#FF6B35] text-white px-4 py-3 rounded-t-lg">
-            Search by Date Range
+            按日期范围搜索
           </div>
           <div className="bg-white p-4 rounded-b-lg shadow-lg">
             <input
               type="date"
-              placeholder="From Date"
+              placeholder="开始日期"
               value={searchFrom}
               onChange={(e) => setSearchFrom(e.target.value)}
               className="border w-full p-3 mb-2 rounded focus:outline-none focus:ring focus:ring-[#FF6B35]"
             />
             <input
               type="date"
-              placeholder="To Date"
+              placeholder="结束日期"
               value={searchTo}
               onChange={(e) => setSearchTo(e.target.value)}
               className="border w-full p-3 mb-2 rounded focus:outline-none focus:ring focus:ring-[#FF6B35]"
@@ -197,40 +197,40 @@ function SchedulePage() {
               onClick={searchSchedules}
               className="bg-[#FF6B35] text-white w-full py-2 rounded-full mt-3"
             >
-              Search
+              搜索
             </button>
           </div>
         </div>
 
         <div className="mb-12">
           <div className="bg-[#FF6B35] text-white px-4 py-3 rounded-t-lg">
-            {editSchedule ? "Edit Schedule" : "Add New Schedule"}
+            {editSchedule ? "编辑日程" : "添加新日程"}
           </div>
           <div className="bg-white p-4 rounded-b-lg shadow-lg">
             <input
               type="text"
-              placeholder="Schedule Title"
+              placeholder="日程标题"
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               className="border w-full p-3 mb-2 rounded focus:outline-none focus:ring focus:ring-[#FF6B35]"
             />
             <input
               type="datetime-local"
-              placeholder="Start Time"
+              placeholder="开始时间"
               value={newStartTime}
               onChange={(e) => setNewStartTime(e.target.value)}
               className="border w-full p-3 mb-2 rounded focus:outline-none focus:ring focus:ring-[#FF6B35]"
             />
             <input
               type="datetime-local"
-              placeholder="End Time"
+              placeholder="结束时间"
               value={newEndTime}
               onChange={(e) => setNewEndTime(e.target.value)}
               className="border w-full p-3 mb-2 rounded focus:outline-none focus:ring focus:ring-[#FF6B35]"
             />
             <input
               type="text"
-              placeholder="Schedule Description"
+              placeholder="日程描述"
               value={newDescription}
               onChange={(e) => setNewDescription(e.target.value)}
               className="border w-full p-3 mb-4 rounded focus:outline-none focus:ring focus:ring-[#FF6B35]"
@@ -240,14 +240,14 @@ function SchedulePage() {
                 onClick={applyEdit}
                 className="bg-[#FF6B35] text-white w-full py-2 rounded-full"
               >
-                Update Schedule
+                更新日程
               </button>
             ) : (
               <button
                 onClick={addSchedule}
                 className="bg-[#FF6B35] text-white w-full py-2 rounded-full"
               >
-                Add Schedule
+                添加日程
               </button>
             )}
           </div>

@@ -12,7 +12,7 @@ function List({
   return (
     <div className="overflow-y-auto max-h-96">
       {items.length === 0 ? (
-        <p>No items found.</p>
+        <p>没有找到项目。</p> 
       ) : (
         <ul>
           {items.map((item) => (

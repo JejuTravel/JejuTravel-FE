@@ -13,7 +13,7 @@ const RestaurantSection = ({ items, onItemClick }) => {
       ))}
       {items.length === 0 && (
         <p className="text-center text-gray-500 text-lg">
-          No restaurants found matching your search.
+          未找到符合条件的餐厅。
         </p>
       )}
     </div>
@@ -57,11 +57,11 @@ const RestaurantItem = ({ item, onItemClick }) => {
         </h3>
         <p className="text-gray-600 text-base mb-2 flex items-center line-clamp-2">
           <MapPin className="mr-2 flex-shrink-0" size={20} />{" "}
-          {item.address || "Address not available"}
+          {item.address || "无地址信息"}
         </p>
         <p className="text-gray-500 text-base flex items-center">
           <Phone className="mr-2 flex-shrink-0" size={20} />{" "}
-          {item.tel || "No phone number available"}
+          {item.tel || "无电话号码"}
         </p>
       </div>
     </div>

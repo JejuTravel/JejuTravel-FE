@@ -34,7 +34,7 @@ function Restroom() {
       }
     } catch (error) {
       console.error("Error fetching restrooms:", error);
-      setError("Failed to fetch restrooms. Please try again later.");
+      setError("无法获取公厕信息，请稍后再试。");
     } finally {
       setIsLoading(false);
     }
@@ -55,7 +55,7 @@ function Restroom() {
       }
     } catch (error) {
       console.error("Error searching restrooms:", error);
-      setError("Failed to search restrooms. Please try again.");
+      setError("搜索公厕失败，请重试。");
     } finally {
       setIsLoading(false);
     }
@@ -88,7 +88,7 @@ function Restroom() {
               ? "bg-[#FF4C4C] scale-125"
               : "bg-gray-300 hover:bg-[#FF8585] hover:scale-110"
           }`}
-          aria-label={`Go to page ${i}`}
+          aria-label={`前往第${i}页`}
         ></button>
       );
     }
@@ -99,7 +99,7 @@ function Restroom() {
           onClick={() => handlePageChange(Math.max(1, pageNo - 1))}
           disabled={pageNo === 1}
           className="p-2 mr-4 bg-white text-gray-700 rounded-full border border-gray-300 hover:bg-gray-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Previous page"
+          aria-label="上一页"
         >
           <ChevronLeft size={20} />
         </button>
@@ -108,7 +108,7 @@ function Restroom() {
           onClick={() => handlePageChange(Math.min(totalPages, pageNo + 1))}
           disabled={pageNo === totalPages}
           className="p-2 ml-4 bg-white text-gray-700 rounded-full border border-gray-300 hover:bg-gray-100 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="Next page"
+          aria-label="下一页"
         >
           <ChevronRight size={20} />
         </button>
@@ -122,10 +122,10 @@ function Restroom() {
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#FF4C4C] mb-2">
-            Jeju Public Restrooms
+            济州岛公共厕所
           </h1>
           <p className="text-gray-600 text-lg">
-            Find all Public Restrooms in Jeju
+            查找济州岛的所有公共厕所
           </p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -134,7 +134,7 @@ function Restroom() {
               <div className="bg-[#FF4C4C] text-white p-4 flex items-center justify-between">
                 <div className="flex items-center">
                   <FaMapMarkerAlt className="mr-2" />
-                  <h2 className="text-xl font-semibold">Restroom Map</h2>
+                  <h2 className="text-xl font-semibold">厕所地图</h2>
                 </div>
               </div>
               <Map
@@ -154,13 +154,13 @@ function Restroom() {
               <div className="bg-[#FF6B6B] text-white p-4 flex items-center">
                 <FaSearch className="mr-2" />
                 <h2 className="text-xl font-semibold">
-                  Search Public Restrooms
+                  搜索公共厕所
                 </h2>
               </div>
               <div className="p-4">
                 <Search
                   onSearch={handleSearch}
-                  placeholder="Search for public restroom..."
+                  placeholder="搜索公共厕所..."
                 />
               </div>
             </div>
@@ -168,7 +168,7 @@ function Restroom() {
               <div className="bg-[#FF8585] text-white p-4 flex items-center justify-between">
                 <div className="flex items-center">
                   <FaToilet className="mr-2" />
-                  <h2 className="text-xl font-semibold">Public Restrooms</h2>
+                  <h2 className="text-xl font-semibold">公共厕所</h2>
                 </div>
                 {isLoading && <Loader className="animate-spin" />}
               </div>

@@ -52,7 +52,7 @@ function TourismDetail() {
         });
         setEvent(data);
       } catch (err) {
-        setError("Failed to load detailed information.");
+        setError("加载详细信息失败。");
       } finally {
         setLoading(false);
       }
@@ -65,7 +65,7 @@ function TourismDetail() {
     if (storedUserId) {
       setUserId(storedUserId);
     } else {
-      console.warn("User ID not found in localStorage");
+      console.warn("localStorage 中未找到用户 ID");
     }
 
     setUserName(storedUserName);
@@ -85,7 +85,7 @@ function TourismDetail() {
       <div className="flex justify-center items-center h-screen bg-gradient-to-b from-red-50 to-white">
         <div className="text-center">
           <Loader className="w-12 h-12 text-[#FF4C4C] animate-spin mx-auto mb-4" />
-          <p className="text-gray-600 text-lg">Loading details...</p>
+          <p className="text-gray-600 text-lg">正在加载详细信息...</p>
         </div>
       </div>
     );
@@ -100,7 +100,7 @@ function TourismDetail() {
             onClick={handleBackClick}
             className="px-4 py-2 bg-[#FF4C4C] text-white rounded hover:bg-[#FF6B6B] transition duration-300"
           >
-            Back to List
+            返回列表
           </button>
         </div>
       </div>
@@ -119,7 +119,7 @@ function TourismDetail() {
             className="mb-6 text-[#FF4C4C] hover:text-[#FF6B6B] flex items-center transition duration-300"
           >
             <ArrowLeft className="mr-2" />
-            Back to List
+            返回列表
           </button>
           <h2 className="text-4xl font-bold mb-6 text-[#FF4C4C] border-b-2 border-[#FF8585] pb-4">
             {event.title}
@@ -137,59 +137,59 @@ function TourismDetail() {
             {(!event.firstImage || event.firstImage === "") && (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
                 <span className="text-gray-500 text-2xl">
-                  No Image Available
+                  没有可用的图片
                 </span>
               </div>
             )}
           </div>
           <p className="text-gray-700 mb-8 leading-relaxed whitespace-pre-line">
-            {event.overview || "No detailed information available."}
+            {event.overview || "没有详细信息。"}
           </p>
 
           <div className="space-y-4 bg-red-50 p-6 rounded-xl">
             <InfoItem
               icon={MapPin}
-              label="address"
+              label="地址"
               text={event.address}
-              defaultText="No address information available"
+              defaultText="没有地址信息"
             />
             <InfoItem
               icon={Phone}
-              label="tel"
+              label="电话"
               text={event.tel}
-              defaultText="No phone number available"
+              defaultText="没有电话号码"
             />
             <InfoItem
               icon={Globe}
-              label="homepage"
+              label="主页"
               text={event.homepage}
-              defaultText="No website information available"
+              defaultText="没有网站信息"
               isLink
             />
             <InfoItem
               icon={Car}
-              label="parking"
+              label="停车"
               text={event.parking}
-              defaultText="No parking information available"
+              defaultText="没有停车信息"
             />
             <InfoItem
               icon={Clock}
-              label="usetime"
+              label="营业时间"
               text={event.usetime}
-              defaultText="No operating hours available"
+              defaultText="没有营业时间信息"
             />
             <InfoItem
               icon={Image}
-              label="restdate"
+              label="休息日"
               text={event.restdate}
-              defaultText="No rest date information available"
+              defaultText="没有休息日信息"
             />
             {event.infocenter && (
               <InfoItem
                 icon={Phone}
-                label="infocenter"
+                label="信息中心"
                 text={event.infocenter}
-                defaultText="No information center details available"
+                defaultText="没有信息中心详情"
               />
             )}
           </div>

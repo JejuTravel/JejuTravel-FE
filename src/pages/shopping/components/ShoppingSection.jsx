@@ -13,7 +13,7 @@ const ShoppingSection = ({ items, onItemClick }) => {
       ))}
       {items.length === 0 && (
         <p className="text-center text-gray-500 text-lg">
-          No stores found matching your search.
+          没有找到符合搜索条件的商店。
         </p>
       )}
     </div>
@@ -47,7 +47,7 @@ const ShoppingItem = ({ item, onItemClick }) => {
         />
         {(!item.firstImage || item.firstImage === "") && imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
-            <span className="text-gray-500 text-base">No Image Available</span>
+            <span className="text-gray-500 text-base">没有可用的图片</span>
           </div>
         )}
       </div>
@@ -57,11 +57,11 @@ const ShoppingItem = ({ item, onItemClick }) => {
         </h3>
         <p className="text-gray-600 text-base mb-2 flex items-center line-clamp-2">
           <MapPin className="mr-2 flex-shrink-0" size={20} />{" "}
-          {item.address || "Address not available"}
+          {item.address || "地址不可用"}
         </p>
         <p className="text-gray-500 text-base flex items-center">
           <Phone className="mr-2 flex-shrink-0" size={20} />{" "}
-          {item.tel || "No phone number available"}
+          {item.tel || "电话号码不可用"}
         </p>
       </div>
     </div>

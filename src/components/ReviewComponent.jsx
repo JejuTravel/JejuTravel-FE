@@ -32,9 +32,9 @@ const ReviewComponent = ({
       const response = await getReviews(contentId);
       setReviews(response.data.data.content || []);
     } catch (error) {
-      console.error("Error fetching reviews:", error);
+      console.error("评论获取出错:", error);
       setError(
-        "Oops! We couldn't load the reviews right now. Let's try that again!"
+        "抱歉！我们现在无法加载评论。再试一次吧！"
       );
     } finally {
       setIsLoading(false);
@@ -46,7 +46,7 @@ const ReviewComponent = ({
       const response = await getReviewAverage(contentId);
       setAverage(response.data.data);
     } catch (error) {
-      console.error("Error fetching review average:", error);
+      console.error("获取评论平均分出错:", error);
     }
   }, [contentId]);
 
@@ -59,7 +59,7 @@ const ReviewComponent = ({
     e.preventDefault();
     setError(null);
     if (!userId) {
-      setError("Oops! Looks like you need to log in to share your thoughts.");
+      setError("抱歉！您需要登录才能分享您的想法。");
       return;
     }
     setIsSubmitting(true);
@@ -77,11 +77,11 @@ const ReviewComponent = ({
         fetchReviews();
         fetchReviewAverage();
       } else {
-        setError("Hmm, something went wrong. Mind giving it another try?");
+        setError("嗯，出现了一些问题。再试一次吧！");
       }
     } catch (error) {
-      console.error("Error submitting review:", error);
-      setError("Oops! We hit a snag. Let's try submitting that review again!");
+      console.error("提交评论时出错:", error);
+      setError("抱歉！遇到了问题。再试一次提交您的评论吧！");
     } finally {
       setIsSubmitting(false);
     }
@@ -112,12 +112,12 @@ const ReviewComponent = ({
         fetchReviewAverage();
       } else {
         setError(
-          "Hmm, updating didn't quite work. Shall we give it another go?"
+          "嗯，更新没有成功。再试一次吧！"
         );
       }
     } catch (error) {
-      console.error("Error updating review:", error);
-      setError("Oops! We couldn't update your review. Let's try that again!");
+      console.error("更新评论时出错:", error);
+      setError("抱歉！无法更新您的评论。再试一次吧！");
     } finally {
       setIsSubmitting(false);
     }
@@ -126,7 +126,7 @@ const ReviewComponent = ({
   const handleDelete = async (reviewId) => {
     if (
       window.confirm(
-        "Are you sure you want to remove this review? It'll be gone forever!"
+        "确定要删除这条评论吗？它将永久删除！"
       )
     ) {
       try {
@@ -135,12 +135,12 @@ const ReviewComponent = ({
           fetchReviews();
           fetchReviewAverage();
         } else {
-          setError("We couldn't delete that review. Want to try again?");
+          setError("我们无法删除该评论。要再试一次吗？");
         }
       } catch (error) {
-        console.error("Error deleting review:", error);
+        console.error("删除评论时出错:", error);
         setError(
-          "Oops! Something went wrong while deleting. Let's give it another shot!"
+          "抱歉！删除时出了点问题。再试一次吧！"
         );
       }
     }
@@ -176,19 +176,17 @@ const ReviewComponent = ({
   return (
     <div className="space-y-8 bg-white rounded-xl shadow-lg p-6">
       <div className="text-center">
-        <h2 className="text-3xl font-bold mb-4 text-gray-800">Reviews</h2>
+        <h2 className="text-3xl font-bold mb-4 text-gray-800">评论</h2>
         <div className="flex justify-center items-center mb-4">
           <div className="flex mr-2">{renderStars(average)}</div>
           <span className="text-2xl font-semibold text-yellow-500">
-            {average ? average.toFixed(1) : "No ratings yet"}
+            {average ? average.toFixed(1) : "暂无评分"}
           </span>
         </div>
         <p className="text-gray-600">
           {reviews.length > 0
-            ? `Based on ${reviews.length} review${
-                reviews.length !== 1 ? "s" : ""
-              }`
-            : "Be the first to share your experience!"}
+            ? `基于 ${reviews.length} 条评论`
+            : "成为第一个分享您体验的人吧！"}
         </p>
       </div>
 
@@ -207,7 +205,7 @@ const ReviewComponent = ({
           className="space-y-4 bg-gray-50 p-6 rounded-lg"
         >
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            {editingReview ? "Edit Your Review" : "Share Your Experience"}
+            {editingReview ? "编辑您的评论" : "分享您的体验"}
           </h3>
           <textarea
             className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
@@ -215,12 +213,12 @@ const ReviewComponent = ({
             onChange={(e) =>
               setNewReview({ ...newReview, reviewContent: e.target.value })
             }
-            placeholder="Share your experience..."
+            placeholder="分享您的体验..."
             rows="4"
             required
           />
           <div className="flex items-center space-x-2">
-            <span className="text-gray-700 font-medium">Your Rating:</span>
+            <span className="text-gray-700 font-medium">您的评分:</span>
             {renderStars(newReview.reviewRating, true)}
           </div>
           <button
@@ -235,10 +233,10 @@ const ReviewComponent = ({
             }
           >
             {isSubmitting
-              ? "Submitting..."
+              ? "提交中..."
               : editingReview
-              ? "Update Review"
-              : "Submit Review"}
+              ? "更新评论"
+              : "提交评论"}
           </button>
 
           {editingReview && (
@@ -249,7 +247,7 @@ const ReviewComponent = ({
                 setNewReview({ reviewContent: "", reviewRating: 0 });
               }}
             >
-              Cancel Edit
+              取消编辑
             </button>
           )}
         </form>
@@ -258,8 +256,8 @@ const ReviewComponent = ({
           className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 rounded-md"
           role="alert"
         >
-          <p className="font-bold">Hey there!</p>
-          <p>Want to share your thoughts? Just log in and start reviewing!</p>
+          <p className="font-bold">嗨！</p>
+          <p>想分享您的想法？登录后即可发表评论！</p>
         </div>
       )}
 
@@ -274,7 +272,7 @@ const ReviewComponent = ({
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h4 className="text-lg font-semibold text-gray-800 mb-1">
-                      {review.userName || "Anonymous Guest"}
+                      {review.userName || "匿名用户"}
                     </h4>
                     <div className="flex items-center">
                       {renderStars(review.reviewRating || 0)}
@@ -283,7 +281,7 @@ const ReviewComponent = ({
                           ? new Date(
                               review.reviewUpdatedAt
                             ).toLocaleDateString()
-                          : "Unknown date"}
+                          : "未知日期"}
                       </span>
                     </div>
                   </div>
@@ -305,7 +303,7 @@ const ReviewComponent = ({
                   )}
                 </div>
                 <p className="text-gray-700 whitespace-pre-line">
-                  {review.reviewContent || "No content"}
+                  {review.reviewContent || "无内容"}
                 </p>
               </div>
             </div>
@@ -314,10 +312,10 @@ const ReviewComponent = ({
           <div className="text-center py-10 bg-gray-50 rounded-lg">
             <MessageSquare className="mx-auto text-gray-400 mb-4" size={48} />
             <p className="text-xl font-semibold text-gray-700 mb-2">
-              No reviews yet
+              还没有评论
             </p>
             <p className="text-gray-600">
-              Be the first to share your experience!
+              成为第一个分享您体验的人吧！
             </p>
           </div>
         )}

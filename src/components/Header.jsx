@@ -7,24 +7,23 @@ function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        // 로그인 상태 확인
         const accessToken = localStorage.getItem('accessToken');
-        setIsLoggedIn(!!accessToken); // 토큰이 존재하면 로그인 상태
+        setIsLoggedIn(!!accessToken); 
     }, []);
 
     const handleMouseEnter = (item) => setHoveredItem(item);
     const handleMouseLeave = () => setHoveredItem(null);
 
     const navItems = [
-        { name: 'Tourism', link: '/tourism' },
-        { name: 'Shopping', link: '/shopping' },
-        { name: 'Restaurant', link: '/restaurant' },
-        { name: 'Accommodation', link: '/accommodation' },
-        { name: 'Bus', link: '/bus' },
-        { name: 'Restroom', link: '/restroom' },
-        { name: 'Wifi', link: '/wifi' },
-        { name: 'Schedule', link: '/schedule' },
-        { name: 'About Us', link: '/aboutus' },
+        { name: '旅游', link: '/tourism' },
+        { name: '购物', link: '/shopping' },
+        { name: '餐厅', link: '/restaurant' },
+        { name: '住宿', link: '/accommodation' },
+        { name: '公交车', link: '/bus' },
+        { name: '洗手间', link: '/restroom' },
+        { name: '无线网络', link: '/wifi' },
+        { name: '日程表', link: '/schedule' },
+        { name: '关于我们', link: '/aboutus' },
     ];
 
     return (
@@ -48,7 +47,6 @@ function Header() {
                 </Link>
                 <div className="flex space-x-4">
                     {isLoggedIn ? (
-                        // 로그인 상태일 때 마이페이지와 로그아웃 링크
                         <>
                             <Link
                                 to="/mypage"
@@ -60,7 +58,7 @@ function Header() {
                                         : 'text-gray-700 hover:bg-red-50 hover:rounded-full'
                                 }`}
                             >
-                                My Page
+                                我的页面
                             </Link>
                             <Link
                                 to="/logout"
@@ -72,11 +70,10 @@ function Header() {
                                         : 'text-gray-700 hover:bg-red-50 hover:rounded-full'
                                 }`}
                             >
-                                Logout
+                                登出
                             </Link>
                         </>
                     ) : (
-                        // 로그아웃 상태일 때 로그인과 회원가입 링크
                         <>
                             <Link
                                 to="/login"
@@ -88,7 +85,7 @@ function Header() {
                                         : 'text-gray-700 hover:bg-red-50 hover:rounded-full'
                                 }`}
                             >
-                                Login
+                                登录
                             </Link>
                             <Link
                                 to="/signup"
@@ -100,7 +97,7 @@ function Header() {
                                         : 'text-gray-700 hover:bg-red-50 hover:rounded-full'
                                 }`}
                             >
-                                SignUp
+                                注册
                             </Link>
                         </>
                     )}
