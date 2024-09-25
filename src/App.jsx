@@ -137,14 +137,16 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/schedule"
-              element={
-                <ProtectedRoute>
-                  <Schedule />
-                </ProtectedRoute>
-              }
-            />
+            {/*<Route*/}
+            {/*  path="/schedule"*/}
+            {/*  element={*/}
+            {/*    <ProtectedRoute>*/}
+            {/*      <Schedule />*/}
+            {/*    </ProtectedRoute>*/}
+            {/*  }*/}
+            {/*/>*/}
+            {/*  톡캘린더는 로컬 로그인 필요 없음 */}
+              <Route path="/schedule" element={<Schedule />} />
             <Route
               path="/mypage"
               element={

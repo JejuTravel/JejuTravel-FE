@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import {
   getScheduleList,
   createSchedule,
+  editSchedule as updateSchedule, // 함수 이름 변경
   deleteSchedule as deleteScheduleAPI,
 } from "../../apis"; // API 모듈 import
 
@@ -39,7 +40,8 @@ function SchedulePage() {
   const [newDescription, setNewDescription] = useState("");
   const [newStartTime, setNewStartTime] = useState("");
   const [newEndTime, setNewEndTime] = useState("");
-  const [token, setToken] = useState(localStorage.getItem('accessToken'));  // 토큰을 상태로 관리
+  // const [token, setToken] = useState(localStorage.getItem('accessToken'));  // 토큰을 상태로 관리
+  const [token, setToken] = useState(`${token}`);
 
   const addSchedule = async () => {
     if (!newTitle || !newStartTime || !newEndTime || !newDescription) {
@@ -50,9 +52,9 @@ function SchedulePage() {
     // 입력된 시간을 ISO 8601 UTC 형식으로 변환
     const newSchedule = {
       title: newTitle,
-      time: { 
-        start_at: new Date(newStartTime).toISOString(),
-        end_at: new Date(newEndTime).toISOString(),
+      time: {
+        start_at: roundToNearestFiveMinutes(new Date(newStartTime)).toISOString().slice(0, -5) + 'Z',
+        end_at: roundToNearestFiveMinutes(new Date(newEndTime)).toISOString().slice(0, -5) + 'Z',
         time_zone: "Asia/Seoul",
         all_day: false,
         lunar: false,
@@ -65,18 +67,30 @@ function SchedulePage() {
       console.log(response); // 전체 응답을 출력
       console.log(response.data); // 응답 데이터 구조를 확인
 
-      if (response.data.success) {
-        setSchedules([...schedules, response.data.result]);
+      if (response.data.status  === "success") {
+        const newSchedule2 = {
+          id: response.data.data.event_id, // event_id를 명시적으로 설정
+          title: newTitle,
+          time: newSchedule.time,
+          description: newDescription,
+        };
+        setSchedules([...schedules, newSchedule2]);
         resetForm();
       } else {
-        alert(response.data.message || "添加日程失败。");
+        alert( " 添加日程失败。");
       }
     } catch (error) {
       console.error("日程创建错误:", error);
       alert("添加日程时发生错误。");
     }
   };
-
+  // 시간을 5분 단위로 맞추는 함수
+  const roundToNearestFiveMinutes = (date) => {
+    const minutes = Math.round(date.getMinutes() / 5) * 5;
+    date.setMinutes(minutes);
+    date.setSeconds(0);  // 초는 0으로 설정
+    return date;
+  };
   // 일정 삭제
   const deleteSchedule = async (id) => {
     try {
@@ -106,9 +120,9 @@ function SchedulePage() {
 
     const updatedSchedule = {
       title: newTitle,
-      time: { 
-        start_at: new Date(newStartTime).toISOString(),
-        end_at: new Date(newEndTime).toISOString(),
+      time: {
+        start_at: roundToNearestFiveMinutes(new Date(newStartTime)).toISOString().slice(0, -5) + 'Z',
+        end_at: roundToNearestFiveMinutes(new Date(newEndTime)).toISOString().slice(0, -5) + 'Z',
         time_zone: "Asia/Seoul",
         all_day: false,
         lunar: false,
@@ -116,13 +130,13 @@ function SchedulePage() {
       description: newDescription,
     };
 
-    try {
-      const response = await createSchedule(updatedSchedule, token);  // 서버에 수정된 일정 전송
+    try { // 수정하기
+      const response = await updateSchedule(editSchedule.id, updatedSchedule, token);  // 서버에 수정된 일정 전송
       console.log(response);
 
-      if (response.data.success) {
-        const updatedSchedules = schedules.map((schedule) => 
-          schedule.id === editSchedule.id ? { ...schedule, ...updatedSchedule } : schedule
+      if (response.data.status  === "success") {
+        const updatedSchedules = schedules.map((schedule) =>
+           schedule.id === editSchedule.id ? { ...schedule, ...updatedSchedule } : schedule
         );
         setSchedules(updatedSchedules);
         resetForm();
@@ -139,7 +153,7 @@ function SchedulePage() {
   const searchSchedules = async () => {
     try {
       const response = await getScheduleList(searchFrom, searchTo, token);
-      if (response.data.success) {
+      if (response.data.status  === "success") {
         setSchedules(response.data.result);
       }
     } catch (error) {
@@ -254,14 +268,23 @@ function SchedulePage() {
         </div>
 
         <div className="space-y-6 animate-fade-in">
-          {schedules.map((schedule) => (
-            <ScheduleComponent
-              key={schedule.id}
-              schedule={schedule}
-              onEdit={startEdit}
-              onDelete={deleteSchedule}
-            />
-          ))}
+          {schedules.map((schedule) =>
+          {
+            // schedule이나 schedule.event_id가 없는 경우 에러를 방지
+            if (!schedule || !schedule.id) {
+              console.error('schedule or schedule.id is undefined', schedule);
+              return null; // null을 반환하여 렌더링에서 건너뜀
+            }
+
+            return (
+                <ScheduleComponent
+                    key={schedule.id} // id를 key로 사용
+                    schedule={schedule}
+                    onEdit={startEdit}
+                    onDelete={deleteSchedule}
+                />
+            );
+          })}
         </div>
       </div>
     </div>
