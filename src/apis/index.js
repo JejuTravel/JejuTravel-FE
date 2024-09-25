@@ -8,7 +8,7 @@ export const searchTourism = (keyword, pageNo = 1) =>
   axiosInstance.get("/tourism/search", { params: { keyword, pageNo } });
 
 export const getTourismDetail = (contentId) =>
-  axiosInstance.get(`/tourism/info/${contentId}`);
+  axiosInstance.get(`/tourism/info/${contentId}`); // 템플릿 리터럴 사용
 
 // shopping
 export const getShoppingList = (pageNo = 1, sigunguCode) =>
@@ -18,7 +18,7 @@ export const searchShopping = (keyword, pageNo = 1) =>
   axiosInstance.get("/shopping/search", { params: { keyword, pageNo } });
 
 export const getShoppingDetail = (contentId) =>
-  axiosInstance.get(`/shopping/info/${contentId}`);
+  axiosInstance.get(`/shopping/info/${contentId}`); // 템플릿 리터럴 사용
 
 // restaurant
 export const getRestaurantList = (pageNo = 1, sigunguCode) =>
@@ -28,7 +28,7 @@ export const searchRestaurant = (keyword, pageNo = 1) =>
   axiosInstance.get("/restaurant/search", { params: { keyword, pageNo } });
 
 export const getRestaurantDetail = (contentId) =>
-  axiosInstance.get(`/restaurant/info/${contentId}`);
+  axiosInstance.get(`/restaurant/info/${contentId}`); // 템플릿 리터럴 사용
 
 // accommodation
 export const getAccommodationList = (pageNo = 1, sigunguCode, stayType) =>
@@ -38,7 +38,7 @@ export const searchAccommodation = (keyword, pageNo = 1) =>
   axiosInstance.get("/stay/search", { params: { keyword, pageNo } });
 
 export const getAccommodationDetail = (contentId) =>
-  axiosInstance.get(`/stay/info/${contentId}`);
+  axiosInstance.get(`/stay/info/${contentId}`); // 템플릿 리터럴 사용
 
 // bus
 export const getBusStops = (pageNo = 1) =>
@@ -66,16 +66,16 @@ export const getScheduleList = (from, to) =>
   axiosInstance.get("/events", { params: { from, to } });
 
 // 일정 생성
-export const createSchedule = (scheduleData) => {
+export const createSchedule = (scheduleData, token) => {
   const params = new URLSearchParams();
   params.append(
     "event",
     JSON.stringify({
       title: scheduleData.title,
       time: {
-        start_at: scheduleData.start_at,
-        end_at: scheduleData.end_at,
-        time_zone: "Asia/Seoul",
+        start_at: scheduleData.time.start_at,
+        end_at: scheduleData.time.end_at,
+        time_zone: scheduleData.time.time_zone,
       },
       description: scheduleData.description,
     })
@@ -84,9 +84,11 @@ export const createSchedule = (scheduleData) => {
   return axiosInstance.post("/create/event", params, {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: `Bearer ${token}`,  // 토큰 추가
     },
   });
 };
+
 
 // 일정 삭제
 export const deleteSchedule = (scheduleId, recurUpdateType = "THIS") =>
@@ -96,10 +98,10 @@ export const deleteSchedule = (scheduleId, recurUpdateType = "THIS") =>
 
 // review
 export const getReviews = (contentId) =>
-  axiosInstance.get(`/review/${contentId}`);
+  axiosInstance.get(`/review/${contentId}`); // 템플릿 리터럴 사용
 
 export const getReviewAverage = (contentId) =>
-  axiosInstance.get(`/review/average/${contentId}`);
+  axiosInstance.get(`/review/average/${contentId}`); // 템플릿 리터럴 사용
 
 export const saveReview = (reviewData) => {
   console.log("Review data in API call:", reviewData);
@@ -112,6 +114,7 @@ export const saveReview = (reviewData) => {
     reviewRating: reviewData.reviewRating,
   });
 };
+
 export const updateReview = (reviewData) =>
   axiosInstance.post("/review/update", {
     reviewId: reviewData.reviewId,
@@ -120,4 +123,4 @@ export const updateReview = (reviewData) =>
   });
 
 export const deleteReview = (reviewId) =>
-  axiosInstance.post(`/review/delete/${reviewId}`);
+  axiosInstance.post(`/review/delete/${reviewId}`); // 템플릿 리터럴 사용

@@ -39,45 +39,43 @@ function SchedulePage() {
   const [newDescription, setNewDescription] = useState("");
   const [newStartTime, setNewStartTime] = useState("");
   const [newEndTime, setNewEndTime] = useState("");
-  const [token, setToken] = useState("leh9QNGSSkT8Zqls6xMus-gRx3MdAfX4AAAAAQo8JJsAAAGR7u6Po5CBbdpZdq0Z");  // 토큰을 상태로 관리
+  const [token, setToken] = useState(localStorage.getItem('accessToken'));  // 토큰을 상태로 관리
 
   const addSchedule = async () => {
     if (!newTitle || !newStartTime || !newEndTime || !newDescription) {
       alert("모든 필드를 입력해야 합니다!");
       return;
     }
-  
+
     // 입력된 시간을 ISO 8601 UTC 형식으로 변환
     const newSchedule = {
       title: newTitle,
-      time: { // 정확한 형식으로 time 객체 추가
+      time: { 
         start_at: new Date(newStartTime).toISOString(),
         end_at: new Date(newEndTime).toISOString(),
-        time_zone: "Asia/Seoul", // 시간대 추가
-        all_day: false, // 예시로 추가한 필드
-        lunar: false, // 예시로 추가한 필드
+        time_zone: "Asia/Seoul",
+        all_day: false,
+        lunar: false,
       },
       description: newDescription,
-      // 필요한 다른 필드들도 여기에 추가
     };
-  
+
     try {
       const response = await createSchedule(newSchedule, token);
       console.log(response); // 전체 응답을 출력
       console.log(response.data); // 응답 데이터 구조를 확인
-  
+
       if (response.data.success) {
         setSchedules([...schedules, response.data.result]);
         resetForm();
       } else {
-        alert(response.data.message || "일정 추가에 실패했습니다."); // 서버에서 반환된 메시지를 출력
+        alert(response.data.message || "일정 추가에 실패했습니다.");
       }
     } catch (error) {
       console.error("일정 생성 중 오류:", error);
       alert("일정 추가 중 오류가 발생했습니다.");
     }
   };
-  
 
   // 일정 삭제
   const deleteSchedule = async (id) => {
@@ -100,6 +98,43 @@ function SchedulePage() {
     setNewEndTime(schedule.time.end_at);
   };
 
+  const applyEdit = async () => {
+    if (!newTitle || !newStartTime || !newEndTime || !newDescription) {
+      alert("모든 필드를 입력해야 합니다!");
+      return;
+    }
+
+    const updatedSchedule = {
+      title: newTitle,
+      time: { 
+        start_at: new Date(newStartTime).toISOString(),
+        end_at: new Date(newEndTime).toISOString(),
+        time_zone: "Asia/Seoul",
+        all_day: false,
+        lunar: false,
+      },
+      description: newDescription,
+    };
+
+    try {
+      const response = await createSchedule(updatedSchedule, token);  // 서버에 수정된 일정 전송
+      console.log(response);
+
+      if (response.data.success) {
+        const updatedSchedules = schedules.map((schedule) => 
+          schedule.id === editSchedule.id ? { ...schedule, ...updatedSchedule } : schedule
+        );
+        setSchedules(updatedSchedules);
+        resetForm();
+      } else {
+        alert(response.data.message || "일정 수정에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("일정 수정 중 오류:", error);
+      alert("일정 수정 중 오류가 발생했습니다.");
+    }
+  };
+
   // 일정 검색 요청
   const searchSchedules = async () => {
     try {
@@ -112,14 +147,12 @@ function SchedulePage() {
     }
   };
 
-  // 일정 검색 버튼 클릭 또는 날짜 변경 시 자동 검색
   useEffect(() => {
     if (searchFrom && searchTo) {
       searchSchedules();
     }
   }, [searchFrom, searchTo]);
 
-  // 폼 초기화
   const resetForm = () => {
     setNewTitle("");
     setNewDescription("");
@@ -132,7 +165,6 @@ function SchedulePage() {
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white">
       <Header />
       <div className="container mx-auto mt-32 p-6">
-        {/* 상단 제목과 설명 */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-[#FF6B35] mb-2">
             Schedule Management
@@ -142,7 +174,6 @@ function SchedulePage() {
           </p>
         </div>
 
-        {/* 일정 검색 영역 */}
         <div className="mb-12">
           <div className="bg-[#FF6B35] text-white px-4 py-3 rounded-t-lg">
             Search by Date Range
@@ -171,7 +202,6 @@ function SchedulePage() {
           </div>
         </div>
 
-        {/* 일정 추가/수정 영역 */}
         <div className="mb-12">
           <div className="bg-[#FF6B35] text-white px-4 py-3 rounded-t-lg">
             {editSchedule ? "Edit Schedule" : "Add New Schedule"}
@@ -223,7 +253,6 @@ function SchedulePage() {
           </div>
         </div>
 
-        {/* 일정 목록 영역 */}
         <div className="space-y-6 animate-fade-in">
           {schedules.map((schedule) => (
             <ScheduleComponent
