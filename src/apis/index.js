@@ -84,11 +84,10 @@ export const createSchedule = (scheduleData, token) => {
   return axiosInstance.post("/create/event", params, {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `Bearer ${token}`,  // 토큰 추가
+      Authorization: `Bearer ${token}`, // 토큰 추가
     },
   });
 };
-
 
 // 일정 삭제
 export const deleteSchedule = (scheduleId, recurUpdateType = "THIS") =>
