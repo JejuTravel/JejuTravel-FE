@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import Header from "../../components/Header";
 import MainBanner from "./components/MainBanner";
 import HomeTourism from "./components/HomeTourism";
 import HomeShoppingRestaurant from "./components/HomeShoppingRestaurant";
 import HomeAccommodation from "./components/HomeAccommodation";
+import LoginModal from "../../components/LoginModal";
 import {
   getTourismList,
   getShoppingList,
@@ -13,120 +14,127 @@ import {
 } from "../../apis";
 
 function Home() {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    setIsAuthenticated(!!token);
+
+    const handleScroll = () => {
+      if (!isAuthenticated && window.scrollY > 200) {
+        setShowLoginModal(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isAuthenticated]);
+
   const fetchData = async (apiCall) => {
+    if (!isAuthenticated) return null;
     try {
       const response = await apiCall(1);
-      console.log("API Response:", response); // 전체 응답 로깅
-
       if (
-        response &&
-        response.data &&
-        response.data.data &&
+        response?.data?.data?.content &&
         Array.isArray(response.data.data.content)
       ) {
         return response.data.data.content.slice(0, 5);
       } else {
-        console.error("Unexpected API response structure:", response);
+        console.error("예상치 못한 API 응답 구조:", response);
         return [];
       }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("데이터 가져오기 오류:", error);
       throw error;
     }
   };
 
-  const {
-    data: tourismData,
-    isLoading: tourismLoading,
-    error: tourismError,
-  } = useQuery("tourism", () => fetchData(getTourismList), {
-    retry: 3,
-    enabled: true,
-  });
+  const { data: tourismData, isLoading: tourismLoading } = useQuery(
+    "tourism",
+    () => fetchData(getTourismList),
+    { enabled: isAuthenticated }
+  );
 
-  const {
-    data: shoppingData,
-    isLoading: shoppingLoading,
-    error: shoppingError,
-  } = useQuery("shopping", () => fetchData(getShoppingList), {
-    retry: 3,
-    enabled: true,
-  });
+  const { data: shoppingData, isLoading: shoppingLoading } = useQuery(
+    "shopping",
+    () => fetchData(getShoppingList),
+    { enabled: isAuthenticated }
+  );
 
-  const {
-    data: restaurantData,
-    isLoading: restaurantLoading,
-    error: restaurantError,
-  } = useQuery("restaurant", () => fetchData(getRestaurantList), {
-    retry: 3,
-    enabled: true,
-  });
+  const { data: restaurantData, isLoading: restaurantLoading } = useQuery(
+    "restaurant",
+    () => fetchData(getRestaurantList),
+    { enabled: isAuthenticated }
+  );
 
-  const {
-    data: accommodationData,
-    isLoading: accommodationLoading,
-    error: accommodationError,
-  } = useQuery("accommodation", () => fetchData(getAccommodationList), {
-    retry: 3,
-    enabled: true,
-  });
+  const { data: accommodationData, isLoading: accommodationLoading } = useQuery(
+    "accommodation",
+    () => fetchData(getAccommodationList),
+    { enabled: isAuthenticated }
+  );
 
-  console.log("Tourism Data:", tourismData);
-  console.log("Shopping Data:", shoppingData);
-  console.log("Restaurant Data:", restaurantData);
-  console.log("Accommodation Data:", accommodationData);
-
-  if (tourismError || shoppingError || restaurantError || accommodationError) {
-    console.error("Data fetching error:", {
-      tourismError,
-      shoppingError,
-      restaurantError,
-      accommodationError,
-    });
-    return (
-      <div>
-        데이터를 불러오는 중 오류가 발생했습니다. 나중에 다시 시도해 주세요.
-      </div>
-    );
-  }
+  const scrollToTourism = () => {
+    const tourismSection = document.getElementById("home-tourism");
+    if (tourismSection) {
+      tourismSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
-    <div className="bg-base-100">
+    <div className="flex flex-col min-h-screen bg-base-100">
       <Header />
-      <MainBanner />
-      <div className="bg-gradient-to-b from-[#FF4C4C]/10 via-[#FF6B6B]/5 to-[#FF4C4C]/10">
-        {tourismLoading ? (
-          <p>관광 데이터 로딩 중...</p>
-        ) : tourismData ? (
-          <HomeTourism tourismData={tourismData} isLoading={false} />
-        ) : (
-          <p>관광 데이터가 없습니다.</p>
-        )}
+      <main className="flex-grow">
+        <MainBanner onExplore={scrollToTourism} />
+        {isAuthenticated ? (
+          <div className="bg-gradient-to-b from-[#FF4C4C]/10 via-[#FF6B6B]/5 to-[#FF4C4C]/10 py-8">
+            <div className="container mx-auto px-4">
+              <section id="home-tourism" className="mb-12">
+                {tourismLoading ? (
+                  <p>正在加载旅游数据...</p>
+                ) : tourismData ? (
+                  <HomeTourism tourismData={tourismData} />
+                ) : (
+                  <p>无法装入旅游数据。</p>
+                )}
+              </section>
 
-        {shoppingLoading || restaurantLoading ? (
-          <p>쇼핑 및 레스토랑 데이터 로딩 중...</p>
-        ) : shoppingData && restaurantData ? (
-          <HomeShoppingRestaurant
-            shoppingData={shoppingData}
-            restaurantData={restaurantData}
-            isLoadingShopping={false}
-            isLoadingRestaurant={false}
-          />
-        ) : (
-          <p>쇼핑 및 레스토랑 데이터가 없습니다.</p>
-        )}
+              <section className="mb-12">
+                {shoppingLoading || restaurantLoading ? (
+                  <p>正在加载购物和餐厅数据...</p>
+                ) : shoppingData && restaurantData ? (
+                  <HomeShoppingRestaurant
+                    shoppingData={shoppingData}
+                    restaurantData={restaurantData}
+                  />
+                ) : (
+                  <p>无法装入购物和餐馆数据。</p>
+                )}
+              </section>
 
-        {accommodationLoading ? (
-          <p>숙박 데이터 로딩 중...</p>
-        ) : accommodationData ? (
-          <HomeAccommodation
-            accommodationData={accommodationData}
-            isLoading={false}
-          />
+              <section className="mb-12">
+                {accommodationLoading ? (
+                  <p>正在加载住宿数据....</p>
+                ) : accommodationData ? (
+                  <HomeAccommodation accommodationData={accommodationData} />
+                ) : (
+                  <p>无法装入住宿数据。</p>
+                )}
+              </section>
+            </div>
+          </div>
         ) : (
-          <p>숙박 데이터가 없습니다.</p>
+          <div
+            style={{ height: "1000px" }}
+            className="flex items-center justify-center"
+          >
+            <p className="text-xl text-gray-600">要查看更多信息，请登录。</p>
+          </div>
         )}
-      </div>
+        {showLoginModal && !isAuthenticated && (
+          <LoginModal onClose={() => setShowLoginModal(false)} />
+        )}
+      </main>
     </div>
   );
 }
