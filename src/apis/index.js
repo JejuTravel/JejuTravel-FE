@@ -64,10 +64,10 @@ export const searchPublicWifi = (apGroupName, pageNo = 1) =>
 // 일정 목록 조회
 export const getScheduleList = (from, to, token) =>
   axiosInstance.get("/events", {
-      params: { from, to } ,
-      headers: {
-          Authorization: `Bearer ${token}`, // Authorization 헤더 추가
-      },
+    params: { from, to },
+    headers: {
+      Authorization: `Bearer ${token}`, // Authorization 헤더 추가
+    },
   });
 
 // 일정 생성
@@ -89,66 +89,68 @@ export const createSchedule = (scheduleData, token) => {
   return axiosInstance.post("/create/event", params, {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `Bearer ${token}`,  // 토큰 추가
+      Authorization: `Bearer ${token}`, // 토큰 추가
     },
   });
 };
 
 // 일정 수정
 export const editSchedule = (scheduleId, updatedSchedule, token) => {
-    const params = new URLSearchParams();
-    params.append(
-        "event",
-        JSON.stringify({
-            title: updatedSchedule.title,
-            time: {
-                start_at: updatedSchedule.time.start_at,
-                end_at: updatedSchedule.time.end_at,
-                time_zone: updatedSchedule.time.time_zone,
-            },
-            description: updatedSchedule.description,
-        })
-    );
-    return axiosInstance.post("/update/event",params,
-        // {
-        //     event_id: scheduleId, // Body에 event_id 포함
-        //     recur_update_type: "THIS",// Body에 recur_update_type 포함
-        //     event: ...updatedSchedule, // 수정된 일정 정보 포함
-        // },
-        {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-                Authorization: `Bearer ${token}`,
-            },
-        }
+  const params = new URLSearchParams();
+  params.append(
+    "event",
+    JSON.stringify({
+      title: updatedSchedule.title,
+      time: {
+        start_at: updatedSchedule.time.start_at,
+        end_at: updatedSchedule.time.end_at,
+        time_zone: updatedSchedule.time.time_zone,
+      },
+      description: updatedSchedule.description,
+    })
+  );
+  return axiosInstance.post(
+    "/update/event",
+    params,
+    // {
+    //     event_id: scheduleId, // Body에 event_id 포함
+    //     recur_update_type: "THIS",// Body에 recur_update_type 포함
+    //     event: ...updatedSchedule, // 수정된 일정 정보 포함
+    // },
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
-        );
-
-    // params랑 return 값 다 없애고 이것만 남겨도 됨.
-    // axiosInstance.post("/update/event",
-    //     {
-    //         event_id: scheduleId, // Body에 event_id 포함
-    //         recur_update_type: "THIS",// Body에 recur_update_type 포함
-    //         event: ...updatedSchedule, // 수정된 일정 정보 포함
-    //     },
-    //     {
-    //         headers: {
-    //             "Content-Type": "application/x-www-form-urlencoded",
-    //             Authorization: `Bearer ${token}`,
-    //         },
-    //     });
-
+  // params랑 return 값 다 없애고 이것만 남겨도 됨.
+  // axiosInstance.post("/update/event",
+  //     {
+  //         event_id: scheduleId, // Body에 event_id 포함
+  //         recur_update_type: "THIS",// Body에 recur_update_type 포함
+  //         event: ...updatedSchedule, // 수정된 일정 정보 포함
+  //     },
+  //     {
+  //         headers: {
+  //             "Content-Type": "application/x-www-form-urlencoded",
+  //             Authorization: `Bearer ${token}`,
+  //         },
+  //     });
 };
 // 일정 삭제
 export const deleteSchedule = (scheduleId, recurUpdateType = "THIS") =>
-  axiosInstance.delete("/delete/event",
-      {
-          event_id: scheduleId, // Body에 event_id 포함
-          recur_update_type: recurUpdateType // Body에 recur_update_type 포함
-        },
-        {
-            headers: { Authorization: `Bearer ${token}`, },
-  });
+  axiosInstance.delete(
+    "/delete/event",
+    {
+      event_id: scheduleId, // Body에 event_id 포함
+      recur_update_type: recurUpdateType, // Body에 recur_update_type 포함
+    },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
 
 // review
 export const getReviews = (contentId) =>
