@@ -79,21 +79,21 @@ function HomeShoppingRestaurant({
   return (
     <section className="pt-12 pb-24">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 space-y-4 sm:space-y-0">
           <h2 className="text-4xl font-bold text-base-content">
             <span className="text-[#FF4C4C]">购物</span> 和
             <span className="text-[#FF4C4C]"> 餐馆</span>
           </h2>
-          <div className="space-x-4">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
             <Link
               to="/shopping"
-              className="px-6 py-2 bg-[#FF4C4C] text-white rounded-full hover:bg-[#FF6B6B] transition duration-300 shadow-md hover:shadow-lg"
+              className="px-6 py-2 bg-[#FF4C4C] text-white rounded-full hover:bg-[#FF6B6B] transition duration-300 shadow-md hover:shadow-lg text-center"
             >
               探索济州商店
             </Link>
             <Link
               to="/restaurant"
-              className="px-6 py-2 bg-[#FF4C4C] text-white rounded-full hover:bg-[#FF6B6B] transition duration-300 shadow-md hover:shadow-lg"
+              className="px-6 py-2 bg-[#FF4C4C] text-white rounded-full hover:bg-[#FF6B6B] transition duration-300 shadow-md hover:shadow-lg text-center"
             >
               探索济州餐馆
             </Link>
