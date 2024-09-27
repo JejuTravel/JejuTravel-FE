@@ -22,7 +22,7 @@ function ScheduleComponent({ schedule, onEdit, onDelete }) {
           <button onClick={() => onEdit(schedule)} className="text-blue-500">
             编辑
           </button>
-          <button onClick={() => onDelete(schedule.id)} className="text-red-500">
+          <button onClick={() => onDelete(schedule)} className="text-red-500">
             删除
           </button>
         </div>
@@ -92,11 +92,11 @@ function SchedulePage() {
     return date;
   };
   // 일정 삭제
-  const deleteSchedule = async (id) => {
+  const deleteSchedule = async (delSchedule) => {
     try {
-      const response = await deleteScheduleAPI(id, "THIS", token);
-      if (response.data.success) {
-        setSchedules(schedules.filter((schedule) => schedule.id !== id));
+      const response = await deleteScheduleAPI(delSchedule.id, "THIS", token);
+      if (response.data.status  === "success") {
+        setSchedules((prevSchedules) => prevSchedules.filter((schedule) => schedule.id !== delSchedule.id));
       }
     } catch (error) {
       console.error("删除日程时出错:", error);
@@ -151,21 +151,30 @@ function SchedulePage() {
 
   // 일정 검색 요청
   const searchSchedules = async () => {
+    if (!searchFrom || !searchTo) {
+      alert("날짜 범위를 선택해주세요.");
+      return;
+    }
+
     try {
-      const response = await getScheduleList(searchFrom, searchTo, token);
+      const response = await getScheduleList(
+          roundToNearestFiveMinutes(new Date(searchFrom)).toISOString().slice(0, -5) + 'Z',
+          roundToNearestFiveMinutes(new Date(searchTo)).toISOString().slice(0, -5) + 'Z',
+          token);
       if (response.data.status  === "success") {
-        setSchedules(response.data.result);
+        setSchedules(response.data.data.events || []); // events가 없으면 빈 배열로 처리
+        resetForm();
       }
     } catch (error) {
       console.error("检索日程时出错:", error);
     }
   };
 
-  useEffect(() => {
-    if (searchFrom && searchTo) {
-      searchSchedules();
-    }
-  }, [searchFrom, searchTo]);
+  // useEffect(() => {
+  //   if (searchFrom && searchTo) {
+  //     searchSchedules();
+  //   }
+  // }, [searchFrom, searchTo]);
 
   const resetForm = () => {
     setNewTitle("");
@@ -173,6 +182,8 @@ function SchedulePage() {
     setNewStartTime("");
     setNewEndTime("");
     setEditSchedule(null);
+    setSearchFrom("");
+    setSearchTo("");
   };
 
   return (
@@ -194,14 +205,14 @@ function SchedulePage() {
           </div>
           <div className="bg-white p-4 rounded-b-lg shadow-lg">
             <input
-              type="date"
+              type="datetime-local"
               placeholder="开始日期"
               value={searchFrom}
               onChange={(e) => setSearchFrom(e.target.value)}
               className="border w-full p-3 mb-2 rounded focus:outline-none focus:ring focus:ring-[#FF6B35]"
             />
             <input
-              type="date"
+              type="datetime-local"
               placeholder="结束日期"
               value={searchTo}
               onChange={(e) => setSearchTo(e.target.value)}
@@ -268,11 +279,11 @@ function SchedulePage() {
         </div>
 
         <div className="space-y-6 animate-fade-in">
-          {schedules.map((schedule) =>
+          {schedules.length > 0 && schedules.map((schedule) =>
           {
             // schedule이나 schedule.event_id가 없는 경우 에러를 방지
             if (!schedule || !schedule.id) {
-              console.error('schedule or schedule.id is undefined', schedule);
+              // console.error('schedule or schedule.id is undefined', schedule);
               return null; // null을 반환하여 렌더링에서 건너뜀
             }
 
