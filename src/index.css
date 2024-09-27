@@ -38,3 +38,8 @@ body {
     animation: fadeIn 0.6s ease-out;
   }
 }
+
+input[type="text"], input[type="datetime-local"] {
+  color: transparent;
+  text-shadow: 0 0 0 gray;
+}
