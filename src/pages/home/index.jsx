@@ -81,60 +81,83 @@ function Home() {
     }
   };
 
+  const ElegantLoader = () => (
+    <div className="flex justify-center items-center py-12">
+      <span className="loading loading-dots loading-lg text-primary"></span>
+    </div>
+  );
+
   return (
     <div className="flex flex-col min-h-screen bg-base-100">
       <Header />
       <main className="flex-grow">
         <MainBanner onExplore={scrollToTourism} />
         {isAuthenticated ? (
-          <div className="bg-gradient-to-b from-[#FF4C4C]/10 via-[#FF6B6B]/5 to-[#FF4C4C]/10 py-8">
-            <div className="container mx-auto px-4">
-              <section id="home-tourism" className="mb-12">
-                {tourismLoading ? (
-                  <p>正在加载旅游数据...</p>
-                ) : tourismData ? (
-                  <HomeTourism tourismData={tourismData} />
-                ) : (
-                  <p>无法装入旅游数据。</p>
-                )}
-              </section>
+          <div className="container mx-auto px-4 py-12 space-y-24">
+            <section id="home-tourism" className="fade-in">
+              {tourismLoading ? (
+                <ElegantLoader />
+              ) : tourismData ? (
+                <HomeTourism tourismData={tourismData} />
+              ) : (
+                <p className="text-center text-base-content/60">
+                  无法加载旅游数据。
+                </p>
+              )}
+            </section>
 
-              <section className="mb-12">
-                {shoppingLoading || restaurantLoading ? (
-                  <p>正在加载购物和餐厅数据...</p>
-                ) : shoppingData && restaurantData ? (
-                  <HomeShoppingRestaurant
-                    shoppingData={shoppingData}
-                    restaurantData={restaurantData}
-                  />
-                ) : (
-                  <p>无法装入购物和餐馆数据。</p>
-                )}
-              </section>
+            <section className="fade-in">
+              {shoppingLoading || restaurantLoading ? (
+                <ElegantLoader />
+              ) : shoppingData && restaurantData ? (
+                <HomeShoppingRestaurant
+                  shoppingData={shoppingData}
+                  restaurantData={restaurantData}
+                />
+              ) : (
+                <p className="text-center text-base-content/60">
+                  无法加载购物和餐馆数据。
+                </p>
+              )}
+            </section>
 
-              <section className="mb-12">
-                {accommodationLoading ? (
-                  <p>正在加载住宿数据....</p>
-                ) : accommodationData ? (
-                  <HomeAccommodation accommodationData={accommodationData} />
-                ) : (
-                  <p>无法装入住宿数据。</p>
-                )}
-              </section>
-            </div>
+            <section className="fade-in">
+              {accommodationLoading ? (
+                <ElegantLoader />
+              ) : accommodationData ? (
+                <HomeAccommodation accommodationData={accommodationData} />
+              ) : (
+                <p className="text-center text-base-content/60">
+                  无法加载住宿数据。
+                </p>
+              )}
+            </section>
           </div>
         ) : (
-          <div
-            style={{ height: "1000px" }}
-            className="flex items-center justify-center"
-          >
-            <p className="text-xl text-gray-600">要查看更多信息，请登录。</p>
+          <div className="flex items-center justify-center min-h-[calc(100vh-64px)] bg-base-100">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold mb-4">欢迎来到济州探索</h1>
+              <p className="mb-8 text-base-content/70">
+                登录以探索更多精彩内容，体验济州岛的魅力。
+              </p>
+              <button
+                className="btn btn-primary"
+                onClick={() => setShowLoginModal(true)}
+              >
+                立即登录
+              </button>
+            </div>
           </div>
         )}
         {showLoginModal && !isAuthenticated && (
           <LoginModal onClose={() => setShowLoginModal(false)} />
         )}
       </main>
+      <footer className="footer footer-center p-4 bg-base-200 text-base-content">
+        <div>
+          <p>Copyright © 2024 - All right reserved by 济州探索</p>
+        </div>
+      </footer>
     </div>
   );
 }
