@@ -19,7 +19,7 @@ function Restaurant() {
 
   const fetchRestaurantData = useCallback(
     async (query = searchTerm, pageNum = page) => {
-      if (loading || !hasMore) return;
+      if (loading || (!hasMore && pageNum === page)) return;
       setLoading(true);
       setError(null);
       try {
@@ -71,12 +71,8 @@ function Restaurant() {
       <Header />
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-[#FF6B35] mb-2">
-            济州岛餐厅
-          </h1>
-          <p className="text-gray-600 text-lg">
-            发现济州岛最好的餐饮体验
-          </p>
+          <h1 className="text-4xl font-bold text-[#FF6B35] mb-2">济州岛餐厅</h1>
+          <p className="text-gray-600 text-lg">发现济州岛最好的餐饮体验</p>
         </div>
 
         <TouristInfoSearch
@@ -99,12 +95,10 @@ function Restaurant() {
           </p>
         )}
 
-        <div className="space-y-6 animate-fade-in">
-          <RestaurantSection
-            items={restaurantData}
-            onItemClick={handleItemClick}
-          />
-        </div>
+        <RestaurantSection
+          items={restaurantData}
+          onItemClick={handleItemClick}
+        />
 
         {loading && (
           <div className="text-center mt-8">
@@ -113,9 +107,7 @@ function Restaurant() {
         )}
 
         {!hasMore && restaurantData.length > 0 && (
-          <p className="text-center text-gray-500 mt-4">
-            没有更多内容可加载
-          </p>
+          <p className="text-center text-gray-500 mt-4">没有更多内容可加载</p>
         )}
         <div ref={loader} />
       </div>

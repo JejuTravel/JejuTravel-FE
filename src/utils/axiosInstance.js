@@ -24,7 +24,7 @@ axiosInstance.interceptors.request.use(
     // 경로가 특정 API 호출이 아닌 경우에만 "/api/v1"을 앞에 추가
     if (
       !config.url.startsWith("/api/auth") && // 로그인 관련 경로
-      !config.url.startsWith("/api/mypage")  // 마이페이지 관련 경로
+      !config.url.startsWith("/api/mypage") // 마이페이지 관련 경로
     ) {
       config.url = `/api/v1${config.url}`; // "/api/v1"을 경로에 추가
     }
@@ -43,12 +43,18 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
 
     // 만약 401 에러가 발생하고, 재시도가 아니라면
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true; // 재시도 플래그 설정
       const refreshed = await AuthenticationService.refreshToken(); // 토큰 갱신 시도
       if (refreshed) {
         // 새로운 토큰을 요청 헤더에 추가하여 다시 요청
-        originalRequest.headers["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+        originalRequest.headers[
+          "Authorization"
+        ] = `Bearer ${localStorage.getItem("accessToken")}`;
         return axiosInstance(originalRequest); // 재시도
       }
     }

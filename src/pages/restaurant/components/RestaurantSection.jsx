@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Phone, MapPin, Utensils } from "lucide-react";
 
 const RestaurantSection = ({ items, onItemClick }) => {
@@ -21,33 +21,25 @@ const RestaurantSection = ({ items, onItemClick }) => {
 };
 
 const RestaurantItem = ({ item, onItemClick }) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const defaultImage = "/api/placeholder/400/300";
-
   return (
     <div
-      className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer flex h-48"
+      className="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl border border-orange-100 flex h-48"
       onClick={() => onItemClick(item)}
     >
       <div className="relative w-48 flex-shrink-0">
-        {!imageLoaded && (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
-        )}
-        <img
-          src={item.firstImage || defaultImage}
-          alt={item.title}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
-            imageLoaded ? "opacity-100" : "opacity-0"
-          }`}
-          onLoad={() => setImageLoaded(true)}
-          onError={(e) => {
-            e.target.src = defaultImage;
-            setImageLoaded(true);
-          }}
-        />
-        {(!item.firstImage || item.firstImage === "") && imageLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
-            <Utensils className="text-gray-400 w-12 h-12" />
+        {item.firstImage ? (
+          <img
+            src={item.firstImage}
+            alt={item.title}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "/api/placeholder/400/300";
+            }}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-orange-100">
+            <Utensils size={64} className="text-orange-400" />
           </div>
         )}
       </div>
@@ -56,11 +48,11 @@ const RestaurantItem = ({ item, onItemClick }) => {
           {item.title}
         </h3>
         <p className="text-gray-600 text-base mb-2 flex items-center line-clamp-2">
-          <MapPin className="mr-2 flex-shrink-0" size={20} />{" "}
+          <MapPin className="mr-2 flex-shrink-0" size={20} />
           {item.address || "无地址信息"}
         </p>
         <p className="text-gray-500 text-base flex items-center">
-          <Phone className="mr-2 flex-shrink-0" size={20} />{" "}
+          <Phone className="mr-2 flex-shrink-0" size={20} />
           {item.tel || "无电话号码"}
         </p>
       </div>

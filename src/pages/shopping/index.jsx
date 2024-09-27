@@ -19,7 +19,7 @@ function Shopping() {
 
   const fetchShoppingData = useCallback(
     async (query = searchTerm, pageNum = page) => {
-      if (loading || !hasMore) return;
+      if (loading || (!hasMore && pageNum === page)) return;
       setLoading(true);
       setError(null);
       try {
@@ -67,16 +67,12 @@ function Shopping() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
       <Header />
       <div className="container mx-auto mt-32 p-6">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-[#FF4C4C] mb-2">
-            济州购物
-          </h1>
-          <p className="text-gray-600 text-lg">
-            探索济州岛最佳购物体验
-          </p>
+          <h1 className="text-4xl font-bold text-[#FF4C4C] mb-2">济州购物</h1>
+          <p className="text-gray-600 text-lg">探索济州岛最佳购物体验</p>
         </div>
 
         <TouristInfoSearch
@@ -99,9 +95,7 @@ function Shopping() {
           </p>
         )}
 
-        <div className="space-y-6 animate-fade-in">
-          <ShoppingSection items={shoppingData} onItemClick={handleItemClick} />
-        </div>
+        <ShoppingSection items={shoppingData} onItemClick={handleItemClick} />
 
         {loading && (
           <div className="text-center mt-8">
@@ -110,9 +104,7 @@ function Shopping() {
         )}
 
         {!hasMore && shoppingData.length > 0 && (
-          <p className="text-center text-gray-500 mt-4">
-            没有更多内容可加载
-          </p>
+          <p className="text-center text-gray-500 mt-4">没有更多内容可加载</p>
         )}
         <div ref={loader} />
       </div>
