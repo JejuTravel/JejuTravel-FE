@@ -44,7 +44,7 @@ function HomeTourism({ tourismData, isLoading }) {
   };
 
   return (
-    <section className="pt-24 pb-12">
+    <section className="pt-20 pb-10">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-2/5 text-center lg:text-left">

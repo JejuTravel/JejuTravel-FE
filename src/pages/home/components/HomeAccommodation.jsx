@@ -1,12 +1,6 @@
 import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  MapPin,
-  Phone,
-  ChevronLeft,
-  ChevronRight,
-  Bed,
-} from "lucide-react";
+import { MapPin, Phone, ChevronLeft, ChevronRight, Bed } from "lucide-react";
 
 function HomeAccommodation({ accommodationData, isLoading }) {
   const scrollContainerRef = useRef(null);
@@ -80,7 +74,7 @@ function HomeAccommodation({ accommodationData, isLoading }) {
   };
 
   return (
-    <section className="pt-12 pb-24">
+    <section className="pt-10 pb-20">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-4xl font-bold text-base-content">

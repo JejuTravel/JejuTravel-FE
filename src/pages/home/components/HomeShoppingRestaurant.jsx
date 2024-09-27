@@ -77,7 +77,7 @@ function HomeShoppingRestaurant({
   };
 
   return (
-    <section className="pt-12 pb-24">
+    <section className="pt-10 pb-18">
       <div className="container mx-auto px-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 space-y-4 sm:space-y-0">
           <h2 className="text-4xl font-bold text-base-content">
