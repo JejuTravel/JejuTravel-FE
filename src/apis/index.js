@@ -66,7 +66,7 @@ export const getScheduleList = (from, to, token) =>
   axiosInstance.get("/events", {
     params: { from, to },
     headers: {
-      Authorization: `Bearer UOVTeoBsLkfwSOJQ0YcWtxRDtbeO6MzCAAAAAQo9c5sAAAGSNEfTHVIZRy9oVvUS`, // Authorization 헤더 추가
+      Authorization: `Bearer ${token}`, // Authorization 헤더 추가
     },
   });
 
@@ -89,7 +89,7 @@ export const createSchedule = (scheduleData, token) => {
   return axiosInstance.post("/create/event", params, {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `Bearer UOVTeoBsLkfwSOJQ0YcWtxRDtbeO6MzCAAAAAQo9c5sAAAGSNEfTHVIZRy9oVvUS`, // 토큰 추가
+      Authorization: `Bearer ${token}`, // 토큰 추가
     },
   });
 };
@@ -117,7 +117,7 @@ export const editSchedule = (scheduleId, updatedSchedule, token) => {
     {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Bearer UOVTeoBsLkfwSOJQ0YcWtxRDtbeO6MzCAAAAAQo9c5sAAAGSNEfTHVIZRy9oVvUS`,
+        Authorization: `Bearer ${token}`,
       },
     }
   );
@@ -133,7 +133,7 @@ export const deleteSchedule = (scheduleId, recurUpdateType = "THIS") =>
                 recur_update_type: recurUpdateType, // Param에 recur_update_type 포함
             },
             headers: {
-                Authorization: `Bearer UOVTeoBsLkfwSOJQ0YcWtxRDtbeO6MzCAAAAAQo9c5sAAAGSNEfTHVIZRy9oVvUS`,
+                Authorization: `Bearer ${token}`,
             },
     },
   );
