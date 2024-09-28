@@ -1,6 +1,11 @@
 import React from "react";
 import Slider from "react-slick";
 import Header from "../../components/Header";
+import hj from '../../assets/hj.jpg';
+import jk from '../../assets/jk.jpg';
+import m from '../../assets/m.png';
+import hy from '../../assets/hy.jpg';
+import cw from '../../assets/cw.jpg';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -69,40 +74,38 @@ function AboutUs() {
             我们的项目
           </div>
           <div className="bg-[#ECF0F1] p-6 rounded-b-lg shadow-lg">
-        <p className="text-[#4A4A4A] text-xl mb-4">
-            <em>"我们从一位在中国的交换生期间认识的中国朋友那里得到了这个想法。我们开始考虑为中国游客创建一个专门定制的济州岛旅游网站，而济州岛是可以免签证访问的地方."</em>
-            <br />
-        </p>
-        <p className="text-[#4A4A4A] text-lg mb-4">
-            JEJU TRAVEL 是为中国用户量身定制的专业旅游网站，提供基于韩国旅游局和济州市数据的可靠信息。我们的目标是为中国游客提供丰富的景点和活动，满足他们的需求和偏好。
-        </p>
-        <p className="text-[#4A4A4A] text-lg mb-4">
-            本项目提供以下功能:
-        <ul className="list-disc list-inside ml-4">
-            <li>提供济州岛著名景点和地标的信息</li>
-            <li>提供购物场所和当地特产的指南</li>
-            <li>提供各种餐厅和咖啡馆的详细评价和信息</li>
-            <li>搜索和预订住宿的信息</li>
-            <li>公共交通工具和巴士的相关信息</li>
-            <li>公共卫生间和免费 Wi-Fi 的位置</li>
-        </ul>
-        </p>
-        <p className="text-[#4A4A4A] text-xl">
-            该项目通过团队成员的合作与努力，利用各种网络技术完成。在前端使用 React 增强用户体验，而后端使用 Spring 提供稳定且快速的 API 服务。
-        </p>
+            <p className="text-[#4A4A4A] text-xl mb-4">
+              <em>"我们从一位在中国的交换生期间认识的中国朋友那里得到了这个想法。我们开始考虑为中国游客创建一个专门定制的济州岛旅游网站，而济州岛是可以免签证访问的地方."</em>
+              <br />
+            </p>
+            <p className="text-[#4A4A4A] text-lg mb-4">
+            济州旅游 是为中国用户量身定制的专业旅游网站，提供基于韩国旅游局和济州市数据的可靠信息。我们的目标是为中国游客提供丰富的景点和活动，满足他们的需求和偏好。
+            </p>
+            <p className="text-[#4A4A4A] text-lg mb-4">
+              本项目提供以下功能:
+              <ul className="list-disc list-inside ml-4">
+                <li>提供济州岛著名景点和地标的信息</li>
+                <li>提供购物场所和当地特产的指南</li>
+                <li>提供各种餐厅和咖啡馆的详细评价和信息</li>
+                <li>搜索和预订住宿的信息</li>
+                <li>公共交通工具和巴士的相关信息</li>
+                <li>公共卫生间和免费 Wi-Fi 的位置</li>
+              </ul>
+            </p>
+            <p className="text-[#4A4A4A] text-xl">
+              该项目通过团队成员的合作与努力，利用各种网络技术完成。在前端使用 React 增强用户体验，而后端使用 Spring 提供稳定且快速的 API 服务。
+            </p>
           </div>
         </div>
 
         <div className="mb-12">
-          <div className="bg-[#2C3E50] text-white px-4 py-3 rounded-t-lg">
-            我们的团队
-          </div>
+          <div className="bg-[#2C3E50] text-white px-4 py-3 rounded-t-lg">我们的团队</div>
           <div className="p-4 bg-[#FFFFFF] shadow-lg">
             <Slider {...sliderSettings}>
               <div className="px-2">
                 <div className="bg-[#ECF0F1] p-4 rounded-lg shadow-md flex flex-col items-center">
                   <div className="bg-[#2C3E50] w-24 h-24 rounded-full mb-3 flex items-center justify-center">
-                    <img src="/path/to/image1.png" alt="김현지" className="rounded-full" />
+                    <img src={hj} alt="HyunJi KIM" className="rounded-full" />
                   </div>
                   <h3 className="text-xl font-bold text-[#2C3E50]">HyunJi KIM</h3>
                   <p className="text-sm text-[#4A4A4A]">前端开发者</p>
@@ -116,7 +119,7 @@ function AboutUs() {
               <div className="px-2">
                 <div className="bg-[#ECF0F1] p-4 rounded-lg shadow-md flex flex-col items-center">
                   <div className="bg-[#2C3E50] w-24 h-24 rounded-full mb-3 flex items-center justify-center">
-                    <img src="/path/to/image2.png" alt="방재경" className="rounded-full" />
+                    <img src={jk} alt="JaeKyoung BANG" className="rounded-full" />
                   </div>
                   <h3 className="text-xl font-bold text-[#2C3E50]">JaeKyoung BANG</h3>
                   <p className="text-sm text-[#4A4A4A]">前端开发者</p>
@@ -130,7 +133,7 @@ function AboutUs() {
               <div className="px-2">
                 <div className="bg-[#ECF0F1] p-4 rounded-lg shadow-md flex flex-col items-center">
                   <div className="bg-[#2C3E50] w-24 h-24 rounded-full mb-3 flex items-center justify-center">
-                    <img src="/path/to/image2.png" alt="김민" className="rounded-full" />
+                    <img src={m} alt="Min KIM" className="rounded-full" />
                   </div>
                   <h3 className="text-xl font-bold text-[#2C3E50]">Min KIM</h3>
                   <p className="text-sm text-[#4A4A4A]">后端开发者</p>
@@ -144,9 +147,9 @@ function AboutUs() {
               <div className="px-2">
                 <div className="bg-[#ECF0F1] p-4 rounded-lg shadow-md flex flex-col items-center">
                   <div className="bg-[#2C3E50] w-24 h-24 rounded-full mb-3 flex items-center justify-center">
-                    <img src="/path/to/image2.png" alt="김혜연" className="rounded-full" />
+                    <img src={hy} alt="HyeYeon KIM" className="rounded-full" />
                   </div>
-                  <h3 className="text-xl font-bold text-[#2C3E50]">Hyeyeon KIM</h3>
+                  <h3 className="text-xl font-bold text-[#2C3E50]">HyeYeon KIM</h3>
                   <p className="text-sm text-[#4A4A4A]">后端开发者</p>
                   <ul className="text-sm text-[#4A4A4A] list-disc list-inside">
                     <li>Java</li>
@@ -158,9 +161,9 @@ function AboutUs() {
               <div className="px-2">
                 <div className="bg-[#ECF0F1] p-4 rounded-lg shadow-md flex flex-col items-center">
                   <div className="bg-[#2C3E50] w-24 h-24 rounded-full mb-3 flex items-center justify-center">
-                    <img src="/path/to/image2.png" alt="방채원" className="rounded-full" />
+                    <img src={cw} alt="ChaeWon BANG" className="rounded-full" />
                   </div>
-                  <h3 className="text-xl font-bold text-[#2C3E50]">Chaewon BANG</h3>
+                  <h3 className="text-xl font-bold text-[#2C3E50]">ChaeWon BANG</h3>
                   <p className="text-sm text-[#4A4A4A]">后端开发者</p>
                   <ul className="text-sm text-[#4A4A4A] list-disc list-inside">
                     <li>Java</li>

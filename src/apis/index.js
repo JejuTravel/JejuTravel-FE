@@ -133,7 +133,7 @@ export const deleteSchedule = (scheduleId, recurUpdateType = "THIS") =>
                 recur_update_type: recurUpdateType, // Param에 recur_update_type 포함
             },
             headers: {
-                Authorization: `Bearer 3cgRm6_YCkQuK5UohNyZLRaaW4iccMveAAAAAQo8JB8AAAGSM5SRIVIZRy9oVvUS`,
+                Authorization: `Bearer ${token}`,
             },
     },
   );
