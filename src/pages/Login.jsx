@@ -24,11 +24,11 @@ const Login = () => {
           return;
         }
 
-        localStorage.setItem("accessToken", accessToken); // 액세스 토큰 저장
-        localStorage.setItem("refreshToken", refreshToken); // 리프레시 토큰 저장
-        localStorage.setItem("userId", userId); // 사용자 ID 저장
-        localStorage.setItem("userName", userName); // 사용자명 저장
-        navigate("/"); // 로그인 성공 후 홈으로 이동
+        localStorage.setItem("accessToken", accessToken); // accessToken 저장
+        localStorage.setItem("refreshToken", refreshToken); // refreshToken 저장
+        localStorage.setItem("userId", userId); // userId 저장
+        localStorage.setItem("userName", userName); // userName 저장
+        navigate("/"); // 로그인 성공 후 메인 페이지로 이동
       } else {
         setError(response.message || "로그인 실패"); // 실패 메시지 처리
       }
@@ -40,9 +40,37 @@ const Login = () => {
     }
   };
 
+  const handleKakaoLogin = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (accessToken) {
+        // 토큰이 만료되었는지 확인하는 로직 추가
+        const isTokenValid = await checkTokenValidity(accessToken);
+
+        if (!isTokenValid) {
+            // 토큰이 만료되었을 경우 로그아웃 처리
+            AuthenticationService.logout();
+        }
+    }
+
+    // 카카오 로그인 URL로 리다이렉트
+    window.location.href = AuthenticationService.getKakaoAuthUrl();
+  };
+
+  // 토큰 유효성 체크 함수 (예시)
+  const checkTokenValidity = async (token) => {
+    try {
+        const response = await axiosInstance.post('/api/auth/check-token', { token });
+        return response.data.status === 'valid';
+    } catch (error) {
+        console.error("토큰 유효성 체크 실패:", error);
+        return false;
+    }
+  };
+
   return (
     <div className="login-container">
-      <h2>登录</h2> {/* 로그인 */}
+      <h2>登录</h2> {/* 로그인 페이지 제목 */}
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleLogin}>
         <Input
@@ -62,7 +90,7 @@ const Login = () => {
         <Button className="login-btn" type="submit">
           登录
         </Button>
-        <Button className="kakao-btn" type="button">
+        <Button className="kakao-btn" type="button" onClick={handleKakaoLogin}>
           使用Kakao登录
         </Button>
       </form>
