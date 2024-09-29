@@ -60,15 +60,13 @@ function SchedulePage() {
   const [showLoginAlert, setShowLoginAlert] = useState(false);
 
   useEffect(() => {
-    if (window.Kakao && window.Kakao.isInitialized()) {
-      const kakaoToken = window.Kakao.Auth.getAccessToken();
+    const kakaoToken = localStorage.getItem("kakaoAccessToken");
       if (kakaoToken) {
         setToken(kakaoToken);
         setIsKakaoLoggedIn(true);
       } else {
         setIsKakaoLoggedIn(false);
       }
-    }
   }, []);
 
   const requireKakaoLogin = (action) => {
@@ -77,6 +75,14 @@ function SchedulePage() {
       return false;
     }
     return true;
+  };
+
+  // 시간을 5분 단위로 맞추는 함수
+  const roundToNearestFiveMinutes = (date) => {
+    const minutes = Math.round(date.getMinutes() / 5) * 5;
+    date.setMinutes(minutes);
+    date.setSeconds(0);  // 초는 0으로 설정
+    return date;
   };
 
   const addSchedule = async () => {
