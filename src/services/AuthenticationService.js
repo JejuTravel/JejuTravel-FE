@@ -111,6 +111,25 @@ const AuthenticationService = {
       throw error;
     }
   },
+  getKakaoAuthUrl() {
+    const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;  // 실제 REST API 키
+    const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;  // 리다이렉트 URI
+    return `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  },
+
+  async kakaoLogin(code) {
+    try {
+      const response = await axiosInstance.get(`/api/auth/kakao/signin?code=${code}`);
+      if (response.data.status === 'success') {
+        return response.data;
+      } else {
+        throw new Error(response.data.message || '카카오 로그인 실패');
+      }
+    } catch (error) {
+      console.error('Kakao 登录失败:', error);
+      throw error;
+    }
+  },
 
   // 로그아웃
   logout() {

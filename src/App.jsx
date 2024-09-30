@@ -19,6 +19,7 @@ import Signup from "./pages/Signup";
 import AboutUs from "./pages/aboutUs";
 import Mypage from "./pages/Mypage";
 import Logout from "./pages/Logout";
+import OAuthCallback from "./pages/OAuthCallback";  // OAuthCallback 컴포넌트 임포트
 
 // QueryClient 인스턴스 생성
 const queryClient = new QueryClient();
@@ -47,6 +48,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/aboutus" element={<AboutUs />} />
+
+            {/* OAuth 콜백을 처리하는 라우트 */}
+            <Route path="/oauth/callback/kakao" element={<OAuthCallback />} /> {/* 카카오 OAuth 콜백 경로 */}
 
             {/* 인증이 필요한 라우트 */}
             <Route

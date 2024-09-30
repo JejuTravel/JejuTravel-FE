@@ -16,10 +16,20 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // localStorage에서 토큰 가져오기
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      config.headers["Authorization"] = `Bearer ${token}`; // Authorization 헤더 추가
-    }
+      const schedulePaths = ['/create/event', '/events', '/update/event', '/delete/event'];
+      if (config.url && schedulePaths.some(path => config.url.includes(path))) {
+          // 톡캘린더 CRUD의 경우, (kakaoAccessToken을 사용하는)다른 헤더
+          const kakaoAccessToken = localStorage.getItem('kakaoAccessToken');
+          if (kakaoAccessToken) {
+              config.headers['Authorization'] = `Bearer ${kakaoAccessToken}`;
+          }
+      } else {
+          // 그 외의 요청에서는 전역 accessToken 사용
+          const token = localStorage.getItem("accessToken");
+          if (token) {
+              config.headers["Authorization"] = `Bearer ${token}`; // Authorization 헤더 추가
+          }
+      }
 
     // 경로가 특정 API 호출이 아닌 경우에만 "/api/v1"을 앞에 추가
     if (

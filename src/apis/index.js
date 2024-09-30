@@ -97,6 +97,8 @@ export const createSchedule = (scheduleData, token) => {
 // 일정 수정
 export const editSchedule = (scheduleId, updatedSchedule, token) => {
   const params = new URLSearchParams();
+    params.append("event_id", scheduleId);
+    params.append("recur_update_type", "THIS");
   params.append(
     "event",
     JSON.stringify({
@@ -112,11 +114,6 @@ export const editSchedule = (scheduleId, updatedSchedule, token) => {
   return axiosInstance.post(
     "/update/event",
     params,
-    // {
-    //     event_id: scheduleId, // Body에 event_id 포함
-    //     recur_update_type: "THIS",// Body에 recur_update_type 포함
-    //     event: ...updatedSchedule, // 수정된 일정 정보 포함
-    // },
     {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -124,32 +121,21 @@ export const editSchedule = (scheduleId, updatedSchedule, token) => {
       },
     }
   );
-
-  // params랑 return 값 다 없애고 이것만 남겨도 됨.
-  // axiosInstance.post("/update/event",
-  //     {
-  //         event_id: scheduleId, // Body에 event_id 포함
-  //         recur_update_type: "THIS",// Body에 recur_update_type 포함
-  //         event: ...updatedSchedule, // 수정된 일정 정보 포함
-  //     },
-  //     {
-  //         headers: {
-  //             "Content-Type": "application/x-www-form-urlencoded",
-  //             Authorization: `Bearer ${token}`,
-  //         },
-  //     });
 };
 // 일정 삭제
-export const deleteSchedule = (scheduleId, recurUpdateType = "THIS") =>
+export const deleteSchedule = (scheduleId, recurUpdateType = "THIS", token) =>
   axiosInstance.delete(
     "/delete/event",
     {
-      event_id: scheduleId, // Body에 event_id 포함
-      recur_update_type: recurUpdateType, // Body에 recur_update_type 포함
+            // delete 요청에서는 data 대신 params를 사용하여 query string을 생성해야 합니다.
+            params: {
+                event_id: scheduleId, // Param에 event_id 포함
+                recur_update_type: recurUpdateType, // Param에 recur_update_type 포함
+            },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
     },
-    {
-      headers: { Authorization: `Bearer ${token}` },
-    }
   );
 
 // review

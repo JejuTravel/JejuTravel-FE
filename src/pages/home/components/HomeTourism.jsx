@@ -44,27 +44,29 @@ function HomeTourism({ tourismData, isLoading }) {
   };
 
   return (
-    <section className="pt-24 pb-12">
+    <section className="py-10 lg:py-20">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          <div className="lg:w-2/5 text-center lg:text-left">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight text-base-content">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+          <div className="w-full lg:w-2/5 text-center lg:text-left mb-8 lg:mb-0">
+            <h2 className="text-3xl lg:text-5xl font-bold mb-4 lg:mb-6 leading-tight text-base-content">
               探索济州的 <span className="text-[#FF4C4C]">隐藏宝石</span>
             </h2>
-            <p className="text-lg text-base-content/80 leading-relaxed mb-10 max-w-lg mx-auto lg:mx-0">
+            <p className="text-base lg:text-lg text-base-content/80 leading-relaxed mb-6 lg:mb-10 max-w-lg mx-auto lg:mx-0">
               揭开济州岛鲜为人知的奇观。从宁静的海滩到神秘的森林，踏上探索之旅。
             </p>
             <Link to="/tourism" className="inline-block">
-              <button className="btn bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white btn-lg px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-3">
-                <span className="text-lg font-semibold">发现更多</span>
-                <MapPin className="w-5 h-5" />
+              <button className="btn bg-[#FF4C4C] hover:bg-[#FF6B6B] text-white btn-lg px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
+                <span className="text-base lg:text-lg font-semibold">
+                  发现更多
+                </span>
+                <MapPin className="w-4 h-4 lg:w-5 lg:h-5" />
               </button>
             </Link>
           </div>
-          <div className="lg:w-3/5 relative">
-            <div className="card w-full bg-base-100 shadow-2xl hover:shadow-3xl transition-shadow duration-300">
+          <div className="w-full lg:w-3/5">
+            <div className="card w-full bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
               {isLoading ? (
-                <div className="flex items-center justify-center h-96 bg-base-300 animate-pulse">
+                <div className="flex items-center justify-center h-64 lg:h-96 bg-base-300 animate-pulse">
                   <span className="loading loading-spinner loading-lg text-[#FF4C4C]"></span>
                 </div>
               ) : (
@@ -96,28 +98,28 @@ function HomeTourism({ tourismData, isLoading }) {
                         }`}
                       >
                         <ImageIcon
-                          size={96}
+                          size={64}
                           className="text-[#FF4C4C] opacity-20"
                         />
                       </div>
                     )
                   )}
-                  <div className="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-end">
-                    <h3 className="text-white text-xl font-bold drop-shadow-lg max-w-[80%]">
+                  <div className="absolute bottom-2 lg:bottom-4 left-2 lg:left-4 right-2 lg:right-4 z-20 flex justify-between items-end">
+                    <h3 className="text-white text-lg lg:text-xl font-bold drop-shadow-lg max-w-[80%]">
                       {tourismData[currentImageIndex]?.title}
                     </h3>
                     <div className="flex items-center space-x-2">
                       <button
                         onClick={prevImage}
-                        className="w-8 h-8 rounded-full bg-black/30 hover:bg-black/50 flex items-center justify-center transition-all duration-300"
+                        className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-black/30 hover:bg-black/50 flex items-center justify-center transition-all duration-300"
                       >
-                        <ChevronLeft size={18} className="text-white" />
+                        <ChevronLeft size={16} className="text-white" />
                       </button>
                       <button
                         onClick={nextImage}
-                        className="w-8 h-8 rounded-full bg-black/30 hover:bg-black/50 flex items-center justify-center transition-all duration-300"
+                        className="w-6 h-6 lg:w-8 lg:h-8 rounded-full bg-black/30 hover:bg-black/50 flex items-center justify-center transition-all duration-300"
                       >
-                        <ChevronRight size={18} className="text-white" />
+                        <ChevronRight size={16} className="text-white" />
                       </button>
                     </div>
                   </div>
