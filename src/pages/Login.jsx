@@ -4,6 +4,7 @@ import AuthenticationService from "../services/AuthenticationService";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import "../assets/styles/Login.css";
+import wechatIcon from '../assets/wechat_icon.png';
 
 const Login = () => {
   const [username, setUsername] = useState(""); // 사용자명 상태 저장
@@ -57,6 +58,12 @@ const Login = () => {
     window.location.href = AuthenticationService.getKakaoAuthUrl();
   };
 
+  const handleWeChatLogin = () => {
+    alert("사업자 등록 후, 위챗 로그인 구현 예정. \n 注册营业执照后，将实现微信登录。");
+    window.location.href = 'https://open.weixin.qq.com/connect/qrconnect?appid=YOUR_APP_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect';
+  };
+
+
   // 토큰 유효성 체크 함수 (예시)
   const checkTokenValidity = async (token) => {
     try {
@@ -92,6 +99,11 @@ const Login = () => {
         </Button>
         <Button className="kakao-btn" type="button" onClick={handleKakaoLogin}>
           使用Kakao登录
+        </Button>
+        {/* WeChat 로그인 버튼 */}
+        <Button className="wechat-btn" type="button" onClick={handleWeChatLogin}>
+          <img src={wechatIcon} alt="WeChat Logo" style={{ width: "400px", height: "50px", marginRight: "8px" }}
+          />
         </Button>
       </form>
       <div className="signup-link">
