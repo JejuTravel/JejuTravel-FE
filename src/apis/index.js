@@ -123,7 +123,7 @@ export const editSchedule = (scheduleId, updatedSchedule, token) => {
   );
 };
 // 일정 삭제
-export const deleteSchedule = (scheduleId, recurUpdateType = "THIS") =>
+export const deleteSchedule = (scheduleId, recurUpdateType = "THIS", token) =>
   axiosInstance.delete(
     "/delete/event",
     {

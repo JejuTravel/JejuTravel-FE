@@ -17,6 +17,9 @@ const OAuthCallback = () => {
                     if (response.status === 'success') {
                         localStorage.setItem('accessToken', response.data.accessToken);
                         localStorage.setItem('refreshToken', response.data.refreshToken);
+                        localStorage.setItem('userId', response.data.userId);
+                        localStorage.setItem('userName', response.data.userName);
+                        localStorage.setItem("kakaoAccessToken", response.data.kakaoAccessToken);
                         navigate('/');
                     } else {
                         console.error('카카오 로그인 실패:', response);
@@ -25,7 +28,7 @@ const OAuthCallback = () => {
                 })
                 .catch((error) => {
                     console.error('로그인 오류:', error);
-                    navigate('/login');
+                    navigate('/');
                 });
         } else {
             console.error('카카오 인증 코드가 없습니다.');
