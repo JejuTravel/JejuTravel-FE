@@ -89,12 +89,12 @@ const AuthenticationService = {
   },
 
   // 비밀번호 변경
-  async updatePassword(passwordData) {
+  async updatePassword(updatedProfilePassword) {
     const accessToken = localStorage.getItem("accessToken");
     try {
       const response = await axiosInstance.put(
         "/api/mypage/update/password",
-        passwordData,
+          updatedProfilePassword,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`, // accessToken을 이용한 권한 설정
@@ -145,6 +145,7 @@ const AuthenticationService = {
     localStorage.removeItem("refreshToken"); // refreshToken 삭제
     localStorage.removeItem("userId"); // userId 삭제
     localStorage.removeItem("userName"); // userName 삭제
+    localStorage.removeItem("kakaoAccessToken");
   },
 };
 

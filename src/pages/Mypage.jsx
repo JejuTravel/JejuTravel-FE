@@ -36,29 +36,35 @@ const Mypage = () => {
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
         try {
-            const response = await AuthenticationService.updateUserProfile(profile); 
-            if (response.status === 'success') {
+            const response = await AuthenticationService.updateUserProfile(profile);
+            // if (response.status === 'success') {
                 setSuccess('用户信息更新成功');
-                setError('');
-            } else {
-                setError(response.message || '更新用户信息失败'); 
-            }
+            //     setError('');
+            // } else {
+            //     setError(response.message || '更新用户信息失败');
+            //     console.error(response);
+            // }
         } catch (error) {
             setError('更新用户信息失败，请检查输入数据'); 
         }
     };
 
-    // 更新密码
+    // 비밀번호 변경
     const handleUpdatePassword = async (e) => {
         e.preventDefault();
+        const updatedProfile = {
+            ...profile, // 기존 프로필 정보 포함
+            currentPassword, // 현재 비밀번호
+            newPassword, // 새로운 비밀번호
+        };
         try {
-            const response = await AuthenticationService.updatePassword({ currentPassword, newPassword }); 
-            if (response.status === 'success') {
-                setSuccess('密码更新成功'); 
-                setError('');
-            } else {
-                setError(response.message || '密码更新失败'); 
-            }
+            const response = await AuthenticationService.updatePassword(updatedProfile);
+            // if (response.status === 'success') {
+                setSuccess('密码更新成功');
+            //     setError('');
+            // } else {
+            //     setError(response.message || ' 실패 密码更新失败');
+            // }
         } catch (error) {
             setError('密码更新失败，请检查输入数据'); 
         }
@@ -110,7 +116,9 @@ const Mypage = () => {
                         <select
                             name="userGender"
                             value={profile.userGender ? 'male' : 'female'}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                                handleChange({ target: { name: 'userGender', value: e.target.value === 'male' } })
+                            } // 'male'은 true, 'female'은 false로 변환하여 handleChange에 전달
                             style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }}
                         >
                             <option value="male">男</option>
