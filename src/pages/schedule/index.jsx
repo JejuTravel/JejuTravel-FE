@@ -48,13 +48,23 @@ function LoginAlertModal({ onClose }) {
 
 function SchedulePage() {
   const [schedules, setSchedules] = useState([]);
-  const [searchFrom, setSearchFrom] = useState("");
-  const [searchTo, setSearchTo] = useState("");
+  // const [searchFrom, setSearchFrom] = useState(new Date());
+  const [searchFrom, setSearchFrom] = useState(() => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1); // 현재 날짜에서 하루 빼기
+    return yesterday;
+  });
+  const [searchTo, setSearchTo] = useState(new Date());
   const [editSchedule, setEditSchedule] = useState(null);
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
-  const [newStartTime, setNewStartTime] = useState("");
-  const [newEndTime, setNewEndTime] = useState("");
+  // const [newStartTime, setNewStartTime] = useState(new Date());
+  const [newStartTime, setNewStartTime] = useState(() => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1); // 현재 날짜에서 하루 빼기
+    return yesterday;
+  });
+  const [newEndTime, setNewEndTime] = useState(new Date());
   const [token, setToken] = useState(null);
   const [isKakaoLoggedIn, setIsKakaoLoggedIn] = useState(false);
   const [showLoginAlert, setShowLoginAlert] = useState(false);
@@ -207,11 +217,13 @@ function SchedulePage() {
   const resetForm = () => {
     setNewTitle("");
     setNewDescription("");
-    setNewStartTime("");
-    setNewEndTime("");
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    setNewStartTime(yesterday);
+    setNewEndTime(new Date());
     setEditSchedule(null);
-    setSearchFrom("");
-    setSearchTo("");
+    setSearchFrom(yesterday);
+    setSearchTo(new Date());
   };
 
   return (
@@ -239,7 +251,9 @@ function SchedulePage() {
                 />
               </div>
             </div>
-            <button className="bg-[#FF6B35] text-white w-full py-2 rounded-full mt-3">
+            <button
+                    onClick={searchSchedules}
+                    className="bg-[#FF6B35] text-white w-full py-2 rounded-full mt-3">
               搜索
             </button>
           </div>

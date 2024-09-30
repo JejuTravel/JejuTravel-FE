@@ -112,8 +112,8 @@ const AuthenticationService = {
     }
   },
   getKakaoAuthUrl() {
-    const CLIENT_ID = '647d68e7afa94a2fe6555b148a87ad29';  // 실제 REST API 키
-    const REDIRECT_URI = 'http://localhost:5173/oauth/callback/kakao';  // 리다이렉트 URI
+    const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;  // 실제 REST API 키
+    const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;  // 리다이렉트 URI
     return `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   },
 
