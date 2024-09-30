@@ -126,8 +126,11 @@ function SchedulePage() {
         };
         setSchedules([...schedules, newSchedule2]);
         resetForm();
-      } else {
-        alert("添加日程失败。");
+      } else { // 카카오 톡캘린더 추가 항목 동의 받지 않음.
+        alert("캘린더 작성을 위한, 추가 동의 항목 필요합니다.\n" +
+            "'My Page'로 이동하여, 아래쪽의 캘린더 추가 동의를 진행해 주세요.\n \n"+
+            "为了制作日历，需要追加同意项目。\n" +
+            "请移动到 '我的页面'，进行下面的日历追加同意。");
       }
     } catch (error) {
       console.error("日程创建错误:", error);
@@ -194,6 +197,8 @@ function SchedulePage() {
   };
 
   const searchSchedules = async () => {
+    if (!requireKakaoLogin()) return;  // Kakao 로그인 필요 확인
+
     if (!searchFrom || !searchTo) {
       alert("请选择日期范围。");
       return;
@@ -208,6 +213,11 @@ function SchedulePage() {
       if (response.data.status === "success") {
         setSchedules(response.data.data.events || []);
         resetForm();
+      } else { // 카카오 톡캘린더 추가 항목 동의 받지 않음.
+        alert("캘린더 작성을 위한, 추가 동의 항목 필요합니다.\n" +
+            "'My Page'로 이동하여, 아래쪽의 캘린더 추가 동의를 진행해 주세요.\n \n"+
+            "为了制作日历，需要追加同意项目。\n" +
+            "请移动到 '我的页面'，进行下面的日历追加同意。");
       }
     } catch (error) {
       console.error("检索日程时出错:", error);

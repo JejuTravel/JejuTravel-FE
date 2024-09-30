@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthenticationService from '../services/AuthenticationService';
 import Input from '../components/Input';
+import Button from "../components/Button.jsx";
 
 const Mypage = () => {
     const [profile, setProfile] = useState({
@@ -69,6 +70,11 @@ const Mypage = () => {
             ...profile,
             [name]: value, 
         });
+    };
+
+    const handleKakaoLogin = async () => {
+        // 카카오 로그인 URL로 리다이렉트 // 톡캘린더 위한 추가 항목 동의 받기
+        window.location.href = AuthenticationService.getKakaoAuthUrl();
     };
 
     return (
@@ -213,6 +219,10 @@ const Mypage = () => {
                 >
                     返回首页
                 </button>
+                <Button className="kakao-btn" type="button" onClick={handleKakaoLogin}>
+                    Kakao 캘린더 추가 동의 항목 받기 <br />
+                    KaKao 日程表 获得额外同意
+                </Button>
             </div>
         </div>
     );
