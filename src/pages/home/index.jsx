@@ -6,11 +6,16 @@ import HomeTourism from "./components/HomeTourism";
 import HomeShoppingRestaurant from "./components/HomeShoppingRestaurant";
 import HomeAccommodation from "./components/HomeAccommodation";
 import LoginModal from "../../components/LoginModal";
+import SimilarItems from "./components/SimilarItems";
 import {
   getTourismList,
   getShoppingList,
   getRestaurantList,
   getAccommodationList,
+  getSimilarUsersTourism,
+  getSimilarUsersShopping,
+  getSimilarUsersStay,
+  getSimilarUsersRestaurant,
 } from "../../apis";
 
 function Home() {
@@ -74,6 +79,33 @@ function Home() {
     { enabled: isAuthenticated }
   );
 
+  const { data: similarTourismData, isLoading: similarTourismLoading } =
+    useQuery(
+      "similarTourism",
+      () => getSimilarUsersTourism(localStorage.getItem("userId")),
+      { enabled: isAuthenticated }
+    );
+
+  const { data: similarShoppingData, isLoading: similarShoppingLoading } =
+    useQuery(
+      "similarShopping",
+      () => getSimilarUsersShopping(localStorage.getItem("userId")),
+      { enabled: isAuthenticated }
+    );
+
+  const { data: similarStayData, isLoading: similarStayLoading } = useQuery(
+    "similarStay",
+    () => getSimilarUsersStay(localStorage.getItem("userId")),
+    { enabled: isAuthenticated }
+  );
+
+  const { data: similarRestaurantData, isLoading: similarRestaurantLoading } =
+    useQuery(
+      "similarRestaurant",
+      () => getSimilarUsersRestaurant(localStorage.getItem("userId")),
+      { enabled: isAuthenticated }
+    );
+
   const scrollToTourism = () => {
     const tourismSection = document.getElementById("home-tourism");
     if (tourismSection) {
@@ -82,7 +114,7 @@ function Home() {
   };
 
   const ElegantLoader = () => (
-    <div className="flex justify-center items-center py-12">
+    <div className="flex justify-center items-center py-8">
       <span className="loading loading-dots loading-lg text-primary"></span>
     </div>
   );
@@ -93,7 +125,7 @@ function Home() {
       <main className="flex-grow">
         <MainBanner onExplore={scrollToTourism} />
         {isAuthenticated ? (
-          <div className="container mx-auto px-4 py-12 space-y-24">
+          <div className="space-y-12">
             <section id="home-tourism" className="fade-in">
               {tourismLoading ? (
                 <ElegantLoader />
@@ -105,6 +137,17 @@ function Home() {
                 </p>
               )}
             </section>
+
+            {!similarTourismLoading && similarTourismData && (
+              <section className="fade-in">
+                <div className="h-px bg-base-300 my-8"></div>
+                <SimilarItems
+                  itemsData={similarTourismData}
+                  title="为您推荐的景点"
+                  linkPrefix="tourism"
+                />
+              </section>
+            )}
 
             <section className="fade-in">
               {shoppingLoading || restaurantLoading ? (
@@ -121,6 +164,28 @@ function Home() {
               )}
             </section>
 
+            {!similarShoppingLoading && similarShoppingData && (
+              <section className="fade-in">
+                <div className="h-px bg-base-300 my-8"></div>
+                <SimilarItems
+                  itemsData={similarShoppingData}
+                  title="为您推荐的购物场所"
+                  linkPrefix="shopping"
+                />
+              </section>
+            )}
+
+            {!similarRestaurantLoading && similarRestaurantData && (
+              <section className="fade-in">
+                <div className="h-px bg-base-300 my-8"></div>
+                <SimilarItems
+                  itemsData={similarRestaurantData}
+                  title="为您推荐的餐厅"
+                  linkPrefix="restaurant"
+                />
+              </section>
+            )}
+
             <section className="fade-in">
               {accommodationLoading ? (
                 <ElegantLoader />
@@ -132,6 +197,17 @@ function Home() {
                 </p>
               )}
             </section>
+
+            {!similarStayLoading && similarStayData && (
+              <section className="fade-in">
+                <div className="h-px bg-base-300 my-8"></div>
+                <SimilarItems
+                  itemsData={similarStayData}
+                  title="为您推荐的住宿"
+                  linkPrefix="stay"
+                />
+              </section>
+            )}
           </div>
         ) : (
           <div className="flex items-center justify-center min-h-[calc(100vh-64px)] bg-base-100">
