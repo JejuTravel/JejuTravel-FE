@@ -97,8 +97,8 @@ export const createSchedule = (scheduleData, token) => {
 // 일정 수정
 export const editSchedule = (scheduleId, updatedSchedule, token) => {
   const params = new URLSearchParams();
-    params.append("event_id", scheduleId);
-    params.append("recur_update_type", "THIS");
+  params.append("event_id", scheduleId);
+  params.append("recur_update_type", "THIS");
   params.append(
     "event",
     JSON.stringify({
@@ -111,32 +111,25 @@ export const editSchedule = (scheduleId, updatedSchedule, token) => {
       description: updatedSchedule.description,
     })
   );
-  return axiosInstance.post(
-    "/update/event",
-    params,
-    {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  return axiosInstance.post("/update/event", params, {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 // 일정 삭제
 export const deleteSchedule = (scheduleId, recurUpdateType = "THIS", token) =>
-  axiosInstance.delete(
-    "/delete/event",
-    {
-            // delete 요청에서는 data 대신 params를 사용하여 query string을 생성해야 합니다.
-            params: {
-                event_id: scheduleId, // Param에 event_id 포함
-                recur_update_type: recurUpdateType, // Param에 recur_update_type 포함
-            },
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+  axiosInstance.delete("/delete/event", {
+    // delete 요청에서는 data 대신 params를 사용하여 query string을 생성해야 합니다.
+    params: {
+      event_id: scheduleId, // Param에 event_id 포함
+      recur_update_type: recurUpdateType, // Param에 recur_update_type 포함
     },
-  );
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
 // review
 export const getReviews = (contentId) =>
@@ -166,3 +159,16 @@ export const updateReview = (reviewData) =>
 
 export const deleteReview = (reviewId) =>
   axiosInstance.post(`/review/delete/${reviewId}`); // 템플릿 리터럴 사용
+
+// similar user
+export const getSimilarUsersTourism = (userId) =>
+  axiosInstance.get(`/review/similarUsers/tourism/${userId}`);
+
+export const getSimilarUsersShopping = (userId) =>
+  axiosInstance.get(`/review/similarUsers/shopping/${userId}`);
+
+export const getSimilarUsersStay = (userId) =>
+  axiosInstance.get(`/review/similarUsers/stay/${userId}`);
+
+export const getSimilarUsersRestaurant = (userId) =>
+  axiosInstance.get(`/review/similarUsers/restaurant/${userId}`);
