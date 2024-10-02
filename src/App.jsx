@@ -19,17 +19,14 @@ import Signup from "./pages/Signup";
 import AboutUs from "./pages/aboutUs";
 import Mypage from "./pages/Mypage";
 import Logout from "./pages/Logout";
-import OAuthCallback from "./pages/OAuthCallback";  // OAuthCallback 컴포넌트 임포트
+import OAuthCallback from "./pages/OAuthCallback";
 
-// QueryClient 인스턴스 생성
 const queryClient = new QueryClient();
 
-// 사용자 인증 상태 확인 함수
 const isAuthenticated = () => {
   return localStorage.getItem("accessToken") !== null;
 };
 
-// 보호된 라우트 컴포넌트
 const ProtectedRoute = ({ children }) => {
   if (!isAuthenticated()) {
     return <Navigate to="/login" replace />;
@@ -48,9 +45,14 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/oauth/callback/kakao" element={<OAuthCallback />} />
 
-            {/* OAuth 콜백을 처리하는 라우트 */}
-            <Route path="/oauth/callback/kakao" element={<OAuthCallback />} /> {/* 카카오 OAuth 콜백 경로 */}
+            {/* 버스, 와이파이, 화장실 - 로그인 없이 접근 가능 */}
+            <Route path="/bus" element={<Bus />} />
+            <Route path="/wifi" element={<Wifi />} />
+            <Route path="/restroom" element={<Restroom />} />
+
+            <Route path="/schedule" element={<Schedule />} />
 
             {/* 인증이 필요한 라우트 */}
             <Route
@@ -117,40 +119,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/bus"
-              element={
-                <ProtectedRoute>
-                  <Bus />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/restroom"
-              element={
-                <ProtectedRoute>
-                  <Restroom />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/wifi"
-              element={
-                <ProtectedRoute>
-                  <Wifi />
-                </ProtectedRoute>
-              }
-            />
-            {/*<Route*/}
-            {/*  path="/schedule"*/}
-            {/*  element={*/}
-            {/*    <ProtectedRoute>*/}
-            {/*      <Schedule />*/}
-            {/*    </ProtectedRoute>*/}
-            {/*  }*/}
-            {/*/>*/}
-            {/*  톡캘린더는 로컬 로그인 필요 없음 */}
-              <Route path="/schedule" element={<Schedule />} />
             <Route
               path="/mypage"
               element={
