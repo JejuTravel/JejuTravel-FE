@@ -89,12 +89,12 @@ const AuthenticationService = {
   },
 
   // 비밀번호 변경
-  async updatePassword(passwordData) {
+  async updatePassword(updatedProfilePassword) {
     const accessToken = localStorage.getItem("accessToken");
     try {
       const response = await axiosInstance.put(
         "/api/mypage/update/password",
-        passwordData,
+          updatedProfilePassword,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`, // accessToken을 이용한 권한 설정
@@ -112,9 +112,17 @@ const AuthenticationService = {
     }
   },
   getKakaoAuthUrl() {
-    const CLIENT_ID = '647d68e7afa94a2fe6555b148a87ad29';  // 실제 REST API 키
-    const REDIRECT_URI = 'http://localhost:5173/oauth/callback/kakao';  // 리다이렉트 URI
-    return `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    const kakaoAccessToken = localStorage.getItem("kakaoAccessToken");
+
+    if (!kakaoAccessToken) { // kakaoAccessToken이 없는, 초기 로그인
+      const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;  // 실제 REST API 키
+      const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;  // 리다이렉트 URI
+      return `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&prompt=login`;
+    } else { // kakaoAccessToken이 있는, 추가 항목 동의를 받기.
+      const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;  // 실제 REST API 키
+      const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;  // 리다이렉트 URI
+      return `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=talk_calendar`;
+    }
   },
 
   async kakaoLogin(code) {
@@ -137,6 +145,7 @@ const AuthenticationService = {
     localStorage.removeItem("refreshToken"); // refreshToken 삭제
     localStorage.removeItem("userId"); // userId 삭제
     localStorage.removeItem("userName"); // userName 삭제
+    localStorage.removeItem("kakaoAccessToken");
   },
 };
 

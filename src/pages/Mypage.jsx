@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthenticationService from '../services/AuthenticationService';
 import Input from '../components/Input';
+import Button from "../components/Button.jsx";
 
 const Mypage = () => {
     const [profile, setProfile] = useState({
@@ -35,29 +36,35 @@ const Mypage = () => {
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
         try {
-            const response = await AuthenticationService.updateUserProfile(profile); 
-            if (response.status === 'success') {
+            const response = await AuthenticationService.updateUserProfile(profile);
+            // if (response.status === 'success') {
                 setSuccess('用户信息更新成功');
-                setError('');
-            } else {
-                setError(response.message || '更新用户信息失败'); 
-            }
+            //     setError('');
+            // } else {
+            //     setError(response.message || '更新用户信息失败');
+            //     console.error(response);
+            // }
         } catch (error) {
             setError('更新用户信息失败，请检查输入数据'); 
         }
     };
 
-    // 更新密码
+    // 비밀번호 변경
     const handleUpdatePassword = async (e) => {
         e.preventDefault();
+        const updatedProfile = {
+            ...profile, // 기존 프로필 정보 포함
+            currentPassword, // 현재 비밀번호
+            newPassword, // 새로운 비밀번호
+        };
         try {
-            const response = await AuthenticationService.updatePassword({ currentPassword, newPassword }); 
-            if (response.status === 'success') {
-                setSuccess('密码更新成功'); 
-                setError('');
-            } else {
-                setError(response.message || '密码更新失败'); 
-            }
+            const response = await AuthenticationService.updatePassword(updatedProfile);
+            // if (response.status === 'success') {
+                setSuccess('密码更新成功');
+            //     setError('');
+            // } else {
+            //     setError(response.message || ' 실패 密码更新失败');
+            // }
         } catch (error) {
             setError('密码更新失败，请检查输入数据'); 
         }
@@ -69,6 +76,11 @@ const Mypage = () => {
             ...profile,
             [name]: value, 
         });
+    };
+
+    const handleKakaoLogin = async () => {
+        // 카카오 로그인 URL로 리다이렉트 // 톡캘린더 위한 추가 항목 동의 받기
+        window.location.href = AuthenticationService.getKakaoAuthUrl();
     };
 
     return (
@@ -104,7 +116,9 @@ const Mypage = () => {
                         <select
                             name="userGender"
                             value={profile.userGender ? 'male' : 'female'}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                                handleChange({ target: { name: 'userGender', value: e.target.value === 'male' } })
+                            } // 'male'은 true, 'female'은 false로 변환하여 handleChange에 전달
                             style={{ width: '100%', padding: '10px', borderRadius: '5px', border: '1px solid #ddd' }}
                         >
                             <option value="male">男</option>
@@ -213,6 +227,10 @@ const Mypage = () => {
                 >
                     返回首页
                 </button>
+                <Button className="kakao-btn" type="button" onClick={handleKakaoLogin}>
+                    Kakao 캘린더 추가 동의 항목 받기 <br />
+                    KaKao 日程表 获得额外同意
+                </Button>
             </div>
         </div>
     );

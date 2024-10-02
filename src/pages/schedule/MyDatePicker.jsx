@@ -3,14 +3,14 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { zhCN } from 'date-fns/locale'; // 중국어 간체 로케일 불러오기
 
-function MyDatePicker() {
-  const [startDate, setStartDate] = useState(new Date());
+function MyDatePicker({ selected, onChange }) {
+  // const [startDate, setStartDate] = useState(new Date());
 
   return (
     <div>
       <DatePicker
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
+        selected={selected}
+        onChange={onChange}
         locale={zhCN}  // 중국어 간체 로케일 적용
         dateFormat="yyyy-MM-dd"
         showTimeSelect

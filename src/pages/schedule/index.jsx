@@ -48,13 +48,23 @@ function LoginAlertModal({ onClose }) {
 
 function SchedulePage() {
   const [schedules, setSchedules] = useState([]);
-  const [searchFrom, setSearchFrom] = useState("");
-  const [searchTo, setSearchTo] = useState("");
+  // const [searchFrom, setSearchFrom] = useState(new Date());
+  const [searchFrom, setSearchFrom] = useState(() => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1); // 현재 날짜에서 하루 빼기
+    return yesterday;
+  });
+  const [searchTo, setSearchTo] = useState(new Date());
   const [editSchedule, setEditSchedule] = useState(null);
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
-  const [newStartTime, setNewStartTime] = useState("");
-  const [newEndTime, setNewEndTime] = useState("");
+  // const [newStartTime, setNewStartTime] = useState(new Date());
+  const [newStartTime, setNewStartTime] = useState(() => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1); // 현재 날짜에서 하루 빼기
+    return yesterday;
+  });
+  const [newEndTime, setNewEndTime] = useState(new Date());
   const [token, setToken] = useState(null);
   const [isKakaoLoggedIn, setIsKakaoLoggedIn] = useState(false);
   const [showLoginAlert, setShowLoginAlert] = useState(false);
@@ -116,8 +126,11 @@ function SchedulePage() {
         };
         setSchedules([...schedules, newSchedule2]);
         resetForm();
-      } else {
-        alert("添加日程失败。");
+      } else { // 카카오 톡캘린더 추가 항목 동의 받지 않음.
+        alert("캘린더 작성을 위한, 추가 동의 항목 필요합니다.\n" +
+            "'My Page'로 이동하여, 아래쪽의 캘린더 추가 동의를 진행해 주세요.\n \n"+
+            "为了制作日历，需要追加同意项目。\n" +
+            "请移动到 '我的页面'，进行下面的日历追加同意。");
       }
     } catch (error) {
       console.error("日程创建错误:", error);
@@ -184,6 +197,8 @@ function SchedulePage() {
   };
 
   const searchSchedules = async () => {
+    if (!requireKakaoLogin()) return;  // Kakao 로그인 필요 확인
+
     if (!searchFrom || !searchTo) {
       alert("请选择日期范围。");
       return;
@@ -198,6 +213,11 @@ function SchedulePage() {
       if (response.data.status === "success") {
         setSchedules(response.data.data.events || []);
         resetForm();
+      } else { // 카카오 톡캘린더 추가 항목 동의 받지 않음.
+        alert("캘린더 작성을 위한, 추가 동의 항목 필요합니다.\n" +
+            "'My Page'로 이동하여, 아래쪽의 캘린더 추가 동의를 진행해 주세요.\n \n"+
+            "为了制作日历，需要追加同意项目。\n" +
+            "请移动到 '我的页面'，进行下面的日历追加同意。");
       }
     } catch (error) {
       console.error("检索日程时出错:", error);
@@ -207,11 +227,13 @@ function SchedulePage() {
   const resetForm = () => {
     setNewTitle("");
     setNewDescription("");
-    setNewStartTime("");
-    setNewEndTime("");
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    setNewStartTime(yesterday);
+    setNewEndTime(new Date());
     setEditSchedule(null);
-    setSearchFrom("");
-    setSearchTo("");
+    setSearchFrom(yesterday);
+    setSearchTo(new Date());
   };
 
   return (
@@ -239,7 +261,9 @@ function SchedulePage() {
                 />
               </div>
             </div>
-            <button className="bg-[#FF6B35] text-white w-full py-2 rounded-full mt-3">
+            <button
+                    onClick={searchSchedules}
+                    className="bg-[#FF6B35] text-white w-full py-2 rounded-full mt-3">
               搜索
             </button>
           </div>
